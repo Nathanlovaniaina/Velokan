@@ -1,32 +1,32 @@
 package org.example.service;
 
-import org.example.entity.PaiementSalaire;
-import org.example.repository.PaiementSalaireRepository;
+import org.example.entity.PayementSalaire;
+import org.example.repository.PayementSalaireRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PaiementSalaireService {
+public class PayementSalaireService {
 
-    private final PaiementSalaireRepository paiementSalaireRepository;
+    private final PayementSalaireRepository PayementSalaireRepository;
 
-    public PaiementSalaireService(PaiementSalaireRepository paiementSalaireRepository) {
-        this.paiementSalaireRepository = paiementSalaireRepository;
+    public PayementSalaireService(PayementSalaireRepository PayementSalaireRepository) {
+        this.PayementSalaireRepository = PayementSalaireRepository;
     }
 
-    // Sauvegarde un paiement de salaire
-    public PaiementSalaire save(PaiementSalaire paiement) {
-        return paiementSalaireRepository.save(paiement);
+    // Sauvegarde un Payement de salaire
+    public PayementSalaire save(PayementSalaire Payement) {
+        return PayementSalaireRepository.save(Payement);
     }
 
     // Liste tous les paiements
-    public List<PaiementSalaire> findAll() {
-        return paiementSalaireRepository.findAll();
+    public List<PayementSalaire> findAll() {
+        return PayementSalaireRepository.findAll();
     }
 
     // Recherche par id (optionnel)
-    public PaiementSalaire findById(Integer id) {
-        return paiementSalaireRepository.findById(id).orElse(null);
+    public PayementSalaire findById(Integer id) {
+        return PayementSalaireRepository.findById(id).orElse(null);
     }
 }

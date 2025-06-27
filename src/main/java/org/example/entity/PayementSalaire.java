@@ -3,8 +3,8 @@ package org.example.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "poste")
-public class Poste {
+@Table(name = "PayementSalaire")
+public class PayementSalaire {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +13,15 @@ public class Poste {
     private String nom;
 
     private Double salaire;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employe_id")
+    private Employe employe;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date datePaie;
+
+    private Double somme;
 
     // Getters & Setters
     public Integer getId() {
@@ -37,5 +46,29 @@ public class Poste {
 
     public void setSalaire(Double salaire) {
         this.salaire = salaire;
+    }
+
+    public Employe getEmploye() {
+        return employe;
+    }
+
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
+    }
+
+    public java.util.Date getDatePaie() {
+        return datePaie;
+    }
+
+    public void setDatePaie(java.util.Date datePaie) {
+        this.datePaie = datePaie;
+    }
+
+    public Double getSomme() {
+        return somme;
+    }
+
+    public void setSomme(Double somme) {
+        this.somme = somme;
     }
 }

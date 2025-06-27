@@ -2,8 +2,8 @@ package org.example.controller;
 
 import org.example.entity.Employe;
 import org.example.service.EmployeService;
-import org.example.entity.PaiementSalaire;
-import org.example.service.PaiementSalaireService;
+import org.example.entity.PayementSalaire;
+import org.example.service.PayementSalaireService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +15,11 @@ import java.util.List;
 public class EmployeController {
 
     private final EmployeService employeService;
-    private final PaiementSalaireService paiementSalaireService;
+    private final PayementSalaireService PayementSalaireService;
 
-    public EmployeController(EmployeService employeService, PaiementSalaireService paiementSalaireService) {
+    public EmployeController(EmployeService employeService, PayementSalaireService PayementSalaireService) {
         this.employeService = employeService;
-        this.paiementSalaireService = paiementSalaireService;
+        this.PayementSalaireService = PayementSalaireService;
     }
 
     @GetMapping("/payement_salaire")
@@ -41,14 +41,14 @@ public class EmployeController {
             return "payement_salaire";
         }
 
-        PaiementSalaire paiement = new PaiementSalaire();
-        paiement.setEmploye(employeOpt.get());
-        paiement.setDatePaie(new java.util.Date());
-        paiement.setSomme(montant);
+        PayementSalaire Payement = new PayementSalaire();
+        Payement.setEmploye(employeOpt.get());
+        Payement.setDatePaie(new java.util.Date());
+        Payement.setSomme(montant);
 
-        paiementSalaireService.save(paiement);
+        PayementSalaireService.save(Payement);
 
-        model.addAttribute("retour", "Paiement effectué avec succès");
+        model.addAttribute("retour", "Payement effectué avec succès");
         model.addAttribute("employes", employeService.findAll());
         return "payement_salaire";
     }

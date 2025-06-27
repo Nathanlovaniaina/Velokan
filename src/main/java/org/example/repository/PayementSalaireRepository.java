@@ -1,8 +1,8 @@
 package org.example.repository;
 
-import org.example.entity.PaiementSalaire;
+import org.example.entity.PayementSalaire;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PaiementSalaireRepository extends JpaRepository<PaiementSalaire, Integer> {
+public interface PayementSalaireRepository extends JpaRepository<PayementSalaire, Integer> {
     // Méthodes personnalisées possibles
 }

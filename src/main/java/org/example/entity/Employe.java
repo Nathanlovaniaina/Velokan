@@ -37,7 +37,7 @@ public class Employe {
     private Date dateEmbauche;
 
     @OneToMany(mappedBy = "employe", cascade = CascadeType.ALL)
-    private List<PaiementSalaire> paiements;
+    private List<PayementSalaire> paiements;
 
     // Getters & Setters
     public Integer getId() {
@@ -104,11 +104,11 @@ public class Employe {
         this.dateEmbauche = dateEmbauche;
     }
 
-    public List<PaiementSalaire> getPaiements() {
+    public List<PayementSalaire> getPaiements() {
         return paiements;
     }
 
-    public void setPaiements(List<PaiementSalaire> paiements) {
+    public void setPaiements(List<PayementSalaire> paiements) {
         this.paiements = paiements;
     }
 }

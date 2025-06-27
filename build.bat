@@ -20,7 +20,7 @@ for /R %SRC% %%f in (*.java) do (
 
 rem === Compilation ===
 echo Compilation des fichiers Java...
-javac -encoding UTF-8 -source 17 -target 17 -cp "%LIB%\*" -d %OUT%\WEB-INF\classes @sources.txt
+javac --release 17 -encoding UTF-8 -cp "%LIB%\*" -d %OUT%\WEB-INF\classes @sources.txt
 
 if %ERRORLEVEL% neq 0 (
     echo Erreur de compilation.
