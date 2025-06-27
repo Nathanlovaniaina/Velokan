@@ -1,0 +1,4 @@
+Planning + recommandations 
+Export PDF plat du jour
+Ingredients plus utilises (filtre par periode et type)
+Plats crees depuis une date
