@@ -1,3 +1,4 @@
+-- Active: 1751000966587@@127.0.0.1@5432@velonkan
 CREATE TABLE plat (
     id SERIAL PRIMARY KEY,
     intitule VARCHAR (100),
@@ -19,7 +20,7 @@ CREATE TABLE composant(
     id SERIAL PRIMARY KEY,
     id_type INTEGER REFERENCES type_composant (id) NOT NULL,
     nom VARCHAR(100),
-    id_unite INTEGER REFERENCES (unite) NOT NULL
+    id_unite INTEGER REFERENCES unite(id) NOT NULL
 );
 
 --recette
