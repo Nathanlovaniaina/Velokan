@@ -17,5 +17,6 @@
         <a href="${pageContext.request.contextPath}/depense/">Les Dépenses </a>
         <a href="${pageContext.request.contextPath}/poste/">Les Postes </a>
         <a href="${pageContext.request.contextPath}/employe/">Les employes </a>
+        <a href="${pageContext.request.contextPath}/listStock/">Les stocks</a>
     </p>
 </div>
