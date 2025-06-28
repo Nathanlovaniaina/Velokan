@@ -1,4 +1,25 @@
-Planning + recommandations 
-Export PDF plat du jour
-Ingredients plus utilises (filtre par periode et type)
-Plats crees depuis une date
+1-Planning + recommandations 
+Details:
+
+
+
+
+2-Export PDF plat du jour
+Details:
+
+
+
+
+
+3-Ingredients plus utilises (filtre par periode et type)
+Details:
+
+
+
+
+
+
+4-Plats crees depuis une date
+Details:
+
+
