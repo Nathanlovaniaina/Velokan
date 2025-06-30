@@ -10,7 +10,7 @@
     .home-container a:hover { background:#444; }
 </style>
 <div class="home-container">
-    <h1>Bienvenue sur l'application de gestion de films</h1>
+    <h1>Bienvenue sur l'application de gestion de cantine</h1>
     <p style="margin:30px 0;">
         <a href="${pageContext.request.contextPath}/films">Voir les films</a>
         <a href="${pageContext.request.contextPath}/categories">Voir les categories</a>

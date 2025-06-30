@@ -1,3 +1,4 @@
+-- Active: 1751217030861@@127.0.0.1@5432@cantine_entreprise
 DROP DATABASE IF EXISTS cantine_entreprise;
 CREATE DATABASE cantine_entreprise;
 \c cantine_entreprise;
