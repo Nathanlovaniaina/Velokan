@@ -15,7 +15,7 @@
     <p style="color: red">${erreur}</p>
 </c:if>
 
-<form action="/mvt-stock/save" method="post">
+<form action="${pageContext.request.contextPath}/mvt-stock/save" method="post">
     <input type="hidden" name="id" value="${mvtStock.id}"/>
     <label>Composant :</label>
     <select name="composantId" required>
@@ -55,8 +55,8 @@
             <td>${mvtStock.dateMvt}</td>
             <td>${mvtStock.datePeremption}</td>
             <td>
-                <a href="/mvt-stock/edit?id=${mvtStock.id}">Modifier</a>
-                <a href="/mvt-stock/delete?id=${mvtStock.id}">Supprimer</a>
+                <a href="${pageContext.request.contextPath}/mvt-stock/edit?id=${mvtStock.id}">Modifier</a>
+                <a href="${pageContext.request.contextPath}/mvt-stock/delete?id=${mvtStock.id}">Supprimer</a>
             </td>
         </tr>
     </c:forEach>

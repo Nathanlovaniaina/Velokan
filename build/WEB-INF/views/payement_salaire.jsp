@@ -16,7 +16,7 @@
         </div>
     </c:if>
 
-    <form action="employe/t_payement_salaire" method="post">
+    <form action="${pageContext.request.contextPath}employe/t_payement_salaire" method="post">
         <div>
             <label for="id_employe">Employé</label>
             <select name="id_employe" id="id_employe" required>

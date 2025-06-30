@@ -15,7 +15,7 @@
     <p style="color: red">${erreur}</p>
 </c:if>
 
-<form action="/entreprise/save" method="post">
+<form action="${pageContext.request.contextPath}/entreprise/save" method="post">
     <input type="hidden" name="id" value="${entreprise.id}"/>
     <label>Nom :</label>
     <input type="text" name="nom" value="${entreprise.nom}" required><br>
@@ -50,8 +50,8 @@
             <td>${entreprise.longitude}</td>
             <td>${entreprise.debutDateContrat}</td>
             <td>
-                <a href="/entreprise/edit?id=${entreprise.id}">Modifier</a>
-                <a href="/entreprise/delete?id=${entreprise.id}">Supprimer</a>
+                <a href="${pageContext.request.contextPath}/entreprise/edit?id=${entreprise.id}">Modifier</a>
+                <a href="${pageContext.request.contextPath}/entreprise/delete?id=${entreprise.id}">Supprimer</a>
             </td>
         </tr>
     </c:forEach>

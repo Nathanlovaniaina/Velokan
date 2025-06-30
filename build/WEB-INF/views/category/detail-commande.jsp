@@ -15,7 +15,7 @@
     <p style="color: red">${erreur}</p>
 </c:if>
 
-<form action="/detail-commande/save" method="post">
+<form action="${pageContext.request.contextPath}/detail-commande/save" method="post">
     <input type="hidden" name="id" value="${detailCommande.id}"/>
     <label>Commande :</label>
     <select name="commandeId" required>
@@ -56,8 +56,8 @@
             <td>${detailCommande.quantite}</td>
             <td>${detailCommande.prixUnitaire}</td>
             <td>
-                <a href="/detail-commande/edit?id=${detailCommande.id}">Modifier</a>
-                <a href="/detail-commande/delete?id=${detailCommande.id}">Supprimer</a>
+                <a href="${pageContext.request.contextPath}/detail-commande/edit?id=${detailCommande.id}">Modifier</a>
+                <a href="${pageContext.request.contextPath}/detail-commande/delete?id=${detailCommande.id}">Supprimer</a>
             </td>
         </tr>
     </c:forEach>

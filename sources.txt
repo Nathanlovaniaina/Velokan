@@ -3,6 +3,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\ComposantController
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\DetailCommandeController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\DetailsPlatController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\EntrepriseController.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\MvtStockController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\PlatController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\StockController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\TypeComposantController.java 
@@ -12,6 +13,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Composant.java
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\DetailCommande.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\DetailsPlat.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Entreprise.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\MvtStock.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Plat.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Stock.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\TypeComposant.java 
@@ -21,6 +23,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\ComposantRepository
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\DetailCommandeRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\DetailsPlatRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\EntrepriseRepository.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\MvtStockRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\PlatRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\StockRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\TypeComposantRepository.java 
@@ -30,6 +33,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\service\ComposantService.java
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\DetailCommandeService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\DetailsPlatService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\EntrepriseService.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\service\MvtStockService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\PlatService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\StockService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\TypeComposantService.java 

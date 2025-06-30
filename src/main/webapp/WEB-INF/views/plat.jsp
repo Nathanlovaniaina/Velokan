@@ -15,7 +15,7 @@
     <p style="color: red">${erreur}</p>
 </c:if>
 
-<form action="/plat/save" method="post">
+<form action="${pageContext.request.contextPath}/plat/save" method="post">
     <input type="hidden" name="id" value="${plat.id}"/>
     <label>Intitulé :</label>
     <input type="text" name="intitule" value="${plat.intitule}" required><br>
@@ -25,7 +25,7 @@
 </form>
 
 <h3>Filtrer par date de création</h3>
-<form action="/plat/since-date" method="get">
+<form action="${pageContext.request.contextPath}/plat/since-date" method="get">
     <label>Date :</label>
     <input type="date" name="date" value="${selectedDate}"><br>
     <button type="submit">Filtrer</button>
@@ -47,8 +47,8 @@
             <td>${plat.prix}</td>
             <td>${plat.dateCreation}</td>
             <td>
-                <a href="/plat/edit?id=${plat.id}">Modifier</a>
-                <a href="/plat/delete?id=${plat.id}">Supprimer</a>
+                <a href="${pageContext.request.contextPath}/plat/edit?id=${plat.id}">Modifier</a>
+                <a href="${pageContext.request.contextPath}/plat/delete?id=${plat.id}">Supprimer</a>
             </td>
         </tr>
     </c:forEach>

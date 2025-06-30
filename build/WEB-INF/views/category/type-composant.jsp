@@ -15,7 +15,7 @@
     <p style="color: red">${erreur}</p>
 </c:if>
 
-<form action="/type-composant/save" method="post">
+<form action="${pageContext.request.contextPath}/type-composant/save" method="post">
     <input type="hidden" name="id" value="${typeComposant.id}"/>
     <label>Nom :</label>
     <input type="text" name="nom" value="${typeComposant.nom}" required><br>
@@ -34,8 +34,8 @@
             <td>${typeComposant.id}</td>
             <td>${typeComposant.nom}</td>
             <td>
-                <a href="/type-composant/edit?id=${typeComposant.id}">Modifier</a>
-                <a href="/type-composant/delete?id=${typeComposant.id}">Supprimer</a>
+                <a href="${pageContext.request.contextPath}/type-composant/edit?id=${typeComposant.id}">Modifier</a>
+                <a href="${pageContext.request.contextPath}/type-composant/delete?id=${typeComposant.id}">Supprimer</a>
             </td>
         </tr>
     </c:forEach>

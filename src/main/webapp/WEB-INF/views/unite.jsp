@@ -15,7 +15,7 @@
     <p style="color: red">${erreur}</p>
 </c:if>
 
-<form action="/unite/save" method="post">
+<form action="${pageContext.request.contextPath}/unite/save" method="post">
     <input type="hidden" name="id" value="${unite.id}"/>
     <label>Nom :</label>
     <input type="text" name="nom" value="${unite.nom}" required><br>
@@ -38,8 +38,8 @@
             <td>${unite.nom}</td>
             <td>${unite.symbol}</td>
             <td>
-                <a href="/unite/edit?id=${unite.id}">Modifier</a>
-                <a href="/unite/delete?id=${unite.id}">Supprimer</a>
+                <a href="${pageContext.request.contextPath}/unite/edit?id=${unite.id}">Modifier</a>
+                <a href="${pageContext.request.contextPath}/unite/delete?id=${unite.id}">Supprimer</a>
             </td>
         </tr>
     </c:forEach>
