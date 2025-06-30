@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "plat")
@@ -16,7 +17,9 @@ public class Plat {
     @Column(name = "prix")
     private Integer prix;
 
-    // Getters and Setters
+    @Column(name = "date_creation")
+    private LocalDate dateCreation;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +42,13 @@ public class Plat {
 
     public void setPrix(Integer prix) {
         this.prix = prix;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation = dateCreation;
     }
 }

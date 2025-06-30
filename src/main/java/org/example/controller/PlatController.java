@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/plat")
 public class PlatController {
@@ -53,6 +55,21 @@ public class PlatController {
         platService.delete(id);
         model.addAttribute("succes", "Plat supprimé avec succès");
         model.addAttribute("plats", platService.findAll());
+        model.addAttribute("plat", new Plat());
+        return "plat";
+    }
+
+    @GetMapping("/since-date")
+    public String afficherPlatsDepuisDate(@RequestParam(value = "date", required = false) String date, Model model) {
+        if (date != null && !date.isEmpty()) {
+            LocalDate localDate = LocalDate.parse(date);
+            model.addAttribute("plats", platService.findPlatsSinceDate(localDate));
+            model.addAttribute("totalPlats", platService.countPlatsSinceDate(localDate));
+            model.addAttribute("selectedDate", date);
+        } else {
+            model.addAttribute("plats", platService.findAll());
+            model.addAttribute("totalPlats", platService.findAll().size());
+        }
         model.addAttribute("plat", new Plat());
         return "plat";
     }

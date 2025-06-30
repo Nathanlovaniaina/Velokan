@@ -24,12 +24,20 @@
     <button type="submit">Enregistrer</button>
 </form>
 
-<h3>Liste des plats</h3>
+<h3>Filtrer par date de création</h3>
+<form action="/plat/since-date" method="get">
+    <label>Date :</label>
+    <input type="date" name="date" value="${selectedDate}"><br>
+    <button type="submit">Filtrer</button>
+</form>
+
+<h3>Liste des plats (Total: ${totalPlats})</h3>
 <table border="1">
     <tr>
         <th>ID</th>
         <th>Intitulé</th>
         <th>Prix</th>
+        <th>Date de création</th>
         <th>Actions</th>
     </tr>
     <c:forEach var="plat" items="${plats}">
@@ -37,6 +45,7 @@
             <td>${plat.id}</td>
             <td>${plat.intitule}</td>
             <td>${plat.prix}</td>
+            <td>${plat.dateCreation}</td>
             <td>
                 <a href="/plat/edit?id=${plat.id}">Modifier</a>
                 <a href="/plat/delete?id=${plat.id}">Supprimer</a>

@@ -23,3 +23,268 @@ Details:
 Details:
 
 
+
+Cahier des charges détaillé par fonctionnalité
+🧩 1. Planning + recommandations
+🔍 Objectif :
+
+Générer automatiquement un planning de plats à produire (par jour/semaine) selon le stock actuel, les commandes prévues et la conservation des composants.
+📥 Entrées :
+
+    Date du jour (ou période)
+
+    Stock actuel (stock.qtte_stock)
+
+    Recettes des plats (details_plat)
+
+    Conservation des composants (stock.nombre_jour_conservation)
+
+    Commandes prévues (commandes.date_heure_prevue)
+
+📤 Sorties :
+
+    Liste des plats à préparer
+
+    Quantité recommandée pour chaque plat
+
+    Ingrédients nécessaires et leur quantité totale
+
+    Avertissements si stock insuffisant ou proche de péremption
+
+🧠 Règles de recommandation :
+
+    Prioriser les composants proches de leur date de péremption
+
+    Ne pas dépasser le stock disponible
+
+    Éviter de proposer des plats impossibles à faire (si ingrédient manquant)
+
+🖥️ Interface attendue :
+
+    Un planning visuel (type tableau ou calendrier)
+
+    Un bouton “Générer planning”
+
+    Une alerte si manque d’ingrédients
+
+    Filtres : par jour, par plat, par stock dispo
+
+📄 2. Export PDF plat du jour
+🔍 Objectif :
+
+Exporter la liste des plats planifiés pour aujourd’hui sous forme de PDF, avec détails (ingrédients, quantités, coût).
+📥 Entrées :
+
+    Date du jour (ou date sélectionnée)
+
+    Planning généré précédemment
+
+📤 Sorties :
+
+    Fichier PDF contenant :
+
+        Nom du plat
+
+        Quantité à préparer
+
+        Ingrédients et quantité nécessaires
+
+        Coût estimé (si possible)
+
+📚 Technologie :
+
+    Librairie type iText (Java) ou DomPDF (PHP) ou jsPDF (JS)
+
+🖥️ Interface attendue :
+
+    Un bouton "Exporter PDF"
+
+    Aperçu du PDF (optionnel)
+
+    Téléchargement du fichier
+
+📊 3. Ingrédients les plus utilisés (filtre par période et type)
+🔍 Objectif :
+
+Afficher un classement des composants les plus utilisés dans la fabrication des plats pendant une période donnée.
+📥 Entrées :
+
+    Période : date début / date fin
+
+    Type de composant (type_composant)
+
+    Recettes (details_plat)
+
+    Historique commandes (detail_commande, commandes)
+
+📤 Sorties :
+
+    Tableau ou graphique :
+
+        Nom du composant
+
+        Quantité totale utilisée
+
+    Possibilité de trier par :
+
+        Quantité utilisée
+
+        Type
+
+        Date
+
+🧠 Calcul :
+
+SELECT c.nom, SUM(dp.quantite * dc.quantite) AS total_utilise
+FROM detail_commande dc
+JOIN plat p ON dc.id_plat = p.id
+JOIN details_plat dp ON dp.id_plat = p.id
+JOIN composant c ON dp.id_composant = c.id
+JOIN commandes co ON co.id = dc.id_commande
+WHERE co.date_heure_prevue BETWEEN :date_debut AND :date_fin
+GROUP BY c.nom
+ORDER BY total_utilise DESC;
+
+🆕 4. Plats créés depuis une date
+🔍 Objectif :
+
+Lister tous les plats créés (ou ajoutés dans la BDD) depuis une date donnée.
+📥 Entrée :
+
+    Date à partir de laquelle on veut voir les plats (plat.date_creation)
+
+📤 Sorties :
+
+    Liste de plats :
+
+        ID, Nom, Prix
+
+        Date création
+
+    Nombre total de plats ajoutés
+
+SQL :
+
+SELECT * FROM plat
+WHERE date_creation >= :date_donnee;
+
+📋 Résumé sous forme de tableau
+Fonctionnalité	Entrées	Sorties	Interface	Requêtes SQL ou règles métier
+Planning plats	Date, stock, commandes	Plats du jour, composants nécessaires	Planning + alertes	Stock vs besoin, péremption
+Export PDF	Date	PDF	Bouton d’export	Détail planning + lib PDF
+Top ingrédients	Période, type	Liste ingrédients, quantités	Tableau ou graphique	Jointures entre recettes, commandes
+Plats récents	Date
+
+
+
+
+
+
+
+
+Objectif global
+
+Créer un système de gestion de menu de cantine pour entreprise, avec :
+
+    Suggestion automatique de plats faisables (recommandation)
+
+    Sélection manuelle de 2 plats par jour sur une semaine
+
+    Export Excel du planning hebdomadaire → envoyé au client
+
+    Le client retourne l’Excel avec les quantités par plat
+
+    Tu importes l’Excel retourné dans l'application
+
+    Tu valides ensuite le planning de production final
+
+    Tu sais quels ingrédients préparer, pour combien de plats, par jour
+
+🔁 Étapes précises du processus métier
+Étape	Description	Données clés
+1. Génération des recommandations	Le système propose une liste de plats faisables, en analysant les stocks, péremptions, historique, etc.	Tables : plat, details_plat, stock, mvt_stock
+2. Planification manuelle	L’utilisateur choisit 2 plats/jour dans un calendrier visuel (semainier) en cliquant sur les plats recommandés.	Nouvelle table : planning_journalier
+3. Export Excel	Le planning validé est exporté (.xlsx) avec les colonnes : jour, plat 1, plat 2. Ce fichier est envoyé au client.	
+4. Import du fichier retourné	Le client remplit dans l'Excel les quantités par plat/jour. Tu importes ensuite ce fichier dans ton système.	Nouvelle table : commande_recue
+5. Génération du planning cuisine	Le système recalcule les quantités totales et les ingrédients nécessaires, et indique les alertes de stock.	
+6. Validation finale	L’utilisateur valide définitivement le planning de production journalier, toujours dans le calendrier.	Affichage interactif + statut validé ✅
+📦 Tables supplémentaires à ajouter
+
+-- Pour stocker le planning prévisionnel par jour
+CREATE TABLE planning_journalier (
+    id SERIAL PRIMARY KEY,
+    date_jour DATE NOT NULL UNIQUE,
+    id_plat_1 INTEGER REFERENCES plat(id),
+    id_plat_2 INTEGER REFERENCES plat(id)
+);
+
+-- Pour stocker les quantités commandées par jour après retour du client
+CREATE TABLE commande_recue (
+    id SERIAL PRIMARY KEY,
+    date_jour DATE NOT NULL,
+    id_plat INTEGER REFERENCES plat(id),
+    quantite_commande INTEGER
+);
+
+🖥️ Interface attendue (UX)
+Vue	Action
+Calendrier de planification	Affiche chaque jour de la semaine avec 2 slots → l’utilisateur choisit les plats à l’aide d’un menu déroulant ou d’un glisser-déposer
+Zone de recommandations	Liste les plats faisables (avec disponibilité en stock + couleur pour péremption proche)
+Export Excel	Bouton "Exporter le planning (.xlsx)" une fois la semaine remplie
+Import Excel client	Upload d’un fichier .xlsx contenant les quantités commandées par jour/plat
+Vue planning cuisine	Calendrier avec plats + quantités finales (affiché avec les totaux ingrédients nécessaires)
+🧠 Exemple de Fichier Excel à Exporter et à Importer
+Format Excel envoyé :
+Date	Plat 1	Plat 2
+01/07/2025	Riz Cantonnais	Poulet Grillé
+02/07/2025	Lasagnes	Poisson Curry
+…	…	…
+Format Excel retourné par l’entreprise :
+Date	Plat	Quantité Commandée
+01/07/2025	Riz Cantonnais	45
+01/07/2025	Poulet Grillé	50
+02/07/2025	Lasagnes	35
+02/07/2025	Poisson Curry	38
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Objectif global :
+
+ajouter ces fonctionnalite :
+
+    Gérer le menu journalier / hebdomadaire de la cantine
+
+    Proposer automatiquement des plats selon les stocks et péremptions
+
+    Permettre la validation manuelle du planning via une interface visuelle (calendrier)
+
+    Exporter le planning vers l’entreprise cliente
+
+    Importer les commandes réelles de l’entreprise
+
+    Générer un planning de production précis
+
+    Assurer le suivi des stocks et des besoins en ingrédients
+
+    Offrir une architecture configurable, scalable et maintenable
+
+🔁 Cycle de vie fonctionnel (Workflow complet)
+Étape	Description	Acteur	Technologies
+1. Préparation automatique	Le système suggère des plats réalisables selon le stock actuel, la péremption et l’historique	Serveur	Requêtes PostGres + Service Recommandation
+2. Planification manuelle	L’admin sélectionne n plats/jour via un calendrier interactif (planning prévisionnel)	Gestionnaire cantine	FullCalendar.js + Vue/React
+3. Export planning (.xlsx)	Le planning est exporté vers un fichier Excel professionnel pour envoi au client entreprise	Système	Apache POI / PHPSpreadsheet
+4. Import retour (.xlsx)	Le client retourne un Excel rempli avec les quantités de commande. Le système l’intègre	Gestionnaire cantine	Import XLSX backend
+5. Génération du planning production	Le système recalcule les besoins réels en ingrédients et affiche les alertes stock/péremption	Système	PostGres + Service de calcul
+6. Validation finale	L’admin valide la production quotidienne à faire avec tous les ingrédients calculés	Gestionnaire cantine	Interface web planning final
+7. Suivi & historique	Toutes les opérations sont historisées pour analyse future (quantité, consommation, planning)	Système	Audit + stockage relationnel
