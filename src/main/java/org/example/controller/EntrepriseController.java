@@ -53,7 +53,7 @@ public class EntrepriseController {
             entreprise.setLatitude(latitude);
             entreprise.setLongitude(longitude);
             // Créer un point géométrique à partir de latitude et longitude
-            entreprise.setGeom(geometryFactory.createPoint(new Coordinate(longitude, latitude)));
+            // entreprise.setGeom(geometryFactory.createPoint(new Coordinate(longitude, latitude)));
             entreprise.setDebutDateContrat(LocalDate.parse(debutDateContrat));
             entrepriseService.saveOrUpdate(entreprise);
 

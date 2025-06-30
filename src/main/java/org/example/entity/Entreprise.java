@@ -26,9 +26,9 @@ public class Entreprise {
     @Column(name = "longitude")
     private Double longitude;
 
-    @Column(name = "geom")
-    @Type(type = "org.hibernate.spatial.GeometryType")
-    private Point geom;
+    // @Column(name = "geom")
+    // @Type(type = "org.hibernate.spatial.GeometryType")
+    // private Point geom;
 
     @Column(name = "debut_date_contrat")
     private LocalDate debutDateContrat;
@@ -74,13 +74,13 @@ public class Entreprise {
         this.longitude = longitude;
     }
 
-    public Point getGeom() {
-        return geom;
-    }
+    // public Point getGeom() {
+    //     return geom;
+    // }
 
-    public void setGeom(Point geom) {
-        this.geom = geom;
-    }
+    // public void setGeom(Point geom) {
+    //     this.geom = geom;
+    // }
 
     public LocalDate getDebutDateContrat() {
         return debutDateContrat;
