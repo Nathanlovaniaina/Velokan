@@ -1,4 +1,11 @@
-C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Sous_groupe\squelette(sansMaven)\src\main\java\org\example\controller\CategoryController.java 
-C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Sous_groupe\squelette(sansMaven)\src\main\java\org\example\entity\Category.java 
-C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Sous_groupe\squelette(sansMaven)\src\main\java\org\example\repository\CategoryRepository.java 
-C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Sous_groupe\squelette(sansMaven)\src\main\java\org\example\service\CategoryService.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\CategoryController.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\EmployeController.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Category.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Employe.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\PayementSalaire.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Poste.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\CategoryRepository.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\EmployeRepository.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\PayementSalaireRepository.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\EmployeService.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\PayementSalaireService.java 
