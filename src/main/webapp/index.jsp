@@ -14,12 +14,16 @@
     <p style="margin:30px 0;">
         <a href="${pageContext.request.contextPath}/mvtcontrat/create">Voir contrats</a>
         <a href="${pageContext.request.contextPath}/entreprise/create">Creer entreprise</a>
-            <a href="${pageContext.request.contextPath}/films">Voir les films</a>
-            <a href="${pageContext.request.contextPath}/categories">Voir les categories</a>
-            <a href="${pageContext.request.contextPath}/employe/paiement_salaire">Le payement salaire</a>
-            <a href="${pageContext.request.contextPath}/penalite/">La Pénalité </a>
-            <a href="${pageContext.request.contextPath}/depense/">Les Dépenses </a>
-            <a href="${pageContext.request.contextPath}/poste/">Les Postes </a>
-            <a href="${pageContext.request.contextPath}/employe/">Les employes </a>
-        </p>
+        <a href="${pageContext.request.contextPath}/films">Voir les films</a>
+        <a href="${pageContext.request.contextPath}/categories">Voir les categories</a>
+        <a href="${pageContext.request.contextPath}/employe/paiement_salaire">Le payement salaire</a>
+        <a href="${pageContext.request.contextPath}/penalite/">La Pénalité </a>
+        <a href="${pageContext.request.contextPath}/depense/">Les Dépenses </a>
+        <a href="${pageContext.request.contextPath}/poste/">Les Postes </a>
+        <a href="${pageContext.request.contextPath}/employe/">Les employes </a>
+        <a href="${pageContext.request.contextPath}/listStock/">Les stocks </a>
+        <a href="${pageContext.request.contextPath}/composant/">Les composants</a>
+        <a href="${pageContext.request.contextPath}/type_composant/">Les types de composants</a>
+        <a href="${pageContext.request.contextPath}/unite/">Les unités</a>
+      </p>
 </div>
