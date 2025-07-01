@@ -1,0 +1,204 @@
+CAHIER DES CHARGES - SYSTÈME DE GESTION DE PLATS ET RECOMMANDATIONS
+🎯 OBJECTIFS GÉNÉRAUX
+Vision du Projet
+Développer une application web complète de gestion professionnelle de plats avec un système de recommandation intelligent et un workflow complet de planification client.
+
+Objectifs Métier
+Automatiser la création de plannings hebdomadaires
+Optimiser la sélection de plats selon des critères intelligents
+Faciliter les échanges avec les clients via Excel
+Générer des plans de production détaillés
+Réduire le temps de planification de 70%
+🏗️ ARCHITECTURE FONCTIONNELLE
+
+1. GESTION DES PLATS
+Objectifs
+Centraliser la base de données des plats
+Permettre la création, modification et suppression
+Organiser les plats par compositions et ingrédients
+Fonctionnalités
+Création de plats avec compositions multiples
+Gestion des ingrédients par composition
+Système de validation des données
+Recherche avancée par nom, ingrédient, composition
+Historique des modifications
+Statut actif/inactif pour les plats
+Cas d'usage typiques
+Chef crée un nouveau plat "Salade César" avec 2 compositions
+Modification des quantités d'ingrédients selon les saisons
+Désactivation temporaire d'un plat en rupture d'ingrédients
+Recherche de tous les plats contenant "tomate"
+
+2. SYSTÈME DE RECOMMANDATION INTELLIGENT
+Objectifs
+Proposer automatiquement les meilleurs plats pour chaque jour
+Optimiser selon multiple critères pondérés
+Assurer la diversité hebdomadaire
+Algorithme de Recommandation
+Facteur saisonnier (30%) - Adaptation aux saisons
+Popularité historique (25%) - Basé sur l'historique des commandes
+Complexité de préparation (20%) - Favorise la simplicité
+Coût-efficacité (15%) - Optimise les coûts
+Profil client (10%) - Adapte selon le type de client
+Logique de Sélection
+2 plats maximum par jour
+Évitement des doublons d'ingrédients (max 30% de chevauchement)
+Diversité hebdomadaire garantie
+Score de recommandation calculé et affiché
+Cas d'usage
+Génération automatique d'un planning pour client "Premium"
+Adaptation saisonnière (plats d'été en juin-août)
+Évitement de répétition d'ingrédients sur la semaine
+Suggestion de quantités selon le profil client
+
+3. PLANIFICATION HEBDOMADAIRE
+Objectifs
+Créer des plannings structurés sur 7 jours
+Permettre l'ajustement manuel des recommandations
+Gérer le cycle de vie complet du planning
+Fonctionnalités
+Création assistée avec recommandations IA
+Modification manuelle des sélections
+Gestion des quantités suggérées
+Informations client intégrées
+Suivi du statut du planning
+États du Planning
+DRAFT - Brouillon en création
+SENT_TO_CLIENT - Envoyé au client
+CLIENT_RESPONSE - Réponse client reçue
+VALIDATED - Validé pour production
+IN_PRODUCTION - En cours de production
+COMPLETED - Terminé
+
+4. EXPORT EXCEL PROFESSIONNEL
+Objectifs
+Générer des fichiers Excel formatés pour les clients
+Faciliter la saisie des quantités souhaitées
+Maintenir la traçabilité des échanges
+Fonctionnalités
+Formatage professionnel avec styles et couleurs
+Instructions claires pour le client
+Colonnes protégées et modifiables distinctes
+Informations complètes (dates, client, plats)
+Téléchargement automatique
+Contenu du Fichier
+En-tête avec informations client et période
+Tableau structuré par jour avec 2 plats maximum
+Colonnes quantités suggérées (lecture seule)
+Colonnes quantités souhaitées (modifiables)
+Zone de notes par jour
+Instructions d'utilisation
+
+5. IMPORT ET TRAITEMENT RÉPONSE CLIENT
+Objectifs
+Récupérer les quantités souhaitées par le client
+Valider et traiter les données importées
+Gérer les erreurs et incohérences
+Fonctionnalités
+Parsing intelligent des fichiers Excel retour
+Validation des données (types, plages)
+Gestion d'erreurs avec rapports détaillés
+Mise à jour automatique des quantités
+Rapport d'import complet
+Validation des Données
+Vérification des formats de dates
+Contrôle des quantités (positives, raisonnables)
+Détection des lignes vides ou corrompues
+Alerte sur les incohérences
+Rapport d'Import
+Nombre de plats mis à jour
+Liste des erreurs rencontrées
+Avertissements sur les données douteuses
+Statut global de l'import
+
+6. PLAN DE PRODUCTION DÉTAILLÉ
+Objectifs
+Générer automatiquement le plan de production
+Calculer les besoins en ingrédients par jour
+Estimer les coûts et temps de préparation
+Fonctionnalités
+Finalisation automatique des quantités
+Calcul des ingrédients nécessaires par jour
+Estimation des coûts par plat et globaux
+Temps de préparation estimé
+Besoins en équipements
+Calculs Automatiques
+Quantités d'ingrédients = (quantité par portion × nombre de portions)
+Coût total = Σ(quantité ingrédient × prix unitaire)
+Temps préparation = temps base + (complexité × 5min) + (portions × 2min)
+Équipements requis selon type de plats et volumes
+Résumé Hebdomadaire
+Total des ingrédients nécessaires
+Répartition par jour
+Coût global estimé
+Planning des équipements
+Temps total de préparation
+
+7. TABLEAU DE BORD ET STATISTIQUES
+Objectifs
+Fournir une vue d'ensemble de l'activité
+Analyser les tendances et performances
+Faciliter la prise de décision
+Indicateurs Clés
+Nombre total de plats créés
+Plannings en cours par statut
+Ingrédients les plus utilisés
+Plats les plus demandés
+Évolution des coûts
+Visualisations
+Graphiques de répartition par difficulté
+Tendances d'utilisation des ingrédients
+Activité récente
+Statistiques de performance
+
+🔄 WORKFLOW COMPLET
+Processus Standard
+Création Planning → Recommandations IA automatiques
+Ajustement Manuel → Modification si nécessaire
+Export Excel → Génération fichier client
+Envoi Client → Transmission par email
+Réception Retour → Client remplit quantités
+Import Réponse → Traitement automatique
+Validation → Finalisation des quantités
+Plan Production → Génération automatique
+Exécution → Suivi de production
+Points de Contrôle
+Validation des recommandations avant envoi
+Vérification de la cohérence des quantités client
+Approbation finale avant production
+Suivi de l'avancement de production
+
+🎨 EXPÉRIENCE UTILISATEUR
+Interface Intuitive
+Navigation claire et logique
+Actions contextuelles selon l'état
+Feedback visuel immédiat
+Responsive design pour tous écrans
+Automatisation Intelligente
+Réduction des tâches répétitives
+Suggestions proactives
+Validation automatique
+Calculs en temps réel
+Gestion d'Erreurs
+Messages d'erreur explicites
+Suggestions de correction
+Sauvegarde automatique
+Récupération en cas d'incident
+
+📊 BÉNÉFICES ATTENDUS
+Gains de Productivité
+70% de réduction du temps de planification
+Automatisation complète des calculs
+Élimination des erreurs manuelles
+Traçabilité complète des échanges
+Amélioration Qualité
+Recommandations optimisées par IA
+Diversité garantie des menus
+Respect des contraintes saisonnières
+Adaptation au profil client
+Optimisation Coûts
+Calculs précis des besoins
+Réduction du gaspillage
+Optimisation des achats
+Planification efficace des ressources
+Ce cahier des charges définit un système complet et professionnel qui transforme la gestion traditionnelle des plannings en un processus automatisé, intelligent et efficace.

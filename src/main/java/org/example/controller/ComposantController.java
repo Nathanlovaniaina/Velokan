@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/composant")
 public class ComposantController {
@@ -71,5 +73,22 @@ public class ComposantController {
         model.addAttribute("types", typeComposantService.findAll());
         model.addAttribute("unites", uniteService.findAll());
         return "composant";
+    }
+
+    @GetMapping("/most-used")
+    public String afficherComposantsPlusUtilises(
+            @RequestParam(value = "dateDebut", required = false) String dateDebut,
+            @RequestParam(value = "dateFin", required = false) String dateFin,
+            @RequestParam(value = "typeId", required = false) Integer typeId,
+            Model model) {
+        LocalDateTime debut = dateDebut != null && !dateDebut.isEmpty() ? LocalDateTime.parse(dateDebut) : LocalDateTime.now().minusDays(30);
+        LocalDateTime fin = dateFin != null && !dateFin.isEmpty() ? LocalDateTime.parse(dateFin) : LocalDateTime.now();
+
+        model.addAttribute("composantUsages", composantService.findMostUsedComposants(debut, fin, typeId));
+        model.addAttribute("types", typeComposantService.findAll());
+        model.addAttribute("selectedDateDebut", dateDebut);
+        model.addAttribute("selectedDateFin", dateFin);
+        model.addAttribute("selectedTypeId", typeId);
+        return "composant-most-used";
     }
 }

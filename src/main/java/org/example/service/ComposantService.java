@@ -1,11 +1,14 @@
 package org.example.service;
 
+import org.example.entity.dto.ComposantUsageDTO;
 import org.example.entity.Composant;
 import org.example.repository.ComposantRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ComposantService {
@@ -30,5 +33,12 @@ public class ComposantService {
 
     public void delete(Integer id) {
         composantRepository.deleteById(id);
+    }
+
+    public List<ComposantUsageDTO> findMostUsedComposants(LocalDateTime dateDebut, LocalDateTime dateFin, Integer typeId) {
+        return composantRepository.findMostUsedComposants(dateDebut, dateFin, typeId)
+                .stream()
+                .map(row -> new ComposantUsageDTO((String) row[0], ((Number) row[1]).doubleValue()))
+                .collect(Collectors.toList());
     }
 }

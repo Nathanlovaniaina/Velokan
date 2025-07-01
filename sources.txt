@@ -18,6 +18,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Plat.java
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Stock.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\TypeComposant.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Unite.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\dto\ComposantUsageDTO.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\CommandeRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\ComposantRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\DetailCommandeRepository.java 
