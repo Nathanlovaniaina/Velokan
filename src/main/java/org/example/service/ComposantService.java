@@ -1,0 +1,54 @@
+package org.example.service;
+
+import org.example.entity.Composant;
+import org.example.repository.ComposantRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ComposantService {
+
+    private final ComposantRepository composantRepository;
+
+    public ComposantService(ComposantRepository composantRepository) {
+        this.composantRepository = composantRepository;
+    }
+
+    public Composant saveOrUpdate(Composant composant) {
+        return composantRepository.save(composant);
+    }
+
+    public List<Composant> findAll() {
+        return composantRepository.findAll();
+    }
+
+    public Optional<Composant> findById(Integer id) {
+        return composantRepository.findById(id);
+    }
+
+    @Transactional
+    public void deleteById(Integer id) {
+        composantRepository.findById(id).ifPresent(unite -> {
+            composantRepository.delete(unite);
+        });
+    }
+
+    public boolean existsById(Integer id) {
+        return composantRepository.existsById(id);
+    }
+
+    public void deleteByTypeComposantId(Integer id) {
+        composantRepository.deleteByTypeComposantId(id);
+    }
+
+    public void deleteByUniteId(Integer id) {
+        composantRepository.deleteByUniteId(id);
+    }
+
+    public List<Composant> findByUniteId(Integer uniteId) {
+        return composantRepository.findByUniteId(uniteId);
+    }
+}
