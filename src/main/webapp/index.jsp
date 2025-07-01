@@ -11,15 +11,15 @@
 </style>
 <div class="home-container">
     <h1>Bienvenue dans l'application</h1>
-    <p style="margin:30px 0;">
-        <a href="${pageContext.request.contextPath}/mvtcontrat/create">Voir contrats</a>
-        <a href="${pageContext.request.contextPath}/entreprise/create">Creer entreprise</a>
-            <a href="${pageContext.request.contextPath}/films">Voir les films</a>
-            <a href="${pageContext.request.contextPath}/categories">Voir les categories</a>
-            <a href="${pageContext.request.contextPath}/employe/paiement_salaire">Le payement salaire</a>
-            <a href="${pageContext.request.contextPath}/penalite/">La Pénalité </a>
-            <a href="${pageContext.request.contextPath}/depense/">Les Dépenses </a>
-            <a href="${pageContext.request.contextPath}/poste/">Les Postes </a>
-            <a href="${pageContext.request.contextPath}/employe/">Les employes </a>
+    <p>
+        <p><a href="${pageContext.request.contextPath}/mvtcontrat/create">Voir contrats</a></p>
+       <p><a href="${pageContext.request.contextPath}/entreprise/create">Creer entreprise</a></p> 
+           <p><a href="${pageContext.request.contextPath}/categories">Voir les categories</a></p> 
+           <p><a href="${pageContext.request.contextPath}/employe/paiement_salaire">Le payement salaire</a></p> 
+           <p><a href="${pageContext.request.contextPath}/penalite/">La Pénalité </a></p> 
+         <p> <a href="${pageContext.request.contextPath}/depense/">Les Dépenses </a></p>  
+            <p><a href="${pageContext.request.contextPath}/poste/">Les Postes </a></p>
+            <p><a href="${pageContext.request.contextPath}/employe/">Les employes </a></p>
+            <p><a href="${pageContext.request.contextPath}/commandes/count">Evolution de Commandes</a></p>
         </p>
 </div>
