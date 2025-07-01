@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Service
 public class EntrepriseService {
+
     private final EntrepriseRepository entrepriseRepository;
 
     public EntrepriseService(EntrepriseRepository entrepriseRepository) {
@@ -30,5 +31,4 @@ public class EntrepriseService {
     public void deleteById(Integer id) {
         entrepriseRepository.deleteById(id);
     }
- 
 }
