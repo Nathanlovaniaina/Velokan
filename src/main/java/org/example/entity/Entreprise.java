@@ -8,11 +8,10 @@ import java.util.List;
 @Entity
 @Table(name = "entreprise")
 public class Entreprise {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+  
     public Entreprise(Integer id) {
         this.id = id;
     }
@@ -66,5 +65,5 @@ public class Entreprise {
     public List<MvtContrat> getMvtContrats() { return mvtContrats; }
     public void setMvtContrats(List<MvtContrat> mvtContrats) { this.mvtContrats = mvtContrats; }
 
-   
+ 
 }
