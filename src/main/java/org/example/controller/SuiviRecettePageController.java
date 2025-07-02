@@ -28,6 +28,10 @@ public class SuiviRecettePageController {
         return "Dashboard/recette";
     }
 
+    @GetMapping("/benefice")
+    public String showDashboardBenefice() {
+        return "Dashboard/benefice";
+    }
 
     @GetMapping("/depense")
     public String showDashboardDepense(Model model) {
