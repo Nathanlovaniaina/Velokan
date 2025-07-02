@@ -96,7 +96,15 @@
                     <div class="mb-3">
                         <h1 class="h3 d-inline align-middle">Nouvelle Commande</h1>
                     </div>
-                    
+
+                    <!-- Affichage des erreurs -->
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            ${error}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                        </div>
+                    </c:if>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -172,6 +180,29 @@
                                             </button>
                                         </div>
                                     </form>
+                                    <hr class="my-4">
+
+                                    <h5 class="card-title mb-3">Importer une commande via CSV</h5>
+                                                                    
+                                    <form action="importCsvCommande" method="POST" enctype="multipart/form-data">
+                                        <div class="row align-items-end">
+                                            <div class="col-md-8">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Fichier CSV</label>
+                                                    <input type="file" class="form-control" name="file" accept=".csv" required>
+                                                    <div class="form-text">
+                                                        Format attendu : <code>NomPlat,Quantite,DateLivraison(yyyy-MM-dd'T'HH:mm),NomEntreprise</code>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="bi bi-upload me-1"></i> Importer la commande
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
