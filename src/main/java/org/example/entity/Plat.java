@@ -2,6 +2,8 @@ package org.example.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "plat")
@@ -19,6 +21,9 @@ public class Plat {
 
     @Column(name = "date_creation")
     private LocalDate dateCreation;
+
+    @OneToMany(mappedBy = "plat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetailsPlat> compositions = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -50,5 +55,23 @@ public class Plat {
 
     public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public List<DetailsPlat> getCompositions() {
+        return compositions;
+    }
+
+    public void setCompositions(List<DetailsPlat> compositions) {
+        this.compositions = compositions;
+    }
+
+    public void addComposition(DetailsPlat detail) {
+        compositions.add(detail);
+        detail.setPlat(this);
+    }
+
+    public void removeComposition(DetailsPlat detail) {
+        compositions.remove(detail);
+        detail.setPlat(null);
     }
 }

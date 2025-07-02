@@ -2,8 +2,18 @@ CREATE TABLE plat (
     id SERIAL PRIMARY KEY,
     intitule VARCHAR(100),
     prix INTEGER,
-    date_creation DATE
+    date_creation DATE,
+    image VARCHAR(255)
 );
+
+
+CREATE TABLE details_plat(
+    id SERIAL PRIMARY KEY,
+    id_plat INTEGER REFERENCES plat(id) NOT NULL,
+    id_composant INTEGER REFERENCES composant(id) NOT NULL,
+    quantite NUMERIC (10,2)
+);
+
 
 CREATE TABLE type_composant(
     id SERIAL PRIMARY KEY,
@@ -24,12 +34,6 @@ CREATE TABLE composant(
 );
 
 --recette
-CREATE TABLE details_plat(
-    id SERIAL PRIMARY KEY,
-    id_plat INTEGER REFERENCES plat(id) NOT NULL,
-    id_composant INTEGER REFERENCES composant(id) NOT NULL,
-    quantite NUMERIC (10,2)
-);
 
 CREATE TABLE stock (
     id SERIAL PRIMARY KEY,

@@ -1,0 +1,79 @@
+// Définition des tables avec leurs colonnes et relations
+
+Table plat {
+  id serial [primary key]
+  intitule varchar(100)
+  prix integer
+  date_creation date
+}
+
+Table type_composant {
+  id serial [primary key]
+  nom varchar(50)
+}
+
+Table unite {
+  id serial [primary key]
+  nom varchar(50)
+  symbol varchar(5)
+}
+
+Table composant {
+  id serial [primary key]
+  id_type integer [not null, ref: > type_composant.id]
+  nom varchar(100)
+  id_unite integer [not null, ref: > unite.id]
+}
+
+Table details_plat {
+  id serial [primary key]
+  id_plat integer [not null, ref: > plat.id]
+  id_composant integer [not null, ref: > composant.id]
+  quantite numeric(10,2)
+}
+
+Table stock {
+  id serial [primary key]
+  id_composant integer [not null, ref: > composant.id]
+  date_creation date
+  qtte_stock numeric(10,2)
+  nombre_jour_conservation integer
+}
+
+Table mvt_stock {
+  id serial [primary key]
+  id_composant integer [not null, ref: > composant.id]
+  type_mvt integer [note: '0: Sortie, 1: Entrée']
+  quantite numeric(10,2)
+  date_mvt date [not null]
+  date_peremption date
+}
+
+Table entreprise {
+  id serial [primary key]
+  // Ajoutez ici les autres colonnes nécessaires
+}
+
+Table commandes {
+  id serial [primary key]
+  id_entreprise integer [not null, ref: > entreprise.id]
+  prix_total integer
+  date_heure_prevue timestamp
+}
+
+Table detail_commande {
+  id serial [primary key]
+  id_commande integer [not null, ref: > commandes.id]
+  id_plat integer [not null, ref: > plat.id]
+  quantite integer
+  prix_unitaire integer
+}
+
+// Définition des relations explicites (optionnel, pour plus de clarté)
+// Ref: plat.id < details_plat.id_plat
+// Ref: composant.id < details_plat.id_composant
+// Ref: composant.id < stock.id_composant
+// Ref: composant.id < mvt_stock.id_composant
+// Ref: entreprise.id < commandes.id_entreprise
+// Ref: commandes.id < detail_commande.id_commande
+// Ref: plat.id < detail_commande.id_plat
