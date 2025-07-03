@@ -33,27 +33,41 @@ public class MvtContratController {
     }
 
     @GetMapping({"/list", "/gestion"})
-    public String listMvtContrats(Model model, @RequestParam(name = "tab", defaultValue = "list") String tab, @RequestParam(name = "entrepriseId", required = false) Integer entrepriseId) {
-        logger.info("Accessing listMvtContrats with tab={} and entrepriseId={}", tab, entrepriseId);
-        List<MvtContrat> mvtContrats;
-        Entreprise entreprise = null;
-        if (entrepriseId != null) {
-            mvtContrats = mvtContratService.findByEntrepriseId(entrepriseId);
-            entreprise = entrepriseRepository.findById(entrepriseId)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid entreprise Id: " + entrepriseId));
-        } else {
-            mvtContrats = mvtContratService.findAll();
-        }
-        model.addAttribute("mvtContrats", mvtContrats);
-        model.addAttribute("entreprises", entrepriseRepository.findAll());
-        model.addAttribute("entreprise", entreprise);
-        model.addAttribute("tab", tab);
-        if (entrepriseRepository.findAll().isEmpty()) {
-            model.addAttribute("message", "Aucune entreprise enregistrée. Veuillez créer une entreprise d'abord.");
-            return "redirect:/entreprise/create";
-        }
-        return "mvtcontrat/gestion";
+public String listMvtContrats(Model model,
+                              @RequestParam(name = "tab", defaultValue = "list") String tab,
+                              @RequestParam(name = "entrepriseId", required = false) Integer entrepriseId,
+                              @RequestParam(name = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate) {
+    logger.info("Accessing listMvtContrats with tab={}, entrepriseId={}, fromDate={}", tab, entrepriseId, fromDate);
+    List<MvtContrat> mvtContrats;
+    Entreprise entreprise = null;
+
+    if (entrepriseId != null) {
+        mvtContrats = mvtContratService.findByEntrepriseId(entrepriseId);
+        entreprise = entrepriseRepository.findById(entrepriseId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid entreprise Id: " + entrepriseId));
+    } else {
+        mvtContrats = mvtContratService.findAll();
     }
+
+    List<Entreprise> activeEntreprises = null;
+    if (fromDate != null) {
+        logger.info("Fetching active entreprises for fromDate: {}", fromDate);
+        activeEntreprises = mvtContratService.findEntreprisesWithActiveContracts(fromDate);
+        logger.info("Active entreprises found: {}", activeEntreprises.size());
+    }
+
+    model.addAttribute("mvtContrats", mvtContrats);
+    model.addAttribute("entreprises", entrepriseRepository.findAll());
+    model.addAttribute("activeEntreprises", activeEntreprises);
+    model.addAttribute("entreprise", entreprise);
+    model.addAttribute("tab", tab);
+    model.addAttribute("fromDate", fromDate);
+    if (entrepriseRepository.findAll().isEmpty()) {
+        model.addAttribute("message", "Aucune entreprise enregistrée. Veuillez créer une entreprise d'abord.");
+        return "redirect:/entreprise/create";
+    }
+    return "mvtcontrat/gestion";
+}
 
     @GetMapping("/create")
     public String showCreateForm(Model model, @RequestParam(name = "entrepriseId", required = false) Integer entrepriseId) {
@@ -189,4 +203,6 @@ public class MvtContratController {
         
         return "redirect:/mvtcontrat/list" + (entrepriseId != null ? "?entrepriseId=" + entrepriseId : "");
     }
+
+   
 }
