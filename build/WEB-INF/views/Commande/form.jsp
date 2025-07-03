@@ -7,66 +7,219 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Gestion des commandes de cantine">
-    <meta name="author" content="Votre Société">
-    <title>Nouvelle Commande | Cantine Entreprise</title>
+    <title>Nouvelle Commande | VELONKAN</title>
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <!-- CSS -->
-    <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #007e5d !important;
+            --secondary-color: #f8c828 !important;
+            --primary-light: #e6f2ef !important;
+            --secondary-light: #fef8e6 !important;
+            --dark-color: #2c3e50 !important;
+            --light-color: #f8f9fa !important;
+            --danger-color: #e74c3c !important;
+            --success-color: #2ecc71 !important;
+            --info-color: #3498db !important;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif !important;
+            color: var(--dark-color) !important;
+        }
+
+        .wrapper {
+            background: var(--primary-light) !important;
+        }
+        
+        /* Sidebar styling */
+        #sidebar {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .sidebar-brand {
+            color: white !important;
+            font-weight: 600 !important;
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .sidebar-item.active .sidebar-link {
+            color: var(--primary-color) !important;
+            background-color: white !important;
+        }
+        
+        .sidebar-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        
+        .sidebar-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Navbar styling */
+        .navbar-bg {
+            background-color: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .sidebar-toggle {
+            color: var(--primary-color) !important;
+        }
+        
+        /* Card styling */
+        .card {
+            border: none !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
+            border-radius: 10px !important;
+            overflow: hidden !important;
+        }
+        
+        .card-header {
+            background-color: white !important;
+            border-bottom: none !important;
+            padding: 1rem 1.5rem !important;
+        }
+
+        .card-title {
+            color: #007e5d !important;
+            font-size: 20px;
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006a4d !important;
+            border-color: #006a4d !important;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color) !important;
+            border-color: var(--success-color) !important;
+        }
+        
+        /* Form styling */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+        }
+        
+        /* Modal styling */
+        .modal-header {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        /* Toast styling */
+        .toast-header {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        /* Custom styles */
         .modal-body {
             max-height: 60vh;
             overflow-y: auto;
         }
+        
         .plat-row {
             align-items: center;
             margin-bottom: 10px;
         }
+        
         .btn-select-plat {
             white-space: nowrap;
         }
+        
         /* Styles pour la modal des plats */
         .modal-plats .modal-content {
             height: 90vh;
             display: flex;
             flex-direction: column;
         }
+        
         .modal-plats .modal-body {
             overflow: hidden;
             padding: 0;
             flex: 1;
         }
+        
         .state-container {
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        /* Correction pour DataTables */
+        
+        /* DataTables styling */
         .dataTables_wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
             height: 100%;
         }
+        
         .dataTables_scroll {
             flex: 1;
         }
+        
         .dataTables_scrollHead {
             position: sticky;
             top: 0;
             z-index: 10;
+            background-color: white !important;
         }
+        
         .dataTables_scrollBody {
             overflow-y: auto !important;
+        }
+        
+        /* Select2 styling */
+        .select2-container--bootstrap-5 .select2-selection {
+            min-height: 38px;
+            border: 1px solid #ced4da !important;
+        }
+        
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+            padding-top: 4px;
+        }
+        
+        .select2-container--bootstrap-5 .select2-dropdown {
+            border-color: #ced4da !important;
+        }
+        
+        .select2-container--bootstrap-5.select2-container--focus .select2-selection {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
         }
     </style>
 </head>
@@ -77,10 +230,18 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">Cantine Entreprise</span>
+                    <span class="align-middle">VELONKAN</span>
                 </a>
                 <ul class="sidebar-nav">
-                    <!-- Votre menu existant -->
+                    <li class="sidebar-header">
+                        Commandes
+                    </li>
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="#">
+                            <i class="align-middle" data-feather="shopping-cart"></i> 
+                            <span class="align-middle">Nouvelle Commande</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -88,7 +249,19 @@
         <div class="main">
             <!-- Navbar -->
             <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <!-- Votre navbar existante -->
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <span class="text-dark">Administrateur</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
 
             <main class="content">
