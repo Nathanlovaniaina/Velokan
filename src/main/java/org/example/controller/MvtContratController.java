@@ -12,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 @Controller

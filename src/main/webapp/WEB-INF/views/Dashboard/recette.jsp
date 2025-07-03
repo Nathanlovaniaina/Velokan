@@ -25,58 +25,199 @@
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
-    
     <style>
-        .card-table {
-            margin-bottom: 0;
+         :root {
+            --primary-color: #007e5d !important;
+            --secondary-color: #f8c828 !important;
+            --primary-light: #e6f2ef !important;
+            --secondary-light: #fef8e6 !important;
+            --dark-color: #2c3e50 !important;
+            --light-color: #f8f9fa !important;
+            --danger-color: #e74c3c !important;
+            --success-color: #2ecc71 !important;
+            --info-color: #3498db !important;
         }
-        .positive {
-            color: #2e7d32;
+        
+        :root {
+            background-color: var(--light-color) !important;
         }
-        .negative {
-            color: #c62828;
-        }
-        .high-retard {
-            background-color: #ffebee;
-        }
-        .medium-retard {
-            background-color: #fff8e1;
-        }
-        .badge-retard {
-            background-color: #ff5722;
-            color: white;
-        }
-        .form-filter {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 0.25rem;
-            margin-bottom: 1rem;
-        }
-        .chart-container {
-            position: relative;
-            height: 300px;
-            margin-bottom: 2rem;
-        }
-        .dataTables_wrapper .dataTables_filter input {
-            margin-left: 0.5em;
-        }
-        .dt-buttons .btn {
-            margin-right: 5px;
-        }
-        /* Style pour les lignes qui dépassent le seuil */
-        .depasse-seuil {
-            background-color: #fff8e1 !important; /* Fond jaune clair */
-            font-weight: bold;
-            border-left: 4px solid #ff5722; /* Bordure orange à gauche */
+        
+        body {
+            font-family: 'Inter', sans-serif !important;
+            color: var(--dark-color) !important;
         }
 
-        /* Style pour le badge de retard */
+        .wrapper{
+            background: var(--primary-light) !important;
+        }
+        
+        /* Sidebar styling */
+        #sidebar {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .sidebar-brand {
+            color: white !important;
+            font-weight: 600 !important;
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .sidebar-item.active .sidebar-link {
+            color: var(--primary-color) !important;
+            background-color: white !important;
+        }
+        
+        .sidebar-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        
+        .sidebar-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Navbar styling */
+        .navbar-bg {
+            background-color: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .sidebar-toggle {
+            color: var(--primary-color) !important;
+        }
+        
+        /* Card styling */
+        .card {
+            border: none !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
+            border-radius: 10px !important;
+            overflow: hidden !important;
+        }
+        
+        .card-header {
+            background-color: white !important;
+            color: white !important;
+            border-bottom: none !important;
+            padding: 1rem 1.5rem !important;
+        }
+
+        .card-title{
+            color: #007e5d !important;
+            font-size: 20px;
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006a4d !important;
+            border-color: #006a4d !important;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        /* Form styling */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+        }
+    
+        .table-hover tbody tr:hover {
+            background-color: var(--primary-light) !important;
+        }
+        
+        /* Status indicators */
+        .positive {
+            color: var(--primary-color) !important;
+            font-weight: 600 !important;
+        }
+        
+        .negative {
+            color: var(--danger-color) !important;
+            font-weight: 600 !important;
+        }
+        
+        .high-retard {
+            background-color: #ffebee !important;
+            border-left: 4px solid var(--danger-color) !important;
+        }
+        
+        .medium-retard {
+            background-color: var(--secondary-light) !important;
+            border-left: 4px solid var(--secondary-color) !important;
+        }
+        
+        /* DataTables buttons */
+        .dt-buttons .btn {
+            border-radius: 4px !important;
+            margin-right: 5px !important;
+            transition: all 0.3s !important;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: white !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Custom styles */
+        .form-filter { 
+            background-color: #f8f9fa; 
+            padding: 1rem; 
+            border-radius: 0.25rem; 
+            margin-bottom: 1rem; 
+        }
+        .chart-container { 
+            position: relative; 
+            height: 300px; 
+            margin-bottom: 2rem; 
+        }
+        
+        /* Badge styling */
         .badge-retard {
-            background-color: #ff5722;
-            color: white;
+            background-color: var(--danger-color) !important;
+            color: white !important;
             padding: 3px 6px;
             border-radius: 4px;
             font-size: 0.85em;
+        }
+        
+        /* Alert styling */
+        .alert-success {
+            background-color: rgba(46, 204, 113, 0.1) !important;
+            border-color: rgba(46, 204, 113, 0.2) !important;
+            color: var(--dark-color) !important;
+        }
+        
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.1) !important;
+            border-color: rgba(231, 76, 60, 0.2) !important;
+            color: var(--dark-color) !important;
+        }
+        
+        .alert-info {
+            background-color: rgba(52, 152, 219, 0.1) !important;
+            border-color: rgba(52, 152, 219, 0.2) !important;
+            color: var(--dark-color) !important;
+        }
+        
+        /* Style pour les lignes qui dépassent le seuil */
+        .depasse-seuil {
+            background-color: var(--secondary-light) !important;
+            font-weight: bold;
+            border-left: 4px solid var(--secondary-color) !important;
         }
     </style>
 </head>
@@ -86,7 +227,7 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">Suivi Recettes</span>
+                    <span class="align-middle">VELONKAN</span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -146,8 +287,6 @@
                                                 <label class="form-label">Entreprise :</label>
                                                 <select class="form-select" id="entrepriseId" name="entrepriseId">
                                                     <option value="">Toutes les entreprises</option>
-                                                    <option value="1">Orange</option>
-                                                    <option value="2"> Canal+</option>
                                                     <c:forEach items="${entreprises}" var="entreprise">
                                                         <option value="${entreprise.id}">${entreprise.nom}</option>
                                                     </c:forEach>
@@ -157,8 +296,6 @@
                                                 <label class="form-label">Plat :</label>
                                                 <select class="form-select" id="platId" name="platId">
                                                     <option value="">Tous les plats</option>
-                                                    <option value="1">Riz Poulet</option>
-                                                    <option value="2">Soupe de légumes</option>
                                                     <c:forEach items="${plats}" var="plat">
                                                         <option value="${plat.id}">${plat.intitule}</option>
                                                     </c:forEach>
@@ -332,11 +469,6 @@
                                         </form>
                                     </div>
                                     
-                                    <!-- Graphique Factures en Retard -->
-                                    <!-- <div class="chart-container">
-                                        <canvas id="facturesRetardChart"></canvas>
-                                    </div> -->
-                                    
                                     <div class="table-responsive">
                                         <table class="table table-hover my-0" id="tableFacturesRetard">
                                             <thead>
@@ -493,26 +625,17 @@
             order: [[0, 'desc']]
         });
 
-        tableFacturesRetard = $('#tableFacturesRetard').DataTable({
-            dom: '<"top"Bf>rt<"bottom"lip><"clear">',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
-            },
-            responsive: true,
+        tableFacturesRetard = initDataTable('#tableFacturesRetard', {
             columns: [
                 { 
-                    data: 'facture', // Cette propriété doit correspondre à votre JSON
+                    data: 'facture',
                     render: function(data, type, row) {
-                        // Gestion des valeurs nulles ou undefined
                         return data !== undefined && data !== null ? 'FACT-' + data.toString().padStart(3, '0') : 'N/A';
                     }
                 },
                 { 
                     data: 'entreprise',
-                    defaultContent: 'Inconnu' // Valeur par défaut si la propriété est manquante
+                    defaultContent: 'Inconnu'
                 },
                 { 
                     data: 'montant_total',
@@ -531,12 +654,21 @@
                 { 
                     data: 'jours_retard',
                     className: 'text-end',
-                    render: function(data) {
-                        return data !== undefined ? data : '0';
+                    render: function(data, type, row) {
+                        const seuil = $('#seuilRetard').val() || 30;
+                        const retardClass = getRetardClass(data, seuil);
+                        const badge = data >= seuil ? ' <span class="badge-retard">Retard</span>' : '';
+                        return '<span class="' + retardClass + '">' + (data !== undefined ? data : '0') + badge + '</span>';
                     }
                 }
             ],
-            order: [[4, 'desc']] // Tri par jours de retard par défaut
+            order: [[4, 'desc']],
+            createdRow: function(row, data, dataIndex) {
+                const seuil = $('#seuilRetard').val() || 30;
+                if (data.jours_retard >= seuil) {
+                    $(row).addClass('depasse-seuil');
+                }
+            }
         });
 
         function updateRevenuMensuelChart(labels, data) {
@@ -553,8 +685,8 @@
                     datasets: [{
                         label: 'Revenu Mensuel (€)',
                         data: data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(0, 126, 93, 0.5)',
+                        borderColor: 'rgba(0, 126, 93, 1)',
                         borderWidth: 1
                     }]
                 },
@@ -604,25 +736,25 @@
                         label: 'Revenu par Entreprise (€)',
                         data: data,
                         backgroundColor: [
-                        'rgba(78, 115, 223, 0.6)',   // Bleu professionnel
-                        'rgba(54, 185, 204, 0.6)',    // Turquoise
-                        'rgba(255, 140, 0, 0.6)',     // Orange vif
-                        'rgba(155, 89, 182, 0.6)',    // Violet
-                        'rgba(46, 204, 113, 0.6)',    // Vert émeraude
-                        'rgba(231, 76, 60, 0.6)',     // Rouge
-                        'rgba(241, 196, 15, 0.6)',    // Jaune
-                        'rgba(52, 152, 219, 0.6)'     // Bleu ciel
-                    ],
-                    borderColor: [
-                        'rgba(78, 115, 223, 1)',
-                        'rgba(54, 185, 204, 1)',
-                        'rgba(255, 140, 0, 1)',
-                        'rgba(155, 89, 182, 1)',
-                        'rgba(46, 204, 113, 1)',
-                        'rgba(231, 76, 60, 1)',
-                        'rgba(241, 196, 15, 1)',
-                        'rgba(52, 152, 219, 1)'
-                    ],
+                            'rgba(0, 126, 93, 0.6)',
+                            'rgba(248, 200, 40, 0.6)',
+                            'rgba(46, 204, 113, 0.6)',
+                            'rgba(52, 152, 219, 0.6)',
+                            'rgba(155, 89, 182, 0.6)',
+                            'rgba(231, 76, 60, 0.6)',
+                            'rgba(241, 196, 15, 0.6)',
+                            'rgba(44, 62, 80, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(0, 126, 93, 1)',
+                            'rgba(248, 200, 40, 1)',
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(52, 152, 219, 1)',
+                            'rgba(155, 89, 182, 1)',
+                            'rgba(231, 76, 60, 1)',
+                            'rgba(241, 196, 15, 1)',
+                            'rgba(44, 62, 80, 1)'
+                        ],
                         borderWidth: 1
                     }]
                 },
@@ -663,16 +795,16 @@
                     datasets: [{
                         label: 'Revenu Journalier (€)',
                         data: data.map(item => item.revenu),
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(0, 126, 93, 1)',
+                        backgroundColor: 'rgba(0, 126, 93, 0.1)',
                         borderWidth: 2,
                         tension: 0.1,
                         fill: true
                     }, {
                         label: 'Revenu Veille (€)',
                         data: data.map(item => item.veille || null),
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(248, 200, 40, 1)',
+                        backgroundColor: 'rgba(248, 200, 40, 0.1)',
                         borderWidth: 2,
                         borderDash: [5, 5],
                         tension: 0.1
@@ -707,81 +839,6 @@
                     }
                 }
             });
-        }
-
-        function updateFacturesRetardChart(labels, data) {
-            const ctx = document.getElementById('facturesRetardChart');
-
-            // Détruire le graphique existant s'il existe
-            if (facturesRetardChart) {
-                facturesRetardChart.destroy();
-            }
-
-            // Vérifier que le contexte existe
-            if (!ctx) {
-                console.error("L'élément canvas pour le graphique des factures en retard n'existe pas");
-                return;
-            }
-
-            try {
-                facturesRetardChart = new Chart(ctx.getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Montant des factures (€)',
-                            data: data.map(item => item.montant),
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1,
-                            yAxisID: 'y'
-                        }, {
-                            label: 'Jours de retard',
-                            data: data.map(item => item.retard),
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1,
-                            type: 'line',
-                            yAxisID: 'y1'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                                title: {
-                                    display: true,
-                                    text: 'Montant (€)'
-                                }
-                            },
-                            y1: {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
-                                title: {
-                                    display: true,
-                                    text: 'Jours de retard'
-                                },
-                                grid: {
-                                    drawOnChartArea: false
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Entreprise'
-                                }
-                            }
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error("Erreur lors de la création du graphique:", error);
-            }
         }
 
         function loadData(startDate, endDate, entrepriseId, platId) {
@@ -883,73 +940,23 @@
         }
 
         function loadFacturesRetardData(startDate, endDate, seuilRetard) {
-            // Convertir le seuil en nombre
-            seuilRetard = Number(seuilRetard) || 0;
-
             $.ajax({
                 url: '${pageContext.request.contextPath}/api/suiviRecette/factures_retard',
                 method: 'GET',
                 data: { 
                     startDate: startDate, 
                     endDate: endDate,
-                    seuilRetard: seuilRetard
+                    seuilRetard: seuilRetard || 30
                 },
                 success: function(data) {
-                    console.log('Données reçues:', data);
-                
                     if (!data || !Array.isArray(data)) {
                         console.error('Données invalides reçues');
                         tableFacturesRetard.clear().draw();
                         return;
                     }
                 
-                    // Préparer les données avec un indicateur de dépassement de seuil
-                    const validatedData = data.map(item => {
-                        const retard = item.jours_retard || 0;
-                        return {
-                            facture: item.facture !== undefined ? item.facture : null,
-                            entreprise: item.entreprise || 'Inconnu',
-                            montant_total: item.montant_total || 0,
-                            date_emission: item.date_emission || null,
-                            jours_retard: retard,
-                            // Ajout d'un champ pour le tri et le style
-                            depasseSeuil: retard >= seuilRetard,
-                            // Valeur de tri (les dépassements en premier)
-                            triPriorite: retard >= seuilRetard ? 1 : 0
-                        };
-                    });
-                
-                    // Trier les données (dépassements en premier, puis par jours de retard décroissant)
-                    validatedData.sort((a, b) => {
-                        if (a.depasseSeuil !== b.depasseSeuil) {
-                            return b.triPriorite - a.triPriorite;
-                        }
-                        return b.jours_retard - a.jours_retard;
-                    });
-                
-                    // Effacer et recréer le DataTable avec les nouvelles données
-                    tableFacturesRetard.clear().rows.add(validatedData).draw();
-
-                    // Appliquer le style aux lignes qui dépassent le seuil
-                    tableFacturesRetard.rows().every(function() {
-                        const rowData = this.data();
-                        if (rowData.depasseSeuil) {
-                            $(this.node()).addClass('depasse-seuil');
-                        } else {
-                            $(this.node()).removeClass('depasse-seuil');
-                        }
-                    });
-                
-                    // Mise à jour du graphique (top 10 seulement)
-                    const topData = validatedData.slice(0, 10);
-                    if (topData.length > 0) {
-                        const labels = topData.map(item => item.entreprise);
-                        const chartData = topData.map(item => ({
-                            montant: item.montant_total,
-                            retard: item.jours_retard
-                        }));
-                        updateFacturesRetardChart(labels, chartData);
-                    }
+                    // Mettre à jour les données de la table
+                    tableFacturesRetard.clear().rows.add(data).draw();
                 },
                 error: function(xhr, status, error) {
                     console.error('Erreur AJAX:', error);

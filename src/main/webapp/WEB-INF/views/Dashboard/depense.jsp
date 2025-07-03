@@ -25,7 +25,165 @@
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <style>
+         :root {
+            --primary-color: #007e5d !important;
+            --secondary-color: #f8c828 !important;
+            --primary-light: #e6f2ef !important;
+            --secondary-light: #fef8e6 !important;
+            --dark-color: #2c3e50 !important;
+            --light-color: #f8f9fa !important;
+            --danger-color: #e74c3c !important;
+            --success-color: #2ecc71 !important;
+        }
+        
+        :root {
+            background-color: var(--light-color) !important;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif !important;
+            color: var(--dark-color) !important;
+        }
+
+        .wrapper{
+            background: var(--primary-light) !important;
+        }
+        
+        /* Sidebar styling */
+        #sidebar {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .sidebar-brand {
+            color: white !important;
+            font-weight: 600 !important;
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .sidebar-item.active .sidebar-link {
+            color: var(--primary-color) !important;
+            background-color: white !important;
+        }
+        
+        .sidebar-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        
+        .sidebar-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Navbar styling */
+        .navbar-bg {
+            background-color: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .sidebar-toggle {
+            color: var(--primary-color) !important;
+        }
+        
+        /* Card styling */
+        .card {
+            border: none !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
+            border-radius: 10px !important;
+            overflow: hidden !important;
+        }
+        
+        .card-header {
+            background-color: white !important;
+            color: white !important;
+            border-bottom: none !important;
+            padding: 1rem 1.5rem !important;
+        }
+
+        .card-title{
+            color: #007e5d !important;
+            font-size: 20px;
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006a4d !important;
+            border-color: #006a4d !important;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        /* Form styling */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+        }
     
+        .table-hover tbody tr:hover {
+            background-color: var(--primary-light) !important;
+        }
+        
+        /* Badge styling */
+        .badge-cost {
+            background-color: var(--secondary-color) !important;
+            color: var(--dark-color) !important;
+        }
+        
+        
+        
+        /* Status indicators */
+        .positive {
+            color: var(--primary-color) !important;
+            font-weight: 600 !important;
+        }
+        
+        .negative {
+            color: var(--danger-color) !important;
+            font-weight: 600 !important;
+        }
+        
+        .high-cost {
+            background-color: #ffebee !important;
+            border-left: 4px solid var(--danger-color) !important;
+        }
+        
+        .medium-cost {
+            background-color: var(--secondary-light) !important;
+            border-left: 4px solid var(--secondary-color) !important;
+        }
+        
+        /* DataTables buttons */
+        .dt-buttons .btn {
+            border-radius: 4px !important;
+            margin-right: 5px !important;
+            transition: all 0.3s !important;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: white !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .js-sidebar{
+            background-color: #ffebee !important;
+        }
+
+    </style>
     <style>
         .card-table {
             margin-bottom: 0;
@@ -83,10 +241,10 @@
 
 <body>
     <div class="wrapper">
-        <nav id="sidebar" class="sidebar js-sidebar">
+        <nav id="sidebar" class="sidebar js-sidebar ">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">Suivi Dépenses</span>
+                    <span class="align-middle">VELONKAN</span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -469,8 +627,8 @@
                     datasets: [{
                         label: 'Dépenses par Composant (€)',
                         data: data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: '#f8c828',
+                        borderColor: '#f8c829',
                         borderWidth: 1
                     }]
                 },
@@ -519,16 +677,16 @@
                     datasets: [{
                         label: 'Dépenses Mensuelles (€)',
                         data: data.map(item => item.depenses),
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: '#f8c828',
+                        backgroundColor: '#f8c828',
                         borderWidth: 2,
                         tension: 0.1,
                         fill: true
                     }, {
                         label: 'Mois Précédent (€)',
                         data: data.map(item => item.precedent || null),
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: '#007e5d',
+                        backgroundColor: '#007e5d',
                         borderWidth: 2,
                         borderDash: [5, 5],
                         tension: 0.1
@@ -578,12 +736,12 @@
                         {
                             label: 'Quantité Théorique',
                             data: theorique,
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                            backgroundColor: '#f8c828'
                         },
                         {
                             label: 'Quantité Réelle',
                             data: reelle,
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                            backgroundColor: '#007e5d'
                         }
                     ]
                 },
