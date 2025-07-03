@@ -35,21 +35,16 @@ Proposer automatiquement les meilleurs plats pour chaque jour
 Optimiser selon multiple critères pondérés
 Assurer la diversité hebdomadaire
 Algorithme de Recommandation
-Facteur saisonnier (30%) - Adaptation aux saisons
 Popularité historique (25%) - Basé sur l'historique des commandes
-Complexité de préparation (20%) - Favorise la simplicité
-Coût-efficacité (15%) - Optimise les coûts
-Profil client (10%) - Adapte selon le type de client
+de date des ingrédient en Stock(85%):(on regarde les reste des ingredient en stock puis en verifie quel plats peuvent etre le plus recommandée pour eviter de perime les restes) 
 Logique de Sélection
-2 plats maximum par jour
+2 recommandation de plats maximum par jour
 Évitement des doublons d'ingrédients (max 30% de chevauchement)
 Diversité hebdomadaire garantie
-Score de recommandation calculé et affiché
 Cas d'usage
-Génération automatique d'un planning pour client "Premium"
-Adaptation saisonnière (plats d'été en juin-août)
-Évitement de répétition d'ingrédients sur la semaine
-Suggestion de quantités selon le profil client
+-quand on clique sur un jour sur le calendrier il y a une popup qui s'affiche pour faire la recommandation(le valider):je veut une Affichage bien fait
+-2plats a recommandée par jour(recommandation)
+
 
 3. PLANIFICATION HEBDOMADAIRE
 Objectifs

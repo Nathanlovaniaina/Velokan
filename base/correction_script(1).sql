@@ -7,7 +7,8 @@ CREATE TABLE plat (
     id SERIAL PRIMARY KEY,
     intitule VARCHAR(100),
     prix INTEGER,
-    date_creation DATE
+    date_creation DATE,
+    image VARCHAR(255)
 );
 
 CREATE TABLE type_composant(
