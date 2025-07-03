@@ -254,6 +254,45 @@
 
         <!-- Onglet Liste -->
         <div id="list-tab" class="tab-content <c:if test='${param.tab == "list"}'>active</c:if>">
+            <!-- Filtre par date -->
+            <div class="form-group">
+                <form action="${pageContext.request.contextPath}/mvtcontrat/list" method="get">
+                    <input type="hidden" name="tab" value="list">
+                    <c:if test="${not empty entreprise}">
+                        <input type="hidden" name="entrepriseId" value="${entreprise.id}">
+                    </c:if>
+                    <label for="fromDate">Afficher les entreprises avec contrats actifs à partir de :</label>
+                    <input type="date" id="fromDate" name="fromDate" class="form-control"
+                           value="<fmt:formatDate value='${fromDate}' pattern='yyyy-MM-dd'/>">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Filtrer</button>
+                </form>
+            </div>
+
+            <!-- Afficher les entreprises avec contrats actifs -->
+            <c:if test="${not empty activeEntreprises}">
+                <h3>Entreprises avec contrats actifs à partir de <fmt:formatDate value="${fromDate}" pattern="dd/MM/yyyy"/></h3>
+                <table class="mvt-contrat-table">
+                    <thead>
+                        <tr>
+                            <th>Nom de l'Entreprise</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="ent" items="${activeEntreprises}">
+                            <tr>
+                                <td>${ent.nom}</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/mvtcontrat/list?entrepriseId=${ent.id}&tab=list" 
+                                       class="btn btn-primary btn-sm">Voir les mouvements</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+         </c:if>
+
+           <h3>Liste des mouvements existante</h3> 
             <c:choose>
                 <c:when test="${empty mvtContrats}">
                     <div style="text-align: center; padding: 50px; color: #f8c828;">
