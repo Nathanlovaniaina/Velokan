@@ -28,6 +28,13 @@
     </style>
 </head>
 <body>
+<div style="max-width:900px;margin:20px auto 0 auto;padding:0 20px 10px 20px;display:flex;align-items:center;gap:10px;">
+    <label for="exportStart">Début :</label>
+    <input type="date" id="exportStart">
+    <label for="exportEnd">Fin :</label>
+    <input type="date" id="exportEnd">
+    <button class="btn" id="btnExportPDF">Exporter PDF</button>
+</div>
 <div id='calendar'></div>
 
 <!-- Modal Popup -->
@@ -60,6 +67,10 @@
             },
             dateClick: function(info) {
                 openRecoModal(info.dateStr);
+            },
+            datesSet: function(info) {
+                // Charger les publications pour la période affichée
+                chargerPublications(info.startStr, info.endStr);
             }
         });
         calendar.render();
@@ -72,22 +83,27 @@
     var btnAutre = document.getElementById('btnAutre');
     var recoContent = document.getElementById('recoContent');
     var selectedDate = null;
+    var platsRecommandes = [];
+    var platsRecommandesIds = [];
 
     function openRecoModal(dateStr) {
         selectedDate = dateStr;
         modal.style.display = 'block';
         recoContent.innerHTML = '<p>Chargement des recommandations...</p>';
-        // Détecte dynamiquement le contexte (ex: /Velokan)
+        platsRecommandes = [];
+        platsRecommandesIds = [];
         var contextPath = '/' + window.location.pathname.split('/')[1];
-        // Appel AJAX pour récupérer les recommandations
         fetch(contextPath + '/api/recommandation?date=' + dateStr)
             .then(response => response.json())
             .then(data => {
                 if (data && data.plats && data.plats.length > 0) {
                     recoContent.innerHTML = '';
-                    data.plats.forEach(function(plat) {
+                    data.plats.forEach(function(plat, idx) {
+                        platsRecommandes.push(plat);
+                        platsRecommandesIds.push(plat.id);
                         recoContent.innerHTML +=
                             '<div class="reco-plat">' +
+                            '<input type="checkbox" class="reco-checkbox" id="reco-plat-' + idx + '" data-plat-id="' + plat.id + '" checked>' +
                             (plat.image ? '<img src="' + plat.image + '" alt="' + plat.intitule + '">' : '') +
                             '<span class="reco-plat-title">' + plat.intitule + '</span><br>' +
                             '<small>Score : ' + (plat.score ? plat.score.toFixed(2) : '-') + '</small>' +
@@ -106,16 +122,16 @@
     window.onclick = function(event) { if (event.target == modal) modal.style.display = 'none'; };
 
     btnValider.onclick = function() {
-        // Récupère les plats recommandés affichés
-        var plats = [];
-        document.querySelectorAll('.reco-plat-title').forEach(function(el) {
-            plats.push(el.textContent);
-        });
         var contextPath = '/' + window.location.pathname.split('/')[1];
+        // Récupère les IDs des plats cochés
+        var platsCoches = [];
+        document.querySelectorAll('.reco-checkbox').forEach(function(cb) {
+            if (cb.checked) platsCoches.push(parseInt(cb.getAttribute('data-plat-id')));
+        });
         fetch(contextPath + '/api/publication_plat', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({date: selectedDate, plats: plats})
+            body: JSON.stringify({date: selectedDate, plats: platsCoches})
         })
         .then(response => response.json())
         .then(data => {
@@ -134,6 +150,37 @@
     btnAutre.onclick = function() {
         // Relancer la recherche de suggestions (ex: recharger l'appel AJAX)
         openRecoModal(selectedDate);
+    };
+
+    function chargerPublications(start, end) {
+        var contextPath = '/' + window.location.pathname.split('/')[1];
+        fetch(contextPath + '/api/publications?start=' + start + '&end=' + end)
+            .then(response => response.json())
+            .then(data => {
+                var events = data.map(function(pub) {
+                    return {
+                        title: pub.plat,
+                        start: pub.date,
+                        allDay: true,
+                        color: '#81c784',
+                        extendedProps: { image: pub.image }
+                    };
+                });
+                calendar.removeAllEvents();
+                calendar.addEventSource(events);
+            });
+    }
+
+    document.getElementById('btnExportPDF').onclick = function() {
+        var start = document.getElementById('exportStart').value;
+        var end = document.getElementById('exportEnd').value;
+        if (!start || !end) {
+            alert('Veuillez sélectionner une période.');
+            return;
+        }
+        var contextPath = '/' + window.location.pathname.split('/')[1];
+        // Appel API pour générer le PDF (à implémenter côté backend)
+        window.open(contextPath + '/api/publications/pdf?start=' + start + '&end=' + end, '_blank');
     };
 </script>
 </body>

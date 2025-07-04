@@ -71,6 +71,7 @@ public class RecommandationService {
             map.put("intitule", plat.getIntitule());
             map.put("image", plat.getImage());
             map.put("score", score);
+            map.put("id", plat.getId());
             result.add(map);
         }
         // Trier par score décroissant et retourner les 2 meilleurs

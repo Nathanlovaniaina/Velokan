@@ -36,12 +36,11 @@ public class RecommandationController {
     @ResponseBody
     public Map<String, Object> publierPlats(@RequestBody Map<String, Object> payload) {
         String dateStr = (String) payload.get("date");
-        List<String> plats = (List<String>) payload.get("plats");
+        List<Integer> platIds = (List<Integer>) payload.get("plats");
         LocalDate date = LocalDate.parse(dateStr);
         boolean ok = true;
-        for (String intitule : plats) {
-            // On suppose que l'intitulé est unique, sinon il faudrait passer les id
-            Plat plat = platService.findAll().stream().filter(p -> intitule.equals(p.getIntitule())).findFirst().orElse(null);
+        for (Integer platId : platIds) {
+            Plat plat = platService.findById(platId).orElse(null);
             if (plat != null) {
                 PublicationPlat pub = new PublicationPlat();
                 pub.setPlat(plat);
@@ -53,6 +52,27 @@ public class RecommandationController {
         }
         Map<String, Object> result = new HashMap<>();
         result.put("success", ok);
+        return result;
+    }
+
+    @GetMapping(value = "/api/publications", produces = "application/json")
+    @ResponseBody
+    public List<Map<String, Object>> getPublications(
+        @RequestParam("start") String start,
+        @RequestParam("end") String end
+    ) {
+        java.time.LocalDate startDate = java.time.LocalDate.parse(start);
+        java.time.LocalDate endDate = java.time.LocalDate.parse(end);
+        List<org.example.entity.PublicationPlat> pubs = publicationPlatService.findByDatePublicationBetween(startDate, endDate);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (org.example.entity.PublicationPlat pub : pubs) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("date", pub.getDatePublication().toString());
+            map.put("plat", pub.getPlat().getIntitule());
+            map.put("image", pub.getPlat().getImage());
+            map.put("id", pub.getPlat().getId());
+            result.add(map);
+        }
         return result;
     }
 } 
