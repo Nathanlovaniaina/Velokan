@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/composant")
@@ -81,8 +82,10 @@ public class ComposantController {
             @RequestParam(value = "dateFin", required = false) String dateFin,
             @RequestParam(value = "typeId", required = false) Integer typeId,
             Model model) {
-        LocalDateTime debut = dateDebut != null && !dateDebut.isEmpty() ? LocalDateTime.parse(dateDebut) : LocalDateTime.now().minusDays(30);
-        LocalDateTime fin = dateFin != null && !dateFin.isEmpty() ? LocalDateTime.parse(dateFin) : LocalDateTime.now();
+        LocalDate debutDate = dateDebut != null && !dateDebut.isEmpty() ? LocalDate.parse(dateDebut) : LocalDate.now().minusDays(30);
+        LocalDate finDate = dateFin != null && !dateFin.isEmpty() ? LocalDate.parse(dateFin) : LocalDate.now();
+        java.time.LocalDateTime debut = debutDate.atStartOfDay();
+        java.time.LocalDateTime fin = finDate.atTime(23,59,59);
 
         model.addAttribute("composantUsages", composantService.findMostUsedComposants(debut, fin, typeId));
         model.addAttribute("types", typeComposantService.findAll());

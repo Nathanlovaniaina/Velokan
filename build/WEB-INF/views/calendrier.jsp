@@ -19,12 +19,20 @@
         }
         .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
         .close:hover, .close:focus { color: #000; text-decoration: none; cursor: pointer; }
-        .reco-plat { margin: 10px 0; padding: 10px; border-radius: 6px; background: #f0f8ff; }
-        .reco-plat img { max-width: 60px; max-height: 60px; margin-right: 10px; vertical-align: middle; border-radius: 4px; }
+        .reco-plat { margin: 10px 0; padding: 10px; border-radius: 6px; background: #f0f8ff; display: flex; align-items: center; gap: 8px; }
+        .reco-plat img { max-width: 60px; max-height: 60px; border-radius: 4px; }
         .reco-plat-title { font-weight: bold; }
         .modal-actions { text-align: right; margin-top: 20px; }
         .btn { background: #1976d2; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-left: 8px; }
         .btn:hover { background: #125ea2; }
+        .pubs-list { margin-bottom: 10px; background: #e8f5e9; border-radius: 6px; padding: 8px; }
+        .pubs-list ul { margin: 5px 0 0 15px; padding: 0; }
+        .pubs-list li { margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .pubs-list img { max-width: 30px; max-height: 30px; border-radius: 3px; }
+        .reco-plat.disabled, .reco-plat input:disabled + img, .reco-plat input:disabled + .reco-plat-title {
+            color: #aaa !important; background: #f5f5f5 !important; text-decoration: line-through; cursor: not-allowed;
+        }
+        .reco-plat input:disabled { cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -98,10 +106,11 @@
             .then(response => response.json())
             .then(pubs => {
                 var pubsHtml = '';
+                var dejaPubliesIds = pubs.map(function(pub) { return pub.id; });
                 if (pubs && pubs.length > 0) {
-                    pubsHtml = '<div style="margin-bottom:10px;"><b>Déjà publiés ce jour :</b><ul style="margin:5px 0 0 15px;">';
+                    pubsHtml = '<div class="pubs-list"><b>Déjà publiés ce jour :</b><ul>';
                     pubs.forEach(function(pub) {
-                        pubsHtml += '<li>' + pub.plat + (pub.image ? ' <img src="' + pub.image + '" style="max-width:30px;max-height:30px;vertical-align:middle;margin-left:5px;">' : '') + '</li>';
+                        pubsHtml += '<li><span style="color:#388e3c;">✔</span> ' + pub.plat + (pub.image ? ' <img src="' + pub.image + '" style="max-width:30px;max-height:30px;vertical-align:middle;margin-left:5px;">' : '') + '</li>';
                     });
                     pubsHtml += '</ul></div>';
                 }
@@ -114,9 +123,10 @@
                             data.plats.forEach(function(plat, idx) {
                                 platsRecommandes.push(plat);
                                 platsRecommandesIds.push(plat.id);
+                                var dejaPublie = dejaPubliesIds.includes(plat.id);
                                 html +=
-                                    '<div class="reco-plat">' +
-                                    '<input type="checkbox" class="reco-checkbox" id="reco-plat-' + idx + '" data-plat-id="' + plat.id + '" checked>' +
+                                    '<div class="reco-plat' + (dejaPublie ? ' disabled' : '') + '">' +
+                                    '<input type="checkbox" class="reco-checkbox" id="reco-plat-' + idx + '" data-plat-id="' + plat.id + '"' + (dejaPublie ? ' disabled' : ' checked') + '>' +
                                     (plat.image ? '<img src="' + plat.image + '" alt="' + plat.intitule + '">' : '') +
                                     '<span class="reco-plat-title">' + plat.intitule + '</span><br>' +
                                     '<small>Score : ' + (plat.score ? plat.score.toFixed(2) : '-') + '</small>' +
