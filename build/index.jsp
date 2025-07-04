@@ -13,6 +13,7 @@
     <h1>Bienvenue sur l'application de gestion de cantine</h1>
     <p style="margin:30px 0;">
         <a href="${pageContext.request.contextPath}/plat/">Voir les Plats</a>
-        <a href="${pageContext.request.contextPath}/plat/">Voir les Plats</a>
+        <a href="${pageContext.request.contextPath}/composant/most-used">composant le plus utilises</a>
+        <a href="${pageContext.request.contextPath}/calendrier/">Calendrier planning recommandation</a>
     </p>
 </div>

@@ -22,6 +22,9 @@ public class Plat {
     @Column(name = "date_creation")
     private LocalDate dateCreation;
 
+    @Column(name = "image")
+    private String image;
+
     @OneToMany(mappedBy = "plat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailsPlat> compositions = new ArrayList<>();
 
@@ -55,6 +58,14 @@ public class Plat {
 
     public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<DetailsPlat> getCompositions() {

@@ -1,3 +1,4 @@
+C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\CalendrierController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\CommandeController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\ComposantController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\DetailCommandeController.java 
@@ -5,6 +6,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\DetailsPlatControll
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\EntrepriseController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\MvtStockController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\PlatController.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\RecommandationController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\StockController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\TypeComposantController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\UniteController.java 
@@ -15,6 +17,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\DetailsPlat.java
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Entreprise.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\MvtStock.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Plat.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\PublicationPlat.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Stock.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\TypeComposant.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\entity\Unite.java 
@@ -26,6 +29,7 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\DetailsPlatReposito
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\EntrepriseRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\MvtStockRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\PlatRepository.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\PublicationPlatRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\StockRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\TypeComposantRepository.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\repository\UniteRepository.java 
@@ -36,6 +40,8 @@ C:\xampp\htdocs\Velokan\src\main\java\org\example\service\DetailsPlatService.jav
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\EntrepriseService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\MvtStockService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\PlatService.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\service\PublicationPlatService.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\service\RecommandationService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\StockService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\TypeComposantService.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\service\UniteService.java 
