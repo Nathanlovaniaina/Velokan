@@ -28,6 +28,13 @@
     </style>
 </head>
 <body>
+<div style="max-width:900px;margin:20px auto 0 auto;padding:0 20px 10px 20px;display:flex;align-items:center;gap:10px;">
+    <label for="exportStart">Début :</label>
+    <input type="date" id="exportStart">
+    <label for="exportEnd">Fin :</label>
+    <input type="date" id="exportEnd">
+    <button class="btn" id="btnExportPDF">Exporter PDF</button>
+</div>
 <div id='calendar'></div>
 
 <!-- Modal Popup -->
@@ -86,28 +93,46 @@
         platsRecommandes = [];
         platsRecommandesIds = [];
         var contextPath = '/' + window.location.pathname.split('/')[1];
-        fetch(contextPath + '/api/recommandation?date=' + dateStr)
+        // 1. Charger les publications déjà faites pour ce jour
+        fetch(contextPath + '/api/publications?start=' + dateStr + '&end=' + dateStr)
             .then(response => response.json())
-            .then(data => {
-                if (data && data.plats && data.plats.length > 0) {
-                    recoContent.innerHTML = '';
-                    data.plats.forEach(function(plat, idx) {
-                        platsRecommandes.push(plat);
-                        platsRecommandesIds.push(plat.id);
-                        recoContent.innerHTML +=
-                            '<div class="reco-plat">' +
-                            '<input type="checkbox" class="reco-checkbox" id="reco-plat-' + idx + '" data-plat-id="' + plat.id + '" checked>' +
-                            (plat.image ? '<img src="' + plat.image + '" alt="' + plat.intitule + '">' : '') +
-                            '<span class="reco-plat-title">' + plat.intitule + '</span><br>' +
-                            '<small>Score : ' + (plat.score ? plat.score.toFixed(2) : '-') + '</small>' +
-                            '</div>';
+            .then(pubs => {
+                var pubsHtml = '';
+                if (pubs && pubs.length > 0) {
+                    pubsHtml = '<div style="margin-bottom:10px;"><b>Déjà publiés ce jour :</b><ul style="margin:5px 0 0 15px;">';
+                    pubs.forEach(function(pub) {
+                        pubsHtml += '<li>' + pub.plat + (pub.image ? ' <img src="' + pub.image + '" style="max-width:30px;max-height:30px;vertical-align:middle;margin-left:5px;">' : '') + '</li>';
                     });
-                } else {
-                    recoContent.innerHTML = '<p>Aucune recommandation disponible pour ce jour.</p>';
+                    pubsHtml += '</ul></div>';
                 }
+                // 2. Charger les recommandations
+                fetch(contextPath + '/api/recommandation?date=' + dateStr)
+                    .then(response => response.json())
+                    .then(data => {
+                        var html = pubsHtml;
+                        if (data && data.plats && data.plats.length > 0) {
+                            data.plats.forEach(function(plat, idx) {
+                                platsRecommandes.push(plat);
+                                platsRecommandesIds.push(plat.id);
+                                html +=
+                                    '<div class="reco-plat">' +
+                                    '<input type="checkbox" class="reco-checkbox" id="reco-plat-' + idx + '" data-plat-id="' + plat.id + '" checked>' +
+                                    (plat.image ? '<img src="' + plat.image + '" alt="' + plat.intitule + '">' : '') +
+                                    '<span class="reco-plat-title">' + plat.intitule + '</span><br>' +
+                                    '<small>Score : ' + (plat.score ? plat.score.toFixed(2) : '-') + '</small>' +
+                                    '</div>';
+                            });
+                        } else {
+                            html += '<p>Aucune recommandation disponible pour ce jour.</p>';
+                        }
+                        recoContent.innerHTML = html;
+                    })
+                    .catch(() => {
+                        recoContent.innerHTML = pubsHtml + '<p>Erreur lors du chargement des recommandations.</p>';
+                    });
             })
             .catch(() => {
-                recoContent.innerHTML = '<p>Erreur lors du chargement des recommandations.</p>';
+                recoContent.innerHTML = '<p>Erreur lors du chargement des publications déjà faites.</p>';
             });
     }
 
@@ -163,6 +188,18 @@
                 calendar.addEventSource(events);
             });
     }
+
+    document.getElementById('btnExportPDF').onclick = function() {
+        var start = document.getElementById('exportStart').value;
+        var end = document.getElementById('exportEnd').value;
+        if (!start || !end) {
+            alert('Veuillez sélectionner une période.');
+            return;
+        }
+        var contextPath = '/' + window.location.pathname.split('/')[1];
+        // Appel API pour générer le PDF (à implémenter côté backend)
+        window.open(contextPath + '/api/publications/pdf?start=' + start + '&end=' + end, '_blank');
+    };
 </script>
 </body>
 </html> 
