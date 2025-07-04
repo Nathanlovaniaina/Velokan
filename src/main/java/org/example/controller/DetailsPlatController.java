@@ -1,0 +1,77 @@
+package org.example.controller;
+
+import org.example.entity.Composant;
+import org.example.entity.DetailsPlat;
+import org.example.entity.Plat;
+import org.example.service.ComposantService;
+import org.example.service.DetailsPlatService;
+import org.example.service.PlatService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("/plats")
+public class DetailsPlatController {
+
+    @Autowired
+    private DetailsPlatService detailsPlatService;
+
+    @Autowired
+    private PlatService platService;
+
+    @Autowired
+    private ComposantService composantService;
+
+   @PostMapping("/inserer_details_plat")
+    public String insererDetailsPlat(@RequestParam("nomPlat") String nomPlat,
+                                    @RequestParam("composantsSelectionnes") List<Integer> composantsIds,
+                                    @RequestParam Map<String, String> allParams,
+                                    Model model) {
+
+        Plat plat = platService.findByIntitule(nomPlat);
+        if (plat == null) {
+            plat = new Plat();
+            plat.setIntitule(nomPlat);
+            platService.save(plat);
+        }
+
+        for (Integer compoId : composantsIds) {
+            String quantiteKey = "quantite_" + compoId;
+            String uniteKey = "unite_" + compoId;
+            String quantiteStr = allParams.get(quantiteKey);
+            String unite = allParams.get(uniteKey);
+
+            if (quantiteStr != null && !quantiteStr.isEmpty()) {
+                try {
+                    double quantite = Double.parseDouble(quantiteStr);
+
+                    Composant composant = composantService.findById(compoId).orElse(null);
+                    if (composant != null) {
+                        DetailsPlat dp = new DetailsPlat();
+                        dp.setPlat(plat);
+                        dp.setComposant(composant);
+                        dp.setQuantite(quantite);
+                        dp.setUnite(unite);
+                        detailsPlatService.save(dp);
+                    }
+
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+            }
+        }
+
+        // Charger et afficher les détails déjà enregistrés
+        List<DetailsPlat> detailsPlats = detailsPlatService.findByPlat(plat);
+        model.addAttribute("detailsPlats", detailsPlats);
+
+        return "plat/choix_quantite";
+    }
+
+
+}

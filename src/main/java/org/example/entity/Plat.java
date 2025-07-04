@@ -1,6 +1,8 @@
 package org.example.entity;
 
 import javax.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +18,9 @@ public class Plat {
 
     @Column(name = "prix", nullable = false)
     private Integer prix;
+
+    @Column(name = "date_creation")
+    private LocalDate dateCreation;
 
     // Constructeurs
     public Plat() {
@@ -49,6 +54,14 @@ public class Plat {
 
     public void setPrix(Integer prix) {
         this.prix = prix;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation = dateCreation;
     }
 
     // Equals et HashCode

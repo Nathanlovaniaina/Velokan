@@ -25,6 +25,7 @@
         <a href="${pageContext.request.contextPath}/type_composant/">Les types de composants</a>
         <a href="${pageContext.request.contextPath}/unite/">Les unités</a>
         <p><a href="${pageContext.request.contextPath}/commandes/count">Evolution de Commandes</a></p>
+        <p><a href="${pageContext.request.contextPath}/plats/">Plat_fefe</a></p>
 
       </p>
 </div>

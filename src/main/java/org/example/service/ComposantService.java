@@ -51,4 +51,14 @@ public class ComposantService {
     public List<Composant> findByUniteId(Integer uniteId) {
         return composantRepository.findByUniteId(uniteId);
     }
+
+    public List<Composant> findByTypeComposantId(Integer typeComposantId) {
+        return composantRepository.findByTypeComposantId(typeComposantId);
+    }
+
+    public List<Composant> findAllById(List<Integer> ids) {
+        return composantRepository.findByIdIn(ids);
+    }
+
+
 }
