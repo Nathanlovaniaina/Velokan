@@ -11,209 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/benefice.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #007e5d !important;
-            --secondary-color: #f8c828 !important;
-            --primary-light: #e6f2ef !important;
-            --secondary-light: #fef8e6 !important;
-            --dark-color: #2c3e50 !important;
-            --light-color: #f8f9fa !important;
-            --danger-color: #e74c3c !important;
-            --success-color: #2ecc71 !important;
-            --info-color: #3498db !important;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif !important;
-            color: var(--dark-color) !important;
-        }
-
-        .sidebar-nav{
-            flex-grow: 0;
-        }
-
-        .wrapper {
-            background: var(--primary-light) !important;
-        }
-        
-        /* Sidebar styling */
-        #sidebar,
-        .sidebar-content {
-            background-color: #fff !important;
-            color: #222e3c !important;
-        }
-        
-        .sidebar-brand {
-            color: #fff !important;
-            font-weight: 700 !important;
-            background-color: #fff  !important;
-            letter-spacing: 2px;
-            font-size: 1.3rem;
-            text-align: center;
-            padding: 1rem 0.5rem;
-            border-radius: 8px;
-            margin: 1rem 0.5rem 1.5rem 0.5rem;
-            display: block;
-            font-style: normal;
-        }
-        
-        .sidebar-link.active {
-            color: var(--secondary-color) !important;
-        }
-        
-        .sidebar-link{
-            background-color: white !important;
-            color: #222e3c !important;
-        }
-        .sidebar-brand {
-            color: var(--secondary-color)  !important;
-            text-decoration: none;
-        }
-        
-        .sidebar-link:hover {
-            background-color: var(--secondary-light) !important;
-            color: var(--primary-color) !important;
-        }
-        
-        /* Navbar styling */
-        .navbar-bg {
-            background-color: white !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .sidebar-toggle {
-            color: var(--primary-color) !important;
-        }
-        
-        /* Card styling */
-        .card {
-            border: none !important;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
-            border-radius: 10px !important;
-            overflow: hidden !important;
-        }
-
-        .sidebar-header{
-            color: var(--primary-color);
-        }
-        
-        .card-header {
-            background-color: white !important;
-            border-bottom: none !important;
-            padding: 1rem 1.5rem !important;
-        }
-
-        .card-title {
-            color: #007e5d !important;
-            font-size: 20px;
-        }
-        
-        /* Button styling */
-        .btn-primary {
-            background-color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-primary:hover {
-            background-color: #006a4d !important;
-            border-color: #006a4d !important;
-        }
-        
-        .btn-outline-primary {
-            color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        /* Form styling */
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
-        }
-    
-        .table-hover tbody tr:hover {
-            background-color: var(--primary-light) !important;
-        }
-        
-        /* Badge styling */
-        .badge-cost {
-            background-color: var(--secondary-color) !important;
-            color: var(--dark-color) !important;
-        }
-        
-        /* Status indicators */
-        .positive {
-            color: var(--primary-color) !important;
-            font-weight: 600 !important;
-        }
-        
-        .negative {
-            color: var(--danger-color) !important;
-            font-weight: 600 !important;
-        }
-        
-        .high-cost {
-            background-color: #ffebee !important;
-            border-left: 4px solid var(--danger-color) !important;
-        }
-        
-        .medium-cost {
-            background-color: var(--secondary-light) !important;
-            border-left: 4px solid var(--secondary-color) !important;
-        }
-        
-        /* DataTables buttons */
-        .dt-buttons .btn {
-            border-radius: 4px !important;
-            margin-right: 5px !important;
-            transition: all 0.3s !important;
-        }
-        
-        /* Footer */
-        .footer {
-            background-color: white !important;
-            border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-        }
-
-        /* Custom styles for this page */
-        .form-filter { 
-            background-color: #f8f9fa; 
-            padding: 1rem; 
-            border-radius: 0.25rem; 
-            margin-bottom: 1rem; 
-        }
-        .chart-container { 
-            position: relative; 
-            height: 300px; 
-            margin-bottom: 2rem; 
-        }
-        .alert-success {
-            background-color: rgba(46, 204, 113, 0.1) !important;
-            border-color: rgba(46, 204, 113, 0.2) !important;
-            color: var(--dark-color) !important;
-        }
-        .alert-danger {
-            background-color: rgba(231, 76, 60, 0.1) !important;
-            border-color: rgba(231, 76, 60, 0.2) !important;
-            color: var(--dark-color) !important;
-        }
-        .alert-info {
-            background-color: rgba(52, 152, 219, 0.1) !important;
-            border-color: rgba(52, 152, 219, 0.2) !important;
-            color: var(--dark-color) !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -224,24 +28,34 @@
                 <a class="sidebar-brand" href="index.html">
                     <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
                 </a>
-
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
                         Tableau de bord
                     </li>
-                    <li class="sidebar-item">
+                    <li class="sidebar-item ">
                         <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
                             <span class="align-middle">Suivi de recette</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
+                    <li class="sidebar-item ">
                         <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
                             <span class="align-middle">Suivi de depense</span>
                         </a>
                     </li>
-                    <li class="sidebar-item active">
+                    <li class="sidebar-item ">
                         <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
                             <span class="align-middle">Suivi de benefice</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Commandes
+                    </li>
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="#">
+                            <i class="align-middle" data-feather="shopping-cart"></i> 
+                            <span class="align-middle">Nouvelle Commande</span>
                         </a>
                     </li>
                 </ul>
@@ -464,23 +278,23 @@
             buttons: [
                 {
                     extend: 'copy',
-                    className: 'btn btn-sm btn-outline-secondary'
+                    className: 'btn'
                 },
                 {
                     extend: 'csv',
-                    className: 'btn btn-sm btn-outline-primary'
+                    className: 'btn'
                 },
                 {
                     extend: 'excel',
-                    className: 'btn btn-sm btn-outline-success'
+                    className: 'btn'
                 },
                 {
                     extend: 'pdf',
-                    className: 'btn btn-sm btn-outline-danger'
+                    className: 'btn'
                 },
                 {
                     extend: 'print',
-                    className: 'btn btn-sm btn-outline-info'
+                    className: 'btn '
                 }
             ],
             language: {

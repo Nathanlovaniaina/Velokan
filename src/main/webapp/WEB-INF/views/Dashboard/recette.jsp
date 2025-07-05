@@ -11,215 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/suivirecette.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
-    <style>
-         :root {
-            --primary-color: #007e5d !important;
-            --secondary-color: #f8c828 !important;
-            --primary-light: #e6f2ef !important;
-            --secondary-light: #fef8e6 !important;
-            --dark-color: #2c3e50 !important;
-            --light-color: #f8f9fa !important;
-            --danger-color: #e74c3c !important;
-            --success-color: #2ecc71 !important;
-            --info-color: #3498db !important;
-        }
-        
-        :root {
-            background-color: var(--light-color) !important;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif !important;
-            color: var(--dark-color) !important;
-        }
-
-        .wrapper{
-            background: var(--primary-light) !important;
-        }
-        
-        /* Sidebar styling */
-        #sidebar {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        .sidebar-brand {
-            color: white !important;
-            font-weight: 600 !important;
-            background-color: rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .sidebar-item.active .sidebar-link {
-            color: var(--primary-color) !important;
-            background-color: white !important;
-        }
-        
-        .sidebar-link {
-            color: rgba(255, 255, 255, 0.8) !important;
-        }
-        
-        .sidebar-link:hover {
-            color: white !important;
-            background-color: rgba(255, 255, 255, 0.1) !important;
-        }
-        
-        /* Navbar styling */
-        .navbar-bg {
-            background-color: white !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .sidebar-toggle {
-            color: var(--primary-color) !important;
-        }
-        
-        /* Card styling */
-        .card {
-            border: none !important;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
-            border-radius: 10px !important;
-            overflow: hidden !important;
-        }
-        
-        .card-header {
-            background-color: white !important;
-            color: white !important;
-            border-bottom: none !important;
-            padding: 1rem 1.5rem !important;
-        }
-
-        .card-title{
-            color: #007e5d !important;
-            font-size: 20px;
-        }
-        
-        /* Button styling */
-        .btn-primary {
-            background-color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-primary:hover {
-            background-color: #006a4d !important;
-            border-color: #006a4d !important;
-        }
-        
-        .btn-outline-primary {
-            color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        /* Form styling */
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
-        }
-    
-        .table-hover tbody tr:hover {
-            background-color: var(--primary-light) !important;
-        }
-        
-        /* Status indicators */
-        .positive {
-            color: var(--primary-color) !important;
-            font-weight: 600 !important;
-        }
-        
-        .negative {
-            color: var(--danger-color) !important;
-            font-weight: 600 !important;
-        }
-        
-        .high-retard {
-            background-color: #ffebee !important;
-            border-left: 4px solid var(--danger-color) !important;
-        }
-        
-        .medium-retard {
-            background-color: var(--secondary-light) !important;
-            border-left: 4px solid var(--secondary-color) !important;
-        }
-        
-        /* DataTables buttons */
-        .dt-buttons .btn {
-            border-radius: 4px !important;
-            margin-right: 5px !important;
-            transition: all 0.3s !important;
-        }
-        
-        /* Footer */
-        .footer {
-            background-color: white !important;
-            border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-        }
-
-        /* Custom styles */
-        .form-filter { 
-            background-color: #f8f9fa; 
-            padding: 1rem; 
-            border-radius: 0.25rem; 
-            margin-bottom: 1rem; 
-        }
-        .chart-container { 
-            position: relative; 
-            height: 300px; 
-            margin-bottom: 2rem; 
-        }
-        
-        /* Badge styling */
-        .badge-retard {
-            background-color: var(--danger-color) !important;
-            color: white !important;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 0.85em;
-        }
-        
-        /* Alert styling */
-        .alert-success {
-            background-color: rgba(46, 204, 113, 0.1) !important;
-            border-color: rgba(46, 204, 113, 0.2) !important;
-            color: var(--dark-color) !important;
-        }
-        
-        .alert-danger {
-            background-color: rgba(231, 76, 60, 0.1) !important;
-            border-color: rgba(231, 76, 60, 0.2) !important;
-            color: var(--dark-color) !important;
-        }
-        
-        .alert-info {
-            background-color: rgba(52, 152, 219, 0.1) !important;
-            border-color: rgba(52, 152, 219, 0.2) !important;
-            color: var(--dark-color) !important;
-        }
-        
-        /* Style pour les lignes qui dépassent le seuil */
-        .depasse-seuil {
-            background-color: var(--secondary-light) !important;
-            font-weight: bold;
-            border-left: 4px solid var(--secondary-color) !important;
-        }
-    </style>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -227,7 +25,7 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">VELONKAN</span>
+                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -236,7 +34,7 @@
                     </li>
                     <li class="sidebar-item active">
                         <a class="sidebar-link" href="#">
-                            <i class="align-middle" data-feather="pie-chart"></i> 
+                            <i class="bi bi-pie-chart me-1"></i>
                             <span class="align-middle">Dashboard</span>
                         </a>
                     </li>
@@ -302,7 +100,9 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-filter me-1"></i> Afficher
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -354,7 +154,9 @@
                                                 <input type="text" class="form-control" id="entrepriseFilter" name="entrepriseFilter" placeholder="Filtrer par entreprise">
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Filtrer</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-filter me-1"></i> Filtrer
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -411,7 +213,9 @@
                                                 <input type="date" class="form-control" id="endDateJournalier" name="endDate" value="2025-12-31" required>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-filter me-1"></i> Afficher
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -464,7 +268,9 @@
                                                 <input type="number" class="form-control" id="seuilRetard" name="seuilRetard" min="0" value="30">
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-search me-1"></i> Rechercher
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -508,6 +314,15 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
     <script>
     // Variables pour stocker les instances de graphiques et DataTables
     let revenuMensuelChart, revenuEntrepriseChart, revenuJournalierChart, facturesRetardChart;

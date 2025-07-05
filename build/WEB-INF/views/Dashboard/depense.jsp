@@ -6,255 +6,49 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard Suivi Dépenses</title>
+    <title>Dashboard Suivi Dépenses | VELONKAN</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/suividepense.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
-    <style>
-         :root {
-            --primary-color: #007e5d !important;
-            --secondary-color: #f8c828 !important;
-            --primary-light: #e6f2ef !important;
-            --secondary-light: #fef8e6 !important;
-            --dark-color: #2c3e50 !important;
-            --light-color: #f8f9fa !important;
-            --danger-color: #e74c3c !important;
-            --success-color: #2ecc71 !important;
-        }
-        
-        :root {
-            background-color: var(--light-color) !important;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif !important;
-            color: var(--dark-color) !important;
-        }
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 
-        .wrapper{
-            background: var(--primary-light) !important;
-        }
-        
-        /* Sidebar styling */
-        #sidebar {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        .sidebar-brand {
-            color: white !important;
-            font-weight: 600 !important;
-            background-color: rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .sidebar-item.active .sidebar-link {
-            color: var(--primary-color) !important;
-            background-color: white !important;
-        }
-        
-        .sidebar-link {
-            color: rgba(255, 255, 255, 0.8) !important;
-        }
-        
-        .sidebar-link:hover {
-            color: white !important;
-            background-color: rgba(255, 255, 255, 0.1) !important;
-        }
-        
-        /* Navbar styling */
-        .navbar-bg {
-            background-color: white !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .sidebar-toggle {
-            color: var(--primary-color) !important;
-        }
-        
-        /* Card styling */
-        .card {
-            border: none !important;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
-            border-radius: 10px !important;
-            overflow: hidden !important;
-        }
-        
-        .card-header {
-            background-color: white !important;
-            color: white !important;
-            border-bottom: none !important;
-            padding: 1rem 1.5rem !important;
-        }
-
-        .card-title{
-            color: #007e5d !important;
-            font-size: 20px;
-        }
-        
-        /* Button styling */
-        .btn-primary {
-            background-color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-primary:hover {
-            background-color: #006a4d !important;
-            border-color: #006a4d !important;
-        }
-        
-        .btn-outline-primary {
-            color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        /* Form styling */
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
-        }
-    
-        .table-hover tbody tr:hover {
-            background-color: var(--primary-light) !important;
-        }
-        
-        /* Badge styling */
-        .badge-cost {
-            background-color: var(--secondary-color) !important;
-            color: var(--dark-color) !important;
-        }
-        
-        
-        
-        /* Status indicators */
-        .positive {
-            color: var(--primary-color) !important;
-            font-weight: 600 !important;
-        }
-        
-        .negative {
-            color: var(--danger-color) !important;
-            font-weight: 600 !important;
-        }
-        
-        .high-cost {
-            background-color: #ffebee !important;
-            border-left: 4px solid var(--danger-color) !important;
-        }
-        
-        .medium-cost {
-            background-color: var(--secondary-light) !important;
-            border-left: 4px solid var(--secondary-color) !important;
-        }
-        
-        /* DataTables buttons */
-        .dt-buttons .btn {
-            border-radius: 4px !important;
-            margin-right: 5px !important;
-            transition: all 0.3s !important;
-        }
-        
-        /* Footer */
-        .footer {
-            background-color: white !important;
-            border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-        }
-
-        .js-sidebar{
-            background-color: #ffebee !important;
-        }
-
-    </style>
-    <style>
-        .card-table {
-            margin-bottom: 0;
-        }
-        .positive {
-            color: #2e7d32;
-        }
-        .negative {
-            color: #c62828;
-        }
-        .high-cost {
-            background-color: #ffebee;
-        }
-        .medium-cost {
-            background-color: #fff8e1;
-        }
-        .badge-cost {
-            background-color: #ff5722;
-            color: white;
-        }
-        .form-filter {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 0.25rem;
-            margin-bottom: 1rem;
-        }
-        .chart-container {
-            position: relative;
-            height: 300px;
-            margin-bottom: 2rem;
-        }
-        .dataTables_wrapper .dataTables_filter input {
-            margin-left: 0.5em;
-        }
-        .dt-buttons .btn {
-            margin-right: 5px;
-        }
-        /* Style pour les composants coûteux */
-        .high-price {
-            background-color: #ffebee !important;
-            font-weight: bold;
-            border-left: 4px solid #ff5722;
-        }
-
-        /* Style pour le badge de coût */
-        .badge-cost {
-            background-color: #ff5722;
-            color: white;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 0.85em;
-        }
-    </style>
 </head>
 
 <body>
     <div class="wrapper">
-        <nav id="sidebar" class="sidebar js-sidebar ">
+        <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">VELONKAN</span>
+                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
                 </a>
 
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
-                        Tableaux de bord
+                        Tableau de bord
                     </li>
                     <li class="sidebar-item active">
-                        <a class="sidebar-link" href="#">
-                            <i class="align-middle" data-feather="pie-chart"></i> 
-                            <span class="align-middle">Dashboard</span>
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                            <i class="bi bi-pie-chart me-2"></i>
+                            <span class="align-middle">Suivi des Dépenses</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                            <i class="bi bi-cash-stack me-2"></i>
+                            <span class="align-middle">Suivi des Recettes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                            <i class="bi bi-graph-up me-2"></i>
+                            <span class="align-middle">Suivi des Benefices</span>
                         </a>
                     </li>
                 </ul>
@@ -280,14 +74,16 @@
 
             <main class="content">
                 <div class="container-fluid p-0">
-                    <h1 class="h3 mb-3"><strong>Suivi</strong> des Dépenses</h1>
+                    <div class="mb-3">
+                        <h1 class="h3 d-inline align-middle"><strong>Suivi</strong> des Dépenses</h1>
+                    </div>
 
                     <!-- Section Dépenses par Composant -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Dépenses par Composant</h5>
+                                    <h5 class="card-title mb-0">Dépenses par Composant</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-filter">
@@ -319,7 +115,9 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-funnel me-1"></i> Filtrer
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -355,7 +153,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Évolution des Dépenses Mensuelles</h5>
+                                    <h5 class="card-title mb-0">Évolution des Dépenses Mensuelles</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-filter">
@@ -369,7 +167,9 @@
                                                 <input type="date" class="form-control" id="endDateEvolution" name="endDate" value="2025-12-31" required>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-funnel me-1"></i> Filtrer
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -405,7 +205,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Comparaison Consommation (Théorique vs Réelle)</h5>
+                                    <h5 class="card-title mb-0">Comparaison Consommation (Théorique vs Réelle)</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-filter">
@@ -419,7 +219,9 @@
                                                 <input type="date" class="form-control" id="endDateComparaison" name="endDate" value="2025-12-31" required>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-funnel me-1"></i> Filtrer
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -466,7 +268,16 @@
     </div>
 
     <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
     <script>
     // Variables pour stocker les instances de graphiques et DataTables
     let depensesComposantChart, evolutionDepensesChart, comparaisonConsommationChart;
@@ -478,10 +289,29 @@
             return $(tableId).DataTable({
                 dom: '<"top"Bf>rt<"bottom"lip><"clear">',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    {
+                        extend: 'copy',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn'
+                    }
                 ],
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
                 },
                 responsive: true,
                 order: [],
@@ -571,10 +401,29 @@
             tableComparaisonConsommation = $('#tableComparaisonConsommation').DataTable({
                 dom: '<"top"Bf>rt<"bottom"lip><"clear">',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    {
+                        extend: 'copy',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn'
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn'
+                    }
                 ],
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
                 },
                 responsive: true,
                 order: [],
@@ -867,7 +716,7 @@
         }
 
         // Chargement initial
-        initComparaisonTable(); // <-- AJOUTE CETTE LIGNE AVANT loadComparaisonConsommation
+        initComparaisonTable();
         loadDepensesComposant($('#startDateComposant').val(), $('#endDateComposant').val(), $('#categorieId').val(), $('#composantId').val());
         loadEvolutionDepenses($('#startDateEvolution').val(), $('#endDateEvolution').val());
         loadComparaisonConsommation($('#startDateComparaison').val(), $('#endDateComparaison').val());
