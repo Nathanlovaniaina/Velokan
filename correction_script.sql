@@ -347,3 +347,13 @@ INSERT INTO facture (id_commandes, id_entreprise, date_emission, date_paiement, 
 -- Table paiement_entreprise
 INSERT INTO paiement_entreprise (id_facture, montant, date_paiement, mode_paiement) VALUES 
 (1, 200000, '2025-06-25', 'Virement bancaire');
+
+
+ALTER TABLE details_plat
+DROP CONSTRAINT details_plat_id_plat_fkey;
+
+ALTER TABLE details_plat
+ADD CONSTRAINT details_plat_id_plat_fkey
+FOREIGN KEY (id_plat)
+REFERENCES plat(id)
+ON DELETE CASCADE;
