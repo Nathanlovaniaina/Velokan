@@ -6,27 +6,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard Suivi Bénéfices</title>
+    <title>Dashboard Suivi Bénéfices | VELONKAN</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-         :root {
+        :root {
             --primary-color: #007e5d !important;
             --secondary-color: #f8c828 !important;
             --primary-light: #e6f2ef !important;
@@ -35,10 +27,7 @@
             --light-color: #f8f9fa !important;
             --danger-color: #e74c3c !important;
             --success-color: #2ecc71 !important;
-        }
-        
-        :root {
-            background-color: var(--light-color) !important;
+            --info-color: #3498db !important;
         }
         
         body {
@@ -46,34 +35,51 @@
             color: var(--dark-color) !important;
         }
 
-        .wrapper{
+        .sidebar-nav{
+            flex-grow: 0;
+        }
+
+        .wrapper {
             background: var(--primary-light) !important;
         }
         
         /* Sidebar styling */
-        #sidebar {
-            background-color: var(--primary-color) !important;
-            color: white !important;
+        #sidebar,
+        .sidebar-content {
+            background-color: #fff !important;
+            color: #222e3c !important;
         }
         
         .sidebar-brand {
-            color: white !important;
-            font-weight: 600 !important;
-            background-color: rgba(0, 0, 0, 0.1) !important;
+            color: #fff !important;
+            font-weight: 700 !important;
+            background-color: #fff  !important;
+            letter-spacing: 2px;
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 1rem 0.5rem;
+            border-radius: 8px;
+            margin: 1rem 0.5rem 1.5rem 0.5rem;
+            display: block;
+            font-style: normal;
         }
         
-        .sidebar-item.active .sidebar-link {
-            color: var(--primary-color) !important;
+        .sidebar-link.active {
+            color: var(--secondary-color) !important;
+        }
+        
+        .sidebar-link{
             background-color: white !important;
+            color: #222e3c !important;
         }
-        
-        .sidebar-link {
-            color: rgba(255, 255, 255, 0.8) !important;
+        .sidebar-brand {
+            color: var(--secondary-color)  !important;
+            text-decoration: none;
         }
         
         .sidebar-link:hover {
-            color: white !important;
-            background-color: rgba(255, 255, 255, 0.1) !important;
+            background-color: var(--secondary-light) !important;
+            color: var(--primary-color) !important;
         }
         
         /* Navbar styling */
@@ -93,15 +99,18 @@
             border-radius: 10px !important;
             overflow: hidden !important;
         }
+
+        .sidebar-header{
+            color: var(--primary-color);
+        }
         
         .card-header {
             background-color: white !important;
-            color: white !important;
             border-bottom: none !important;
             padding: 1rem 1.5rem !important;
         }
 
-        .card-title{
+        .card-title {
             color: #007e5d !important;
             font-size: 20px;
         }
@@ -177,10 +186,6 @@
             border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
         }
 
-        .js-sidebar{
-            background-color: #ffebee !important;
-        }
-
         /* Custom styles for this page */
         .form-filter { 
             background-color: #f8f9fa; 
@@ -213,20 +218,30 @@
 
 <body>
     <div class="wrapper">
+        <!-- Sidebar -->
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">VELONKAN</span>
+                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
                 </a>
 
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
-                        Tableaux de bord
+                        Tableau de bord
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                            <span class="align-middle">Suivi de recette</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                            <span class="align-middle">Suivi de depense</span>
+                        </a>
                     </li>
                     <li class="sidebar-item active">
-                        <a class="sidebar-link" href="#">
-                            <i class="align-middle" data-feather="pie-chart"></i> 
-                            <span class="align-middle">Dashboard</span>
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                            <span class="align-middle">Suivi de benefice</span>
                         </a>
                     </li>
                 </ul>
@@ -234,6 +249,7 @@
         </nav>
 
         <div class="main">
+            <!-- Navbar -->
             <nav class="navbar navbar-expand navbar-light navbar-bg">
                 <a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
@@ -252,14 +268,16 @@
 
             <main class="content">
                 <div class="container-fluid p-0">
-                    <h1 class="h3 mb-3"><strong>Suivi</strong> des Bénéfices</h1>
+                    <div class="mb-3">
+                        <h1 class="h3 d-inline align-middle"><strong>Suivi</strong> des Bénéfices</h1>
+                    </div>
 
                     <!-- Section Bénéfice Net -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Bénéfice Net</h5>
+                                    <h5 class="card-title mb-0">Bénéfice Net</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-filter">
@@ -273,7 +291,9 @@
                                                 <input type="date" class="form-control" id="endDateBenefice" name="endDate" value="2025-12-31" required>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-filter me-1"></i> Afficher
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -301,7 +321,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Revenus par Entreprise</h5>
+                                    <h5 class="card-title mb-0">Revenus par Entreprise</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -327,7 +347,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Bénéfices par Plat</h5>
+                                    <h5 class="card-title mb-0">Bénéfices par Plat</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -356,7 +376,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Salaires Versés</h5>
+                                    <h5 class="card-title mb-0">Salaires Versés</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -381,7 +401,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">Bilan Journalier</h5>
+                                    <h5 class="card-title mb-0">Bilan Journalier</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -423,6 +443,18 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.js"></script>
+    
     <script>
     let beneficeNetChart, tableRevenusEntreprise, tableBeneficesPlat, tableSalairesVerses, tableBilanJournalier;
 
@@ -430,10 +462,29 @@
         return $(tableId).DataTable({
             dom: '<"top"Bf>rt<"bottom"lip><"clear">',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                {
+                    extend: 'copy',
+                    className: 'btn btn-sm btn-outline-secondary'
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-sm btn-outline-primary'
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn btn-sm btn-outline-success'
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-sm btn-outline-danger'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn btn-sm btn-outline-info'
+                }
             ],
             language: {
-                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
             },
             responsive: true,
             order: [],

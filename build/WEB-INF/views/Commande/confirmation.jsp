@@ -13,184 +13,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/confirmationCommande.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #28a745 !important;  /* Vert comme couleur primaire */
-            --secondary-color: #FF8C00 !important;  /* Orange comme couleur secondaire */
-            --primary-light: #e8f5e9 !important;  /* Vert très clair */
-            --secondary-light: #fff3e0 !important; /* Orange très clair */
-            --dark-color: #2c3e50 !important;
-            --light-color: #f8f9fa !important;
-            --danger-color: #e74c3c !important;
-            --success-color: #2ecc71 !important;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif !important;
-            color: var(--dark-color) !important;
-        }
-
-        .wrapper {
-            background: var(--primary-light) !important;
-        }
-        
-        /* Sidebar styling - Utilisation de la couleur primaire (vert) */
-        #sidebar {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        .sidebar-brand {
-            color: white !important;
-            font-weight: 600 !important;
-            background-color: rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .sidebar-item.active .sidebar-link {
-            color: var(--primary-color) !important;
-            background-color: white !important;
-        }
-        
-        .sidebar-link {
-            color: rgba(255, 255, 255, 0.8) !important;
-        }
-        
-        .sidebar-link:hover {
-            color: white !important;
-            background-color: rgba(255, 255, 255, 0.1) !important;
-        }
-        
-        /* Navbar styling */
-        .navbar-bg {
-            background-color: white !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .sidebar-toggle {
-            color: var(--primary-color) !important;
-        }
-        
-        /* Card styling */
-        .card {
-            border: none !important;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
-            border-radius: 10px !important;
-            overflow: hidden !important;
-        }
-        
-        .card-header {
-            background-color: white !important;
-            border-bottom: none !important;
-            padding: 1rem 1.5rem !important;
-        }
-
-        .card-title {
-            color: var(--primary-color) !important;
-            font-size: 20px;
-        }
-        
-        /* Button styling - Primaire en vert, secondaire en orange */
-        .btn-primary {
-            background-color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-primary:hover {
-            background-color: #218838 !important;
-            border-color: #218838 !important;
-        }
-        
-        .btn-outline-primary {
-            color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-        }
-        
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        /* Bouton secondaire en orange */
-        .btn-secondary {
-            background-color: var(--secondary-color) !important;
-            border-color: var(--secondary-color) !important;
-            color: white !important;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #e67e00 !important;
-            border-color: #e67e00 !important;
-            color: white !important;
-        }
-        
-        /* Custom styles */
-        .confirmation-card {
-            border: 1px solid #dee2e6 !important;
-            border-radius: 0.375rem !important;
-        }
-        
-        .plat-item {
-            padding: 0.75rem 1.25rem !important;
-            margin-bottom: 0.5rem !important;
-            background-color: #f8f9fa !important;
-            border-left: 4px solid var(--secondary-color) !important;  /* Bordure orange */
-            border-radius: 0.25rem !important;
-        }
-        
-        .header-section {
-            border-bottom: 2px solid var(--primary-color) !important;  /* Bordure verte */
-            padding-bottom: 1rem !important;
-            margin-bottom: 1.5rem !important;
-        }
-        
-        .info-label {
-            font-weight: 600 !important;
-            color: var(--dark-color) !important;
-            min-width: 180px !important;
-            display: inline-block !important;
-        }
-        
-        .total-price {
-            background-color: var(--secondary-light) !important;  /* Fond orange très clair */
-            padding: 1rem !important;
-            border-radius: 0.375rem !important;
-            margin-top: 1.5rem !important;
-            border: 1px solid rgba(255, 140, 0, 0.2) !important;
-        }
-        
-        /* Alert styling */
-        .alert-danger {
-            background-color: rgba(231, 76, 60, 0.1) !important;
-            border-color: rgba(231, 76, 60, 0.2) !important;
-            color: var(--dark-color) !important;
-        }
-
-        /* Badge styling - en orange */
-        .badge.bg-primary {
-            background-color: var(--secondary-color) !important;
-        }
-
-        /* Icon colors */
-        .text-primary {
-            color: var(--primary-color) !important;  /* Icônes en vert */
-        }
-        
-        .text-secondary {
-            color: var(--secondary-color) !important;  /* Icônes en orange */
-        }
-        
-        /* Style pour le montant en Ariary */
-        .currency-ariary {
-            font-weight: bold;
-        }
-        .currency-ariary:after {
-            content: " Ar";
-            font-weight: normal;
-        }
-    </style>
 </head>
 
 <body>
@@ -199,8 +25,28 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">VELONKAN</span>
+                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
                 </a>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Tableau de bord
+                    </li>
+                    <li class="sidebar-item ">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                            <span class="align-middle">Suivi de recette</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item ">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                            <span class="align-middle">Suivi de depense</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item ">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                            <span class="align-middle">Suivi de benefice</span>
+                        </a>
+                    </li>
+                </ul>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
                         Commandes
@@ -208,7 +54,7 @@
                     <li class="sidebar-item active">
                         <a class="sidebar-link" href="#">
                             <i class="align-middle" data-feather="shopping-cart"></i> 
-                            <span class="align-middle">Confirmation</span>
+                            <span class="align-middle">Nouvelle Commande</span>
                         </a>
                     </li>
                 </ul>
@@ -234,11 +80,15 @@
 
             <main class="content">
                 <div class="container-fluid p-0">
+                    <div class="mb-3">
+                        <h1 class="h3 d-inline align-middle">Confirmation de Commande</h1>
+                    </div>
+                    
                     <div class="row">
                         <div class="col-12 col-lg-8 mx-auto">
                             <div class="card confirmation-card">
                                 <div class="card-header">
-                                    <h2 class="h4 mb-0">Confirmation de Commande</h2>
+                                    <h5 class="card-title mb-0">Détails de la commande</h5>
                                 </div>
                                 
                                 <div class="card-body">
@@ -278,7 +128,7 @@
                                             <!-- Section Plats -->
                                             <div class="mb-4">
                                                 <div class="d-flex align-items-center mb-3">
-                                                    <i class="bi bi-egg-fried me-2 fs-4 text-secondary"></i> <!-- Icône en orange -->
+                                                    <i class="bi bi-egg-fried me-2 fs-4 text-secondary"></i>
                                                     <h3 class="h5 mb-0">Plats Commandés</h3>
                                                 </div>
                                                 
@@ -306,7 +156,7 @@
                                             <div class="total-price">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="d-flex align-items-center">
-                                                        <i class="bi bi-cash-coin fs-3 text-secondary me-3"></i> <!-- Icône en orange -->
+                                                        <i class="bi bi-cash-coin fs-3 text-secondary me-3"></i>
                                                         <div>
                                                             <h4 class="h6 mb-1">Montant total à payer</h4>
                                                             <p class="small text-muted mb-0">TVA incluse</p>

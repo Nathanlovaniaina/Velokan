@@ -62,6 +62,10 @@
             color: var(--primary-color) !important;
         }
         
+        .sidebar-header{
+            color: var(--primary-color);
+        }
+        
         /* Navbar styling */
         .navbar-bg {
             background-color: white !important;
@@ -78,10 +82,6 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
             border-radius: 10px !important;
             overflow: hidden !important;
-        }
-
-        .sidebar-header{
-            color: var(--primary-color);
         }
         
         .card-header {
@@ -116,9 +116,14 @@
             color: white !important;
         }
         
-        .btn-success {
-            background-color: var(--success-color) !important;
-            border-color: var(--success-color) !important;
+        .btn-secondary {
+            background-color: var(--secondary-color) !important;
+            border-color: var(--secondary-color) !important;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e6b800 !important;
+            border-color: #e6b800 !important;
         }
         
         /* Form styling */
@@ -127,95 +132,76 @@
             box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
         }
         
-        /* Modal styling */
-        .modal-header {
+        /* Alert styling */
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.1) !important;
+            border-color: rgba(231, 76, 60, 0.2) !important;
+            color: var(--dark-color) !important;
+        }
+        
+        /* Custom styles for confirmation page */
+        .confirmation-card {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .plat-item {
+            padding: 0.75rem 1.25rem !important;
+            margin-bottom: 0.5rem !important;
+            background-color: var(--light-color) !important;
+            border-left: 4px solid var(--secondary-color) !important;
+            border-radius: 0.25rem !important;
+        }
+
+        .header-section {
+            border-bottom: 2px solid var(--primary-color) !important;
+            padding-bottom: 1rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        .info-label {
+            font-weight: 600 !important;
+            color: var(--dark-color) !important;
+            min-width: 180px !important;
+            display: inline-block !important;
+        }
+
+        .total-price {
+            background-color: var(--secondary-light) !important;
+            padding: 1rem !important;
+            border-radius: 0.375rem !important;
+            margin-top: 1.5rem !important;
+            border: 1px solid rgba(248, 200, 40, 0.2) !important;
+        }
+
+        /* Badge styling */
+        .badge.bg-primary {
             background-color: var(--primary-color) !important;
-            color: white !important;
         }
-        
-        .btn-close-white {
-            filter: invert(1) grayscale(100%) brightness(200%);
+
+        /* Icon colors */
+        .text-primary {
+            color: var(--primary-color) !important;
         }
-        
-        /* Toast styling */
-        .toast-header {
-            background-color: var(--primary-color) !important;
-            color: white !important;
+
+        .text-secondary {
+            color: var(--secondary-color) !important;
         }
-        
-        /* Custom styles */
-        .modal-body {
-            max-height: 60vh;
-            overflow-y: auto;
+
+        /* Currency style */
+        .currency-ariary {
+            font-weight: bold !important;
         }
-        
-        .plat-row {
-            align-items: center;
-            margin-bottom: 10px;
+
+        .currency-ariary:after {
+            content: " Ar" !important;
+            font-weight: normal !important;
         }
-        
-        .btn-select-plat {
-            white-space: nowrap;
-        }
-        
-        /* Styles pour la modal des plats */
-        .modal-plats .modal-content {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .modal-plats .modal-body {
-            overflow: hidden;
-            padding: 0;
-            flex: 1;
-        }
-        
-        .state-container {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* DataTables styling */
-        .dataTables_wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .dataTables_scroll {
-            flex: 1;
-        }
-        
-        .dataTables_scrollHead {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background-color: white !important;
-        }
-        
-        .dataTables_scrollBody {
-            overflow-y: auto !important;
-        }
-        
-        /* Select2 styling */
-        .select2-container--bootstrap-5 .select2-selection {
-            min-height: 38px;
-            border: 1px solid #ced4da !important;
-        }
-        
-        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
-            padding-top: 4px;
-        }
-        
-        .select2-container--bootstrap-5 .select2-dropdown {
-            border-color: #ced4da !important;
-        }
-        
-        .select2-container--bootstrap-5.select2-container--focus .select2-selection {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .info-label {
+                min-width: 120px !important;
+                display: block !important;
+                margin-bottom: 0.25rem !important;
+            }
         }
