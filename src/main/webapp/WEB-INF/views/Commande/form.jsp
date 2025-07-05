@@ -38,34 +38,51 @@
             color: var(--dark-color) !important;
         }
 
+        .sidebar-nav{
+            flex-grow: 0;
+        }
+
         .wrapper {
             background: var(--primary-light) !important;
         }
         
         /* Sidebar styling */
-        #sidebar {
-            background-color: var(--primary-color) !important;
-            color: white !important;
+        #sidebar,
+        .sidebar-content {
+            background-color: #fff !important;
+            color: #222e3c !important;
         }
         
         .sidebar-brand {
-            color: white !important;
-            font-weight: 600 !important;
-            background-color: rgba(0, 0, 0, 0.1) !important;
+            color: #fff !important;
+            font-weight: 700 !important;
+            background-color: #fff  !important;
+            letter-spacing: 2px;
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 1rem 0.5rem;
+            border-radius: 8px;
+            margin: 1rem 0.5rem 1.5rem 0.5rem;
+            display: block;
+            font-style: normal;
         }
         
-        .sidebar-item.active .sidebar-link {
-            color: var(--primary-color) !important;
+        .sidebar-link.active {
+            color: var(--secondary-color) !important;
+        }
+        
+        .sidebar-link{
             background-color: white !important;
+            color: #222e3c !important;
         }
-        
-        .sidebar-link {
-            color: rgba(255, 255, 255, 0.8) !important;
+        .sidebar-brand {
+            color: var(--secondary-color)  !important;
+            text-decoration: none;
         }
         
         .sidebar-link:hover {
-            color: white !important;
-            background-color: rgba(255, 255, 255, 0.1) !important;
+            background-color: var(--secondary-light) !important;
+            color: var(--primary-color) !important;
         }
         
         /* Navbar styling */
@@ -84,6 +101,10 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
             border-radius: 10px !important;
             overflow: hidden !important;
+        }
+
+        .sidebar-header{
+            color: var(--primary-color);
         }
         
         .card-header {
@@ -230,8 +251,28 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">VELONKAN</span>
+                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
                 </a>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Tableau de bord
+                    </li>
+                    <li class="sidebar-item ">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                            <span class="align-middle">Suivi de recette</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item ">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                            <span class="align-middle">Suivi de depense</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item ">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                            <span class="align-middle">Suivi de benefice</span>
+                        </a>
+                    </li>
+                </ul>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
                         Commandes
@@ -432,6 +473,7 @@
                                     <thead>
                                         <tr>
                                             <th>Nom du plat</th>
+                                            <th>Type</th>
                                             <th>Prix</th>
                                             <th>Action</th>
                                         </tr>
@@ -529,10 +571,12 @@
             tbody.empty();
             
             plats.forEach(plat => {
+                const type = plat.type || 'Non spécifié';
                 const prix = plat.prix ? `${plat.prix.toFixed(2)} Ar` : '-';
 
                 const row = '<tr class="align-middle">' +
-                    '<td class="fw-bold">' + (plat.intitule || 'N/A') + '</td>' +
+                    '<td class="fw-bold">' + (plat.intitule ? plat.intitule : 'N/A') + '</td>' +
+                    '<td>' + type + '</td>' +
                     '<td>' + prix + '</td>' +
                     '<td class="text-end">' +
                         '<button class="btn btn-sm btn-primary btn-select-plat" ' +
@@ -558,7 +602,7 @@
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
-                    { orderable: false, targets: 2 } // Désactiver le tri sur la colonne Action
+                    { orderable: false, targets: 3 } // Désactiver le tri sur la colonne Action
                 ],
                 initComplete: function() {
                     // Ajustements après l'initialisation
@@ -581,7 +625,6 @@
                 type: 'GET',
                 data: { search: search },
                 success: function(data) {
-                    console.log('Données reçues:', data); // Debug
                     currentPlats = data;
                     showData(data);
                 },
@@ -617,7 +660,8 @@
             const searchTerm = $(this).val().toLowerCase();
             if (searchTerm.length === 0 || searchTerm.length > 2) {
                 const filteredPlats = currentPlats.filter(plat => 
-                    plat.intitule.toLowerCase().includes(searchTerm)
+                    plat.intitule.toLowerCase().includes(searchTerm) ||
+                    (plat.type && plat.type.toLowerCase().includes(searchTerm))
                 );
                 showData(filteredPlats);
             }
