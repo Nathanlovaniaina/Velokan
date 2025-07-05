@@ -31,7 +31,7 @@ public class PlatService {
         platRepository.deleteById(id);
     }
 
-    public Plat findByIntitule(String intitule) {
+    public List<Plat> findByIntitule(String intitule) {
         return platRepository.findByIntitule(intitule);
     }
 
