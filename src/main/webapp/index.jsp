@@ -21,11 +21,13 @@
         <a href="${pageContext.request.contextPath}/poste/">Les Postes </a>
         <a href="${pageContext.request.contextPath}/employe/">Les employes </a>
         <a href="${pageContext.request.contextPath}/listStock/">Les stocks </a>
+        <a href="${pageContext.request.contextPath}/stock/list">Les stocks </a>
         <a href="${pageContext.request.contextPath}/composant/">Les composants</a>
         <a href="${pageContext.request.contextPath}/type_composant/">Les types de composants</a>
         <a href="${pageContext.request.contextPath}/unite/">Les unités</a>
         <p><a href="${pageContext.request.contextPath}/commandes/count">Evolution de Commandes</a></p>
         <p><a href="${pageContext.request.contextPath}/plats/">Plat_fefe</a></p>
+        <p><a href="${pageContext.request.contextPath}/taches_plat/">Les tâches des plats</a></p>
 
       </p>
 </div>
