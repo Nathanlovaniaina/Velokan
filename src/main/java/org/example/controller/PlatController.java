@@ -42,6 +42,9 @@ public class PlatController {
     @GetMapping
     public String getAllPlats(Model model) {
         List<Plat> plats = platService.findAll();
+        for (Plat plat : plats) {
+            System.out.println("Le plat "+plat.getIntitule()+" prix "+plat.getPrix()+" date "+plat.getDateCreation().toString());
+        }
         model.addAttribute("plats", plats);
         return "plats";  // Ta vue Thymeleaf par exemple : src/main/resources/templates/plats/list.html
     }
@@ -74,7 +77,7 @@ public class PlatController {
         plat.setDateCreation(dateCreation);
 
         platService.save(plat);
-        model.addAttribute("plats_montree", platService.findAll());
+        model.addAttribute("plats", platService.findAll());
 
         return "plats";
     }
@@ -83,7 +86,7 @@ public class PlatController {
     public String deletePlat(@PathVariable("id") Integer id, Model model) {
         platService.deleteById(id);
         model.addAttribute("succes", "Plat supprimé !");
-        model.addAttribute("plats_montree", platService.findAll());
+        model.addAttribute("plats", platService.findAll());
         return "plats";
     }
 
@@ -93,6 +96,7 @@ public class PlatController {
         model.addAttribute("succes", "modification de plat  " + plat.getIntitule() + " !");
         model.addAttribute("plat", plat);
         model.addAttribute("employes", platService.findAll());
+        model.addAttribute("plats", platService.findAll());
         return "plats";  // Formulaire pour modifier un plat
     }
 
