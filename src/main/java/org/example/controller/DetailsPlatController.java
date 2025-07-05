@@ -33,11 +33,14 @@ public class DetailsPlatController {
                                     @RequestParam Map<String, String> allParams,
                                     Model model) {
 
-        Plat plat = platService.findByIntitule(nomPlat);
-        if (plat == null) {
+        List<Plat> plats = platService.findByIntitule(nomPlat);
+        Plat plat;
+        if (plats == null || plats.isEmpty()) {
             plat = new Plat();
             plat.setIntitule(nomPlat);
             platService.save(plat);
+        } else {
+            plat = plats.get(0);
         }
 
         for (Integer compoId : composantsIds) {

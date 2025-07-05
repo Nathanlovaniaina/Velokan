@@ -432,7 +432,6 @@
                                     <thead>
                                         <tr>
                                             <th>Nom du plat</th>
-                                            <th>Type</th>
                                             <th>Prix</th>
                                             <th>Action</th>
                                         </tr>
@@ -530,12 +529,10 @@
             tbody.empty();
             
             plats.forEach(plat => {
-                const type = plat.type || 'Non spécifié';
                 const prix = plat.prix ? `${plat.prix.toFixed(2)} Ar` : '-';
 
                 const row = '<tr class="align-middle">' +
-                    '<td class="fw-bold">' + (plat.intitule ? plat.intitule : 'N/A') + '</td>' +
-                    '<td>' + type + '</td>' +
+                    '<td class="fw-bold">' + (plat.intitule || 'N/A') + '</td>' +
                     '<td>' + prix + '</td>' +
                     '<td class="text-end">' +
                         '<button class="btn btn-sm btn-primary btn-select-plat" ' +
@@ -561,7 +558,7 @@
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
-                    { orderable: false, targets: 3 } // Désactiver le tri sur la colonne Action
+                    { orderable: false, targets: 2 } // Désactiver le tri sur la colonne Action
                 ],
                 initComplete: function() {
                     // Ajustements après l'initialisation
@@ -584,6 +581,7 @@
                 type: 'GET',
                 data: { search: search },
                 success: function(data) {
+                    console.log('Données reçues:', data); // Debug
                     currentPlats = data;
                     showData(data);
                 },
@@ -619,8 +617,7 @@
             const searchTerm = $(this).val().toLowerCase();
             if (searchTerm.length === 0 || searchTerm.length > 2) {
                 const filteredPlats = currentPlats.filter(plat => 
-                    plat.intitule.toLowerCase().includes(searchTerm) ||
-                    (plat.type && plat.type.toLowerCase().includes(searchTerm))
+                    plat.intitule.toLowerCase().includes(searchTerm)
                 );
                 showData(filteredPlats);
             }

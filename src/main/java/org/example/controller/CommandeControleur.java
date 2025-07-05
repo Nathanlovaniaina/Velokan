@@ -52,11 +52,23 @@ public class CommandeControleur {
         return "Commande/form";
     }
 
-    @GetMapping("/api/getPlat")
-    @ResponseBody 
-    public List<Plat> getAllPlats() {
-        return platService.findAll();
+   @GetMapping("/api/getPlat")
+@ResponseBody 
+public List<Map<String, Object>> getAllPlats() {
+    List<Plat> plats = platService.findAll();
+    List<Map<String, Object>> response = new ArrayList<>();
+    
+    for (Plat plat : plats) {
+        Map<String, Object> platMap = new HashMap<>();
+        platMap.put("id", plat.getId());
+        platMap.put("intitule", plat.getIntitule());
+        platMap.put("prix", plat.getPrix());
+        platMap.put("dateCreation", plat.getDateCreation().toString());
+        response.add(platMap);
     }
+    
+    return response;
+}
 
     @PostMapping("/importCsvCommande")
 public String importerCommandeCSV(
