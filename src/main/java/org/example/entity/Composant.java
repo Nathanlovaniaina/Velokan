@@ -10,14 +10,14 @@ public class Composant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_type", nullable = false)
     private TypeComposant typeComposant;
 
     @Column(name = "nom")
     private String nom;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_unite", nullable = false)
     private Unite unite;
 

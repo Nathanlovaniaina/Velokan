@@ -10,10 +10,14 @@
     .home-container a:hover { background:#444; }
 </style>
 <div class="home-container">
-    <h1>Bienvenue sur l'application de gestion de cantine</h1>
+    <h1>Bienvenue sur l'application de gestion de films</h1>
     <p style="margin:30px 0;">
-        <a href="${pageContext.request.contextPath}/plat/">Voir les Plats</a>
-        <a href="${pageContext.request.contextPath}/composant/most-used">composant le plus utilises</a>
-        <a href="${pageContext.request.contextPath}/calendrier/">Calendrier planning recommandation</a>
+        <a href="${pageContext.request.contextPath}/employe/paiement_salaire">Le payement salaire</a>
+        <a href="${pageContext.request.contextPath}/penalite/">La Pénalité </a>
+        <a href="${pageContext.request.contextPath}/depense/">Les Dépenses </a>
+        <a href="${pageContext.request.contextPath}/poste/">Les Postes </a>
+        <a href="${pageContext.request.contextPath}/employe/">Les employes </a>
+        <a href="${pageContext.request.contextPath}/commande/">Commandes </a>
+        <a href="${pageContext.request.contextPath}/stock/">Alerte Stock</a>
     </p>
 </div>

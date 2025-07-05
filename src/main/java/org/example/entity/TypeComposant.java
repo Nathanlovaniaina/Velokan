@@ -10,7 +10,7 @@ public class TypeComposant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom")
+    @Column(name = "nom", nullable = false)
     private String nom;
 
     // Getters and Setters

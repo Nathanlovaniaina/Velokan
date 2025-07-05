@@ -2,6 +2,8 @@ package org.example.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Entity
 @Table(name = "stock")
@@ -11,15 +13,16 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_composant", nullable = false)
     private Composant composant;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_creation")
-    private LocalDate dateCreation;
+    private Date dateCreation;
 
     @Column(name = "qtte_stock")
-    private Double qtteStock;
+    private Double quantiteStock;
 
     @Column(name = "nombre_jour_conservation")
     private Integer nombreJourConservation;
@@ -41,20 +44,20 @@ public class Stock {
         this.composant = composant;
     }
 
-    public LocalDate getDateCreation() {
+    public Date getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(LocalDate dateCreation) {
+    public void setDateCreation(Date dateCreation) {
         this.dateCreation = dateCreation;
     }
 
-    public Double getQtteStock() {
-        return qtteStock;
+    public Double getQuantiteStock() {
+        return quantiteStock;
     }
 
-    public void setQtteStock(Double qtteStock) {
-        this.qtteStock = qtteStock;
+    public void setQuantiteStock(Double quantiteStock) {
+        this.quantiteStock = quantiteStock;
     }
 
     public Integer getNombreJourConservation() {
@@ -63,5 +66,16 @@ public class Stock {
 
     public void setNombreJourConservation(Integer nombreJourConservation) {
         this.nombreJourConservation = nombreJourConservation;
+    }
+
+    public Date getDatePeremption() {
+        if (dateCreation == null || nombreJourConservation == null) {
+            return null;
+        }
+        LocalDate localDate = dateCreation.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate peremptionDate = localDate.plusDays(nombreJourConservation);
+        return Date.from(peremptionDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }

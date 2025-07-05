@@ -1,3 +1,4 @@
+
 package org.example.entity;
 
 import javax.persistence.*;
@@ -10,58 +11,33 @@ public class DetailCommande {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_commande", nullable = false)
-    private Commande commande;
+    private Commandes commande;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_plat", nullable = false)
     private Plat plat;
 
-    @Column(name = "quantite")
+    @Column(name = "quantite", nullable = false)
     private Integer quantite;
 
-    @Column(name = "prix_unitaire")
+    @Column(name = "prix_unitaire", nullable = false)
     private Integer prixUnitaire;
 
     // Getters and Setters
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public Commandes getCommande() { return commande; }
+    public void setCommande(Commandes commande) { this.commande = commande; }
 
-    public Commande getCommande() {
-        return commande;
-    }
+    public Plat getPlat() { return plat; }
+    public void setPlat(Plat plat) { this.plat = plat; }
 
-    public void setCommande(Commande commande) {
-        this.commande = commande;
-    }
+    public Integer getQuantite() { return quantite; }
+    public void setQuantite(Integer quantite) { this.quantite = quantite; }
 
-    public Plat getPlat() {
-        return plat;
-    }
-
-    public void setPlat(Plat plat) {
-        this.plat = plat;
-    }
-
-    public Integer getQuantite() {
-        return quantite;
-    }
-
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
-    }
-
-    public Integer getPrixUnitaire() {
-        return prixUnitaire;
-    }
-
-    public void setPrixUnitaire(Integer prixUnitaire) {
-        this.prixUnitaire = prixUnitaire;
-    }
+    public Integer getPrixUnitaire() { return prixUnitaire; }
+    public void setPrixUnitaire(Integer prixUnitaire) { this.prixUnitaire = prixUnitaire; }
 }

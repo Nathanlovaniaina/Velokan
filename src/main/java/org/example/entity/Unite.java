@@ -10,10 +10,10 @@ public class Unite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom")
+    @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Column(name = "symbol")
+    @Column(name = "symbol", nullable = false)
     private String symbol;
 
     // Getters and Setters

@@ -1,10 +1,8 @@
+
 package org.example.entity;
 
-import org.hibernate.annotations.Type;
-import org.locationtech.jts.geom.Point;
-
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "entreprise")
@@ -14,10 +12,10 @@ public class Entreprise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom")
+    @Column(name = "nom", length = 100)
     private String nom;
 
-    @Column(name = "adresse")
+    @Column(name = "adresse", length = 100)
     private String adresse;
 
     @Column(name = "latitude")
@@ -26,12 +24,9 @@ public class Entreprise {
     @Column(name = "longitude")
     private Double longitude;
 
-    // @Column(name = "geom")
-    // @Type(type = "org.hibernate.spatial.GeometryType")
-    // private Point geom;
-
+    @Temporal(TemporalType.DATE)
     @Column(name = "debut_date_contrat")
-    private LocalDate debutDateContrat;
+    private Date debutDateContrat;
 
     // Getters and Setters
     public Integer getId() {
@@ -74,19 +69,11 @@ public class Entreprise {
         this.longitude = longitude;
     }
 
-    // public Point getGeom() {
-    //     return geom;
-    // }
-
-    // public void setGeom(Point geom) {
-    //     this.geom = geom;
-    // }
-
-    public LocalDate getDebutDateContrat() {
+    public Date getDebutDateContrat() {
         return debutDateContrat;
     }
 
-    public void setDebutDateContrat(LocalDate debutDateContrat) {
+    public void setDebutDateContrat(Date debutDateContrat) {
         this.debutDateContrat = debutDateContrat;
     }
 }
