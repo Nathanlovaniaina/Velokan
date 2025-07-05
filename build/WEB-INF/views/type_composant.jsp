@@ -3,618 +3,258 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Types de Composant</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-green: #007e5d;
-            --secondary-yellow: #f8c828;
-            --light-green: #e8f5f0;
-            --dark-green: #005c43;
-            --light-yellow: #fef6d9;
-            --background: #f8fffe;
-            --white: #ffffff;
-            --text-dark: #2c3e50;
-            --text-light: #718096;
-            --shadow: 0 10px 25px rgba(0, 126, 93, 0.1);
-            --shadow-hover: 0 15px 35px rgba(0, 126, 93, 0.15);
-            --border-radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gestion des Types de Composant | VELONKAN</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--background) 0%, var(--light-green) 100%);
-            color: var(--text-dark);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* Header modernisé */
-        .header {
-            background: var(--white);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 4px 20px rgba(0, 126, 93, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(0, 126, 93, 0.1);
-        }
-
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-container {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-yellow));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-container::before {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            background: var(--white);
-            border-radius: 14px;
-        }
-
-        .logo-container i {
-            font-size: 1.8rem;
-            color: var(--primary-green);
-            z-index: 1;
-        }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            margin: 0;
-        }
-
-        .brand-subtitle {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            margin: 0;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-link:hover {
-            background: var(--light-green);
-            color: var(--primary-green);
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        /* Container principal */
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .page-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Messages de succès */
-        .success-message {
-            background: linear-gradient(135deg, var(--light-green), var(--light-yellow));
-            border: 2px solid var(--secondary-yellow);
-            border-radius: var(--border-radius);
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-weight: 500;
-            color: var(--primary-green);
-            animation: slideInDown 0.5s ease;
-        }
-
-        @keyframes slideInDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Cards modernisées */
-        .card {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(0, 126, 93, 0.1);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-green), var(--secondary-yellow));
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-4px);
-        }
-
-        .card-title {
-            font-size: 1.375rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        /* Formulaires */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-input {
-            padding: 1rem 1.25rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: var(--transition);
-            background: var(--white);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 3px rgba(0, 126, 93, 0.1);
-        }
-
-        .form-input::placeholder {
-            color: var(--text-light);
-        }
-
-        /* Boutons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            justify-content: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
-            color: var(--white);
-            box-shadow: 0 4px 15px rgba(0, 126, 93, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 126, 93, 0.4);
-        }
-
-        /* Tableau modernisé */
-        .table-container {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(0, 126, 93, 0.1);
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table-header {
-            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
-            color: var(--white);
-        }
-
-        .table-header th {
-            padding: 1.25rem 1.5rem;
-            text-align: left;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .table-body tr {
-            transition: var(--transition);
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .table-body tr:hover {
-            background: var(--light-green);
-        }
-
-        .table-body td {
-            padding: 1.25rem 1.5rem;
-            font-weight: 500;
-        }
-
-        .table-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.875rem;
-            transition: var(--transition);
-        }
-
-        .action-edit {
-            color: var(--primary-green);
-            background: var(--light-green);
-        }
-
-        .action-edit:hover {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .action-delete {
-            color: #dc2626;
-            background: #fef2f2;
-        }
-
-        .action-delete:hover {
-            background: #dc2626;
-            color: var(--white);
-        }
-
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: var(--text-light);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        /* Type badges */
-        .type-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            background: var(--light-green);
-            color: var(--primary-green);
-            border: 1px solid rgba(0, 126, 93, 0.2);
-        }
-
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 126, 93, 0.05);
-        }
-
-        .breadcrumb a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .breadcrumb a:hover {
-            color: var(--primary-green);
-        }
-
-        .breadcrumb .current {
-            color: var(--primary-green);
-            font-weight: 600;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .main-container {
-                padding: 1rem;
-            }
-
-            .page-title {
-                font-size: 2rem;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .table-container {
-                overflow-x: auto;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/type_composant.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo-section">
-                <div class="logo-container">
-                    <i class="fas fa-utensils"></i>
-                </div>
-                <div class="brand-text">
-                    <h1 class="brand-title">Anaran'ny app</h1>
-                    <p class="brand-subtitle">Gestion intelligente des ingrédients</p>
-                </div>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="${pageContext.request.contextPath}">
+                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
+                </a>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Tableau de bord
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                            <span class="align-middle">Suivi de recette</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                            <span class="align-middle">Suivi de depense</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                            <span class="align-middle">Suivi de benefice</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Gestion
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/composant/">
+                            <span class="align-middle">Composants</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/composant/type">
+                            <span class="align-middle">Types de composant</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <nav class="nav-links">
-                <a href="${pageContext.request.contextPath}" class="nav-link">
-                    <i class="fas fa-home"></i>
-                    Accueil
+        </nav>
+
+        <div class="main">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
                 </a>
-                <a href="${pageContext.request.contextPath}/composant/" class="nav-link">
-                    <i class="fas fa-seedling"></i>
-                    Composants
-                </a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <span class="text-dark">Administrateur</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
-        </div>
-    </header>
 
-    <main class="main-container">
-        <%-- <div class="breadcrumb">
-            <a href="${pageContext.request.contextPath}">
-                <i class="fas fa-home"></i>
-                Accueil
-            </a>
-            <i class="fas fa-chevron-right"></i>
-            <a href="${pageContext.request.contextPath}/composant/">Composants</a>
-            <i class="fas fa-chevron-right"></i>
-            <span class="current">Types de composant</span>
-        </div> --%>
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="mb-3">
+                        <h1 class="h3 d-inline align-middle">
+                            <i class="bi bi-layer-group me-2"></i>Gestion des Types de Composant
+                        </h1>
+                    </div>
 
-        <div class="page-header">
-            <h1 class="page-title">
-                <i class="fas fa-layer-group"></i>
-                Gestion des Types de Composant
-            </h1>
-            <p class="page-subtitle">
-                Organisez vos ingrédients par catégories : légumes, fruits, épices, viandes...
-            </p>
-        </div>
+                    <c:if test="${not empty succes}">
+                        <div class="success-message">
+                            <i class="bi bi-check-circle-fill"></i>
+                            ${succes}
+                        </div>
+                    </c:if>
 
-        <c:if test="${not empty succes}">
-            <div class="success-message">
-                <i class="fas fa-check-circle"></i>
-                ${succes}
-            </div>
-        </c:if>
-
-        <div class="card">
-            <h2 class="card-title">
-                <i class="fas fa-plus-circle"></i>
-                ${empty typeComposant.id ? 'Créer un nouveau' : 'Modifier le'} type de composant
-            </h2>
-            <form action="save" method="post">
-                <input type="hidden" name="id" value="${typeComposant.id}">
-                
-                <div class="form-group">
-                    <label for="nom" class="form-label">
-                        <i class="fas fa-tag"></i>
-                        Nom du type
-                    </label>
-                    <input type="text" 
-                           id="nom" 
-                           name="nom" 
-                           value="${typeComposant.nom}" 
-                           class="form-input"
-                           required 
-                           placeholder="Ex: Légume, Fruit, Épice, Viande, Poisson, Céréale...">
-                </div>
-                
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    Enregistrer le type
-                </button>
-            </form>
-        </div>
-
-        <div class="card">
-            <h2 class="card-title">
-                <i class="fas fa-list"></i>
-                Liste des types de composant (${not empty typesComposant ? typesComposant.size() : 0})
-            </h2>
-            
-            <c:if test="${empty typesComposant}">
-                <div class="empty-state">
-                    <i class="fas fa-layer-group"></i>
-                    <h3>Aucun type de composant disponible</h3>
-                    <p>Créez votre premier type pour organiser vos ingrédients</p>
-                </div>
-            </c:if>
-            
-            <c:if test="${not empty typesComposant}">
-                <div class="table-container">
-                    <table class="table">
-                        <thead class="table-header">
-                            <tr>
-                                <th><i class="fas fa-hashtag"></i> ID</th>
-                                <th><i class="fas fa-tag"></i> Nom du type</th>
-                                <th><i class="fas fa-cogs"></i> Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-body">
-                            <c:forEach items="${typesComposant}" var="type">
-                                <tr>
-                                    <td><strong>#${type.id}</strong></td>
-                                    <td>
-                                        <div class="type-badge">
-                                            <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
-                                            ${type.nom}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        <i class="bi bi-plus-circle me-2"></i>
+                                        ${empty typeComposant.id ? 'Créer un nouveau' : 'Modifier le'} type de composant
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <form action="save" method="post">
+                                        <input type="hidden" name="id" value="${typeComposant.id}">
+                                        
+                                        <div class="mb-3">
+                                            <label for="nom" class="form-label">
+                                                <i class="bi bi-tag me-2"></i>
+                                                Nom du type
+                                            </label>
+                                            <input type="text" 
+                                                   id="nom" 
+                                                   name="nom" 
+                                                   value="${typeComposant.nom}" 
+                                                   class="form-control"
+                                                   required 
+                                                   placeholder="Ex: Légume, Fruit, Épice, Viande, Poisson, Céréale...">
                                         </div>
-                                    </td>
-                                    <td class="table-actions">
-                                        <a href="edit?id=${type.id}" class="action-btn action-edit">
-                                            <i class="fas fa-edit"></i>
-                                            Modifier
-                                        </a>
-                                        <a href="delete?id=${type.id}" 
-                                           class="action-btn action-delete" 
-                                           onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer le type \"${type.nom}\" ?\\n\\nAttention : Cette action supprimera aussi tous les composants associés à ce type.')">
-                                            <i class="fas fa-trash"></i>
-                                            Supprimer
-                                        </a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                                        
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-save me-2"></i>
+                                                Enregistrer
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        <i class="bi bi-list-ul me-2"></i>
+                                        Liste des types de composant
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <c:if test="${empty typesComposant}">
+                                        <div class="empty-state">
+                                            <i class="bi bi-layer-group"></i>
+                                            <h3>Aucun type de composant disponible</h3>
+                                            <p>Créez votre premier type pour organiser vos ingrédients</p>
+                                        </div>
+                                    </c:if>
+                                    
+                                    <c:if test="${not empty typesComposant}">
+                                        <div class="table-responsive">
+                                            <table id="typesTable" class="table table-hover" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Nom du type</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${typesComposant}" var="type">
+                                                        <tr>
+                                                            <td>${type.id}</td>
+                                                            <td>
+                                                                <div class="type-badge">
+                                                                    <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i>
+                                                                    ${type.nom}
+                                                                </div>
+                                                            </td>
+                                                            <td class="table-actions">
+                                                                <a href="edit?id=${type.id}" class="action-btn action-edit">
+                                                                    <i class="bi bi-pencil"></i>
+                                                                    Modifier
+                                                                </a>
+                                                                <a href="delete?id=${type.id}" 
+                                                                   class="action-btn action-delete" 
+                                                                   onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer le type \"${type.nom}\" ?\\n\\nAttention : Cette action supprimera aussi tous les composants associés à ce type.')">
+                                                                    <i class="bi bi-trash"></i>
+                                                                    Supprimer
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </c:if>
+            </main>
         </div>
-    </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 
     <script>
-        // Animation d'entrée pour les cartes
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.style.animation = 'slideInUp 0.6s ease forwards';
+    $(document).ready(function() {
+        // Initialisation de DataTables
+        if ($('#typesTable').length) {
+            $('#typesTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
+                },
+                responsive: true,
+                columnDefs: [
+                    { 
+                        targets: 0,
+                        className: 'dt-body-center',
+                        width: '80px'
+                    },
+                    { 
+                        targets: 2,
+                        orderable: false,
+                        searchable: false,
+                        width: '200px'
+                    }
+                ],
+                order: [[1, 'asc']], // Tri par nom par défaut
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 10,
+                initComplete: function() {
+                    // Personnalisation du champ de recherche
+                    $('.dataTables_filter input')
+                        .attr('placeholder', 'Rechercher un type...')
+                        .addClass('form-control form-control-sm');
+                    
+                    // Personnalisation du select de pagination
+                    $('.dataTables_length select')
+                        .addClass('form-select form-select-sm');
+                }
             });
-        });
+        }
 
-        // Animation CSS pour l'entrée des cartes
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInUp {
-                from {
-                    transform: translateY(30px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
+        // Confirmation avant suppression
+        $('.action-delete').on('click', function(e) {
+            if (!confirm($(this).attr('onclick').match(/return confirm\('([^']+)'/)[1])) {
+                e.preventDefault();
             }
-        `;
-        document.head.appendChild(style);
+        });
+    });
     </script>
 </body>
 </html>
