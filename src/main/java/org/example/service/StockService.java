@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.entity.Composant;
 import org.example.entity.Employe;
 import org.example.entity.Poste;
 import org.example.entity.Stock;
@@ -20,7 +21,7 @@ public class StockService {
     @Autowired
     private ComposantRepository composantRepository;
 
-    public StockService(StockRepository stockRepository, org.example.service.ComposantRepository composantRepository) {
+    public StockService(StockRepository stockRepository, ComposantRepository composantRepository) {
         this.stockRepository = stockRepository;
         this.composantRepository = composantRepository;
     }
@@ -46,7 +47,7 @@ public class StockService {
         stockRepository.deleteById(id);
     }
 
-    public List<Poste> getAllComposant() {
+    public List<Composant> getAllComposant() {
     return composantRepository.findAll();
 }
 }

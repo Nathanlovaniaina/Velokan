@@ -1,7 +1,9 @@
 package org.example.controller;
 
+import org.example.entity.Composant;
 import org.example.entity.Employe;
 import org.example.entity.Stock;
+import org.example.service.ComposantService;
 import org.example.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

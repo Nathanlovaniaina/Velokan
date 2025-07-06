@@ -14,6 +14,7 @@ C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\exa
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\SuiviDepensesRestController.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\SuiviRecettePageController.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\SuiviRecetteRestController.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\TachePlatController.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\TypeComposantController.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\controller\UniteController.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Commande.java 
@@ -29,6 +30,7 @@ C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\exa
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Poste.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Presence.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Stock.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\TachePlat.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\TypeComposant.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\entity\Unite.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\CommandeRepository.java 
@@ -48,6 +50,7 @@ C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\exa
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\SuiviBeneficesRepository.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\SuiviDepensesRepository.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\SuiviRecetteRepository.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\TachePlatRepository.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\TypeComposantRepository.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\repository\UniteRepository.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\CommandeService.java 
@@ -65,5 +68,6 @@ C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\exa
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\SuiviBeneficesService.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\SuiviDepensesService.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\SuiviRecetteService.java 
+C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\TachePlatService.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\TypeComposantService.java 
 C:\Users\lovan\Documents\S4\Projet_Md_Baovola\Gith\Velokan\src\main\java\org\example\service\UniteService.java 

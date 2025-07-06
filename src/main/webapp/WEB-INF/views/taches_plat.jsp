@@ -2,158 +2,192 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Velonkan - Gestion des Tâches Plat</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- Polices -->
+    <title>Gestion des Tâches Plat | VELONKAN</title>
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/taches_plat.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/poste.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/liste_tache_plat.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-    
-    .taches-container {
-        display: none;  /* Masqué par défaut */
-        background: white;
-    }
-
-    .taches-container.expanded {
-        display: block;  /* Visible quand la classe 'expanded' est ajoutée */
-    }
-
-    .plat-toggle {
-    transition: transform 0.3s ease;  /* Animation fluide */
-    color: #6c757d;
-    }
-
-    .plat-toggle.expanded {
-        transform: rotate(180deg);  /* Rotation de 180° quand expanded */
-    }
-    
-    .plat-header {
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-    }
-    
-    </style>
-
-    <!-- Font Awesome pour les icônes -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1><i class="fas fa-tasks"></i> Gestion des Tâches Plat</h1>
-        
-        <!-- Messages -->
-        <c:if test="${not empty message}">
-            <div class="message">${message}</div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div class="message error">${error}</div>
-        </c:if>
-        
-        <!-- Recherche -->
-        <div class="search-container">
-            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Rechercher par nom de plat ou tâche...">
-        </div>
-        
-        <!-- Contenu principal -->
-        <div id="mainContent">
-            <c:choose>
-                <c:when test="${empty tachesGroupeesParPlat}">
-                    <div class="empty-state">
-                        <i class="fas fa-clipboard-list"></i>
-                        <h3>Aucune tâche trouvée</h3>
-                        <p>Commencez par ajouter des tâches à vos plats pour les voir apparaître ici.</p>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="${pageContext.request.contextPath}">
+                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
+                </a>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Gestion
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/plats">
+                            <span class="align-middle">Plats</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="${pageContext.request.contextPath}/taches_plat">
+                            <span class="align-middle">Tâches Plat</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <span class="text-dark">Administrateur</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="mb-3">
+                        <h1 class="h3 d-inline align-middle">Gestion des Tâches Plat</h1>
                     </div>
-                </c:when>
-                <c:otherwise>
-                    <div id="platsContainer">
-                        <c:forEach var="platEntry" items="${tachesGroupeesParPlat}">
-                            <c:set var="platId" value="${platEntry.key}" />
-                            <c:set var="tachesPlat" value="${platEntry.value}" />
-                            <c:set var="premiereTache" value="${tachesPlat[0]}" />
-                            <c:set var="platNom" value="${premiereTache.plat.intitule}" />
-                            
-                            <div class="plat-group" data-plat-id="${platId}">
-                                <div class="plat-header" onclick="togglePlat(${platId})">
-                                    <div class="plat-name">
-                                        ${platNom}
-                                        <span class="task-count">${fn:length(tachesPlat)} tâche(s)</span>
-                                    </div>
-                                    <i class="fas fa-chevron-down plat-toggle" id="toggle-${platId}"></i>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Liste des tâches par plat</h5>
                                 </div>
-                                <div class="taches-container" id="taches-${platId}">
-                                    <table class="taches-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Nom de la tâche</th>
-                                                <th>Ordre</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="tache" items="${tachesPlat}">
-                                                <tr data-task-id="${tache.id}">
-                                                    <td>
-                                                        <div class="editable-cell" 
-                                                             contenteditable="true" 
-                                                             data-field="nom" 
-                                                             data-id="${tache.id}"
-                                                             data-plat-id="${tache.plat.id}"
-                                                             onblur="saveField(this)" 
-                                                             onkeypress="handleKeyPress(event, this)">${tache.nom}</div>
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" 
-                                                               class="editable-input" 
-                                                               value="${tache.ordre}" 
-                                                               data-field="order"
-                                                               data-id="${tache.id}"
-                                                               data-plat-id="${tache.plat.id}"
-                                                               onblur="saveField(this)" 
-                                                               onkeypress="handleKeyPress(event, this)" 
-                                                               min="1">
-                                                    </td>
-                                                    <td>
-                                                        <a href="delete/${tache.id}" 
-                                                           class="action-delete" 
-                                                           onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer la tâche \"${tache.nom}\" ?\n\nCette action est définitive et ne peut pas être annulée.')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+                                <div class="card-body">
+                                    <!-- Messages -->
+                                    <c:if test="${not empty message}">
+                                        <div class="message">${message}</div>
+                                    </c:if>
+                                    <c:if test="${not empty error}">
+                                        <div class="message error">${error}</div>
+                                    </c:if>
+                                    
+                                    <!-- Recherche -->
+                                    <div class="search-container">
+                                        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Rechercher par nom de plat ou tâche...">
+                                    </div>
+                                    
+                                    <!-- Contenu principal -->
+                                    <div id="mainContent">
+                                        <c:choose>
+                                            <c:when test="${empty tachesGroupeesParPlat}">
+                                                <div class="empty-state">
+                                                    <i class="fas fa-clipboard-list"></i>
+                                                    <h3>Aucune tâche trouvée</h3>
+                                                    <p>Commencez par ajouter des tâches à vos plats pour les voir apparaître ici.</p>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div id="platsContainer">
+                                                    <c:forEach var="platEntry" items="${tachesGroupeesParPlat}">
+                                                        <c:set var="platId" value="${platEntry.key}" />
+                                                        <c:set var="tachesPlat" value="${platEntry.value}" />
+                                                        <c:set var="premiereTache" value="${tachesPlat[0]}" />
+                                                        <c:set var="platNom" value="${premiereTache.plat.intitule}" />
+                                                        
+                                                        <div class="plat-group" data-plat-id="${platId}">
+                                                            <div class="plat-header" onclick="togglePlat(${platId})">
+                                                                <div class="plat-name">
+                                                                    ${platNom}
+                                                                    <span class="task-count">${fn:length(tachesPlat)} tâche(s)</span>
+                                                                </div>
+                                                                <i class="fas fa-chevron-down plat-toggle" id="toggle-${platId}"></i>
+                                                            </div>
+                                                            <div class="taches-container" id="taches-${platId}">
+                                                                <table class="taches-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Nom de la tâche</th>
+                                                                            <th>Ordre</th>
+                                                                            <th>Actions</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <c:forEach var="tache" items="${tachesPlat}">
+                                                                            <tr data-task-id="${tache.id}">
+                                                                                <td>
+                                                                                    <div class="editable-cell" 
+                                                                                         contenteditable="true" 
+                                                                                         data-field="nom" 
+                                                                                         data-id="${tache.id}"
+                                                                                         data-plat-id="${tache.plat.id}"
+                                                                                         onblur="saveField(this)" 
+                                                                                         onkeypress="handleKeyPress(event, this)">${tache.nom}</div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number" 
+                                                                                           class="editable-input" 
+                                                                                           value="${tache.ordre}" 
+                                                                                           data-field="order"
+                                                                                           data-id="${tache.id}"
+                                                                                           data-plat-id="${tache.plat.id}"
+                                                                                           onblur="saveField(this)" 
+                                                                                           onkeypress="handleKeyPress(event, this)" 
+                                                                                           min="1">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a href="delete/${tache.id}" 
+                                                                                       class="action-delete" 
+                                                                                       onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer la tâche \"${tache.nom}\" ?\n\nCette action est définitive et ne peut pas être annulée.')">
+                                                                                        <i class="fas fa-trash"></i>
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </c:forEach>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between mt-4">
+                                        <a href="${pageContext.request.contextPath}" class="btn btn-outline-secondary">
+                                            <i class="fas fa-home me-1"></i> Accueil
+                                        </a>
+                                        <a href="${pageContext.request.contextPath}/taches_plat/ajout" class="btn btn-primary">
+                                            <i class="fas fa-plus me-1"></i> Ajouter une tâche
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </c:forEach>
+                        </div>
                     </div>
-                </c:otherwise>
-            </c:choose>
+                </div>
+            </main>
         </div>
-
-        <a href="${pageContext.request.contextPath}/taches_plat/ajout" class="btn">
-            <i class="fas fa-plus"></i> Ajouter une tâche
-        </a>
-
-        <a href="${pageContext.request.contextPath}" class="btn">
-            Acceuil
-        </a>
     </div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 
     <script>
         // Variables globales
@@ -279,8 +313,5 @@
             initSearch();
         });
     </script>
-    <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
