@@ -1,3 +1,4 @@
+```html
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -11,12 +12,12 @@
 </head>
 <body>
   <div class="container">
-    <!-- <div class="header">
+    <div class="header">
       <h1 class="page-title">Listes des Commandes</h1>
       <div class="date-info">${currentDate}</div>
-    </div> -->
+    </div>
 
-    <!-- <div class="stats-summary">
+    <div class="stats-summary">
       <div class="stat-card">
         <span class="stat-number">${commandes.size()}</span>
         <span class="stat-label">Total commandes</span>
@@ -25,7 +26,7 @@
         <span class="stat-number">${totalPortions}</span>
         <span class="stat-label">Portions totales</span>
       </div>
-    </div> -->
+    </div>
 
     <div class="filters-section">
       <form action="${pageContext.request.contextPath}/commande/" method="get" class="filters-grid">
@@ -47,7 +48,6 @@
     </div>
     
     <div class="orders-list">
-
       <c:forEach var="commande" items="${commandes}">
         <div class="order-card">
           <div class="card-content">
@@ -58,7 +58,6 @@
               <div class="status-badge">${commande.entreprise.nom}</div>
             </div>
             <div class="order-details">
-              <!-- Regroupement des plats par id_plat -->
               <c:set var="platsVus" value="" />
               <c:set var="quantiteTotale" value="0" />
               <c:set var="prixTotalCommande" value="0" />
@@ -73,8 +72,12 @@
                   </c:forEach>
                   <c:set var="quantiteTotale" value="${quantiteTotale + quantiteParPlat}" />
                   <div class="detail-item">
+                    <div class="detail-label">Image</div>
+                    <div class="detail-value"><img src="${pageContext.request.contextPath}/images/${detail.plat.image}" alt="${detail.plat.intitule}" style="max-width: 100px; max-height: 100px;"></div>
+                  </div>
+                  <div class="detail-item">
                     <div class="detail-label">Plat</div>
-                    <div class="detail-value plat-name">${detail.plat.intitule}</div>
+                    <div class="detail-value plat-name">${detail.plat.intitule} (Prix: ${detail.plat.prix}€, Créé: <fmt:formatDate value="${detail.plat.dateCreation}" pattern="dd/MM/yyyy"/>)</div>
                   </div>
                   <div class="detail-item">
                     <div class="detail-label">Quantite</div>
@@ -92,12 +95,9 @@
                 <div class="detail-value datetime-value"><fmt:formatDate value="${commande.dateHeurePrevue}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
               </div>
               <div class="prix-total">
-                <a href="delete?id=${commande.id}&dateDebut=${dateDebut}&dateFin=${dateFin}"  onclick="return confirm('Confirmer la suppression ?')" class="btn btn-danger">Supprimer</a>
-                <a href="edit/?id=${commande.id}" class="btn btn-danger" >Modifier</a>
+                <a href="delete?id=${commande.id}&dateDebut=${dateDebut}&dateFin=${dateFin}" onclick="return confirm('Confirmer la suppression ?')" class="btn btn-danger">Supprimer</a>
+                <a href="edit/?id=${commande.id}" class="btn btn-danger">Modifier</a>
               </div>
-              
-            
-              <!-- <div class="prix-total">Prix Total: ${prixTotalCommande}</div> -->
             </div>
           </div>
         </div>
@@ -112,3 +112,4 @@
   </div>
 </body>
 </html>
+```

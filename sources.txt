@@ -1,6 +1,7 @@
 C:\Users\Rojo\Documents\GitHub\Velokan\src\main\java\org\example\controller\CommandeController.java 
 C:\Users\Rojo\Documents\GitHub\Velokan\src\main\java\org\example\controller\DepenseController.java 
 C:\Users\Rojo\Documents\GitHub\Velokan\src\main\java\org\example\controller\EmployeController.java 
+C:\Users\Rojo\Documents\GitHub\Velokan\src\main\java\org\example\controller\ImageController.java 
 C:\Users\Rojo\Documents\GitHub\Velokan\src\main\java\org\example\controller\PenaliteController.java 
 C:\Users\Rojo\Documents\GitHub\Velokan\src\main\java\org\example\controller\PosteController.java 
 C:\Users\Rojo\Documents\GitHub\Velokan\src\main\java\org\example\controller\StockController.java 

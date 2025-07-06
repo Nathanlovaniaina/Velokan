@@ -1,8 +1,8 @@
-
 package org.example.controller;
-import org.example.entity.Entreprise;
+
 import org.example.entity.Commandes;
 import org.example.entity.DetailCommande;
+import org.example.entity.Entreprise;
 import org.example.entity.Plat;
 import org.example.service.CommandeService;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -25,6 +25,7 @@ public class CommandeController {
 
     public CommandeController(CommandeService commandeService) {
         this.commandeService = commandeService;
+        
     }
 
     @InitBinder
@@ -101,9 +102,11 @@ public class CommandeController {
                                 @RequestParam(value = "dateFin", required = false) String dateFin,
                                 Model model) {
         try {
+            // Associer l'ID de l'entreprise
             commande.setEntreprise(new Entreprise());
             commande.getEntreprise().setId(idEntreprise);
 
+            // Reconstruire les détails avec les idPlat soumis
             if (commande.getDetails() != null && idPlats != null) {
                 for (int i = 0; i < commande.getDetails().size() && i < idPlats.length; i++) {
                     DetailCommande detail = commande.getDetails().get(i);

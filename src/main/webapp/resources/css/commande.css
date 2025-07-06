@@ -186,9 +186,20 @@ body {
   box-shadow: 0 6px 20px rgba(248, 200, 40, 0.3);
 }
 
+.btn-danger {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  color: white;
+  margin-right: 8px;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(229, 62, 62, 0.3);
+}
+
 .orders-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   gap: 24px;
   align-items: start;
 }
@@ -252,15 +263,100 @@ body {
 
 .order-details {
   display: grid;
-  gap: 16px;
+  gap: 20px;
 }
 
+/* Amélioration spécifique pour les détails des plats */
 .detail-item {
   background: linear-gradient(135deg, #f8fffe 0%, #f0f9f6 100%);
   padding: 16px;
   border-radius: 12px;
   border: 1px solid #e6f7f2;
   transition: all 0.2s ease;
+}
+
+/* Style spécial pour l'image du plat - priorité maximale */
+.detail-item:has(.detail-value img) {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
+  border: 2px solid #007e5d;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 126, 93, 0.1);
+  order: -1; /* Met l'image en premier */
+}
+
+.detail-item:has(.detail-value img):hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 126, 93, 0.2);
+}
+
+.detail-item:has(.detail-value img) .detail-value img {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 126, 93, 0.15);
+  border: 3px solid #f8c828;
+  transition: all 0.3s ease;
+}
+
+.detail-item:has(.detail-value img) .detail-value img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 126, 93, 0.3);
+}
+
+.detail-item:has(.detail-value img) .detail-label {
+  font-size: 12px;
+  color: #007e5d;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Style pour les informations du plat */
+.detail-item:has(.plat-name) {
+  background: linear-gradient(135deg, #f0f9f6 0%, #e6f7f2 100%);
+  border: 2px solid #007e5d;
+  border-left: 6px solid #f8c828;
+  padding: 18px;
+  order: -2; /* Met les infos du plat en deuxième */
+}
+
+.detail-item:has(.plat-name):hover {
+  transform: translateX(6px);
+  box-shadow: 0 4px 15px rgba(0, 126, 93, 0.15);
+}
+
+/* Style pour la quantité */
+.detail-item:has(.quantity-highlight) {
+  background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  border: 2px solid #f8c828;
+  border-left: 6px solid #007e5d;
+  padding: 18px;
+  text-align: center;
+  order: -3; /* Met la quantité en troisième */
+}
+
+.detail-item:has(.quantity-highlight):hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(248, 200, 40, 0.3);
+}
+
+/* Style pour la date et heure */
+.detail-item:has(.datetime-value) {
+  background: linear-gradient(135deg, #e6f7f2 0%, #d1f0e8 100%);
+  border: 2px solid #007e5d;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 126, 93, 0.1);
+}
+
+.detail-item:has(.datetime-value):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 126, 93, 0.2);
 }
 
 .detail-item:hover {
@@ -274,7 +370,7 @@ body {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 1px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .detail-value {
@@ -287,6 +383,7 @@ body {
   color: #007e5d;
   font-weight: 700;
   font-size: 16px;
+  line-height: 1.4;
 }
 
 .quantity-highlight {
@@ -295,12 +392,21 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 18px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .datetime-value {
   color: #007e5d;
   font-weight: 700;
+  font-size: 16px;
+}
+
+.prix-total {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f9f6;
+  text-align: center;
 }
 
 .empty-state {
@@ -362,16 +468,21 @@ body {
     gap: 16px;
     text-align: center;
   }
+  
+  .detail-item:has(.detail-value img) .detail-value img {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .orders-list {
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   }
 }
 
 @media (min-width: 1025px) {
   .orders-list {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   }
 }

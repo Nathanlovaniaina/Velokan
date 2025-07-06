@@ -1,6 +1,6 @@
 @echo off
 set WAR_NAME=VelonKan.war
-set SOURCE_DIR=C:\Users\Rojo\Documents\Velokan
+set SOURCE_DIR=C:\Users\Rojo\Documents\GitHub\Velokan
 set DEST_DIR=C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps
 
 echo Copying %WAR_NAME% to %DEST_DIR% ...

@@ -173,7 +173,7 @@
                 <option value="">Sélectionner un plat</option>
                 <c:forEach var="plat" items="${plats}">
                   <option value="${plat.id}" ${detail.plat != null && plat.id == detail.plat.id ? 'selected' : ''}>
-                    ${plat.intitule}
+                    ${plat.intitule} (Prix: ${plat.prix}€, Créé: <fmt:formatDate value="${plat.dateCreation}" pattern="dd/MM/yyyy"/>)
                   </option>
                 </c:forEach>
               </select>
@@ -197,7 +197,6 @@
         <a href="${pageContext.request.contextPath}/commande/?dateDebut=${dateDebut}&dateFin=${dateFin}" 
            class="btn btn-secondary">Annuler</a>
       </div>
-      
     </form>
   </div>
   <script>

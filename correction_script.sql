@@ -57,7 +57,7 @@ CREATE TABLE entreprise (
     adresse VARCHAR (100),
     latitude NUMERIC (10,2),
     longitude NUMERIC(10,2),
-    -- geom geometry(Point, 4326),
+    geom geometry(Point, 4326),
     debut_date_contrat DATE
 );
 
