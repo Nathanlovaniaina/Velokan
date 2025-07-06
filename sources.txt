@@ -1,12 +1,14 @@
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\CalendrierController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\CommandeController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\ComposantController.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\DashboardController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\DetailCommandeController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\DetailsPlatController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\EntrepriseController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\MvtStockController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\PlatController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\RecommandationController.java 
+C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\SettingsController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\StockController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\TypeComposantController.java 
 C:\xampp\htdocs\Velokan\src\main\java\org\example\controller\UniteController.java 

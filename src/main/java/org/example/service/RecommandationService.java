@@ -26,6 +26,10 @@ public class RecommandationService {
         LocalDate date = LocalDate.parse(dateStr);
         List<Plat> plats = platService.findAll();
         List<DetailCommande> commandes = detailCommandeService.findAll();
+        
+        System.out.println("DEBUG: Nombre de plats trouvés: " + plats.size());
+        System.out.println("DEBUG: Nombre de commandes trouvées: " + commandes.size());
+        
         Map<Integer, Integer> popularite = new HashMap<>();
         Map<Integer, Double> peremptionScore = new HashMap<>();
         int maxCmd = 1;
@@ -67,6 +71,9 @@ public class RecommandationService {
             double scorePop = (double)popularite.getOrDefault(plat.getId(), 0) / maxCmd;
             double scorePer = peremptionScore.getOrDefault(plat.getId(), 0.0);
             double score = 0.25 * scorePop + 0.85 * scorePer;
+            
+            System.out.println("DEBUG: Plat " + plat.getIntitule() + " - Score: " + score + " (Pop: " + scorePop + ", Per: " + scorePer + ")");
+            
             Map<String, Object> map = new HashMap<>();
             map.put("intitule", plat.getIntitule());
             map.put("image", plat.getImage());
@@ -74,8 +81,15 @@ public class RecommandationService {
             map.put("id", plat.getId());
             result.add(map);
         }
+        
+        System.out.println("DEBUG: Nombre de résultats avant tri: " + result.size());
+        
         // Trier par score décroissant et retourner les 2 meilleurs
         result.sort((a, b) -> Double.compare((Double)b.get("score"), (Double)a.get("score")));
+        
+        System.out.println("DEBUG: Nombre de résultats après tri: " + result.size());
+        System.out.println("DEBUG: Résultats finaux: " + result);
+        
         return result.subList(0, Math.min(2, result.size()));
     }
 } 

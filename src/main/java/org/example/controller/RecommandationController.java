@@ -22,6 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.Image;
+import com.lowagie.text.Font;
+import java.awt.Color;
+import com.lowagie.text.Element;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
 
 @Controller
 public class RecommandationController {
@@ -35,8 +42,11 @@ public class RecommandationController {
     @GetMapping(value = "/api/recommandation", produces = "application/json")
     @ResponseBody
     public Map<String, Object> getRecommandations(@RequestParam("date") String date) {
+        System.out.println("DEBUG: API recommandation appelée pour la date: " + date);
         Map<String, Object> result = new HashMap<>();
-        result.put("plats", recommandationService.recommanderPlats(date));
+        List<Map<String, Object>> plats = recommandationService.recommanderPlats(date);
+        System.out.println("DEBUG: Plats recommandés: " + plats);
+        result.put("plats", plats);
         return result;
     }
 
@@ -100,23 +110,84 @@ public class RecommandationController {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=publications.pdf");
         // Générer le PDF
-        Document document = new Document();
-        PdfWriter.getInstance(document, response.getOutputStream());
+        Document document = new Document(PageSize.A4, 40, 40, 60, 50);
+        PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
         document.open();
-        document.add(new Paragraph("Publications de plats du " + start + " au " + end));
-        document.add(new Paragraph(" "));
+
+        // Ajouter le logo
+        try {
+            String logoPath = "C:/xampp/htdocs/Velokan/velokan.png";
+            Image logo = Image.getInstance(logoPath);
+            logo.scaleToFit(100, 100);
+            logo.setAlignment(Image.ALIGN_CENTER);
+            document.add(logo);
+        } catch (Exception e) {
+            // Si le logo n'est pas trouvé, on continue sans planter
+        }
+
+        // Titre stylé
+        Font titleFont = new Font(Font.HELVETICA, 22, Font.BOLD, new Color(76, 175, 80)); // #4CAF50
+        Paragraph title = new Paragraph("Velokan - Export des publications de plats", titleFont);
+        title.setAlignment(Element.ALIGN_CENTER);
+        title.setSpacingAfter(10);
+        document.add(title);
+
+        // Période et date d'édition
+        Font infoFont = new Font(Font.HELVETICA, 12, Font.NORMAL, Color.DARK_GRAY);
+        Paragraph periode = new Paragraph("Période : " + start + " au " + end, infoFont);
+        periode.setAlignment(Element.ALIGN_CENTER);
+        periode.setSpacingAfter(5);
+        document.add(periode);
+        Paragraph edition = new Paragraph("Date d'édition : " + java.time.LocalDate.now(), infoFont);
+        edition.setAlignment(Element.ALIGN_CENTER);
+        edition.setSpacingAfter(15);
+        document.add(edition);
+
+        // Pour chaque date, afficher un tableau
+        Font dateFont = new Font(Font.HELVETICA, 14, Font.BOLD, new Color(76, 175, 80));
+        Font headerFont = new Font(Font.HELVETICA, 12, Font.BOLD, new Color(76, 175, 80));
+        Font cellFont = new Font(Font.HELVETICA, 12, Font.NORMAL, Color.BLACK);
         for (Map.Entry<java.time.LocalDate, java.util.List<org.example.entity.PublicationPlat>> entry : pubsByDate.entrySet()) {
-            document.add(new Paragraph("Date : " + entry.getKey()));
+            Paragraph datePara = new Paragraph("Date : " + entry.getKey(), dateFont);
+            datePara.setSpacingBefore(10);
+            datePara.setSpacingAfter(5);
+            document.add(datePara);
             PdfPTable table = new PdfPTable(2);
-            table.addCell("Plat");
-            table.addCell("Image (URL)");
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(5);
+            table.setSpacingAfter(10);
+            table.setWidths(new float[]{2, 3});
+            // En-têtes
+            PdfPCell cell1 = new PdfPCell(new Phrase("Plat", headerFont));
+            cell1.setBackgroundColor(new Color(232, 245, 233)); // vert très clair
+            cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell1.setPadding(8);
+            table.addCell(cell1);
+            PdfPCell cell2 = new PdfPCell(new Phrase("Image (URL)", headerFont));
+            cell2.setBackgroundColor(new Color(232, 245, 233));
+            cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell2.setPadding(8);
+            table.addCell(cell2);
+            // Lignes
             for (org.example.entity.PublicationPlat pub : entry.getValue()) {
-                table.addCell(pub.getPlat().getIntitule());
-                table.addCell(pub.getPlat().getImage() != null ? pub.getPlat().getImage() : "");
+                PdfPCell platCell = new PdfPCell(new Phrase(pub.getPlat().getIntitule(), cellFont));
+                platCell.setPadding(6);
+                table.addCell(platCell);
+                String img = pub.getPlat().getImage() != null ? pub.getPlat().getImage() : "";
+                PdfPCell imgCell = new PdfPCell(new Phrase(img, cellFont));
+                imgCell.setPadding(6);
+                table.addCell(imgCell);
             }
             document.add(table);
-            document.add(new Paragraph(" "));
         }
+
+        // Pied de page
+        Font footerFont = new Font(Font.HELVETICA, 10, Font.ITALIC, Color.GRAY);
+        Paragraph footer = new Paragraph("Velokan – Export PDF généré automatiquement", footerFont);
+        footer.setAlignment(Element.ALIGN_CENTER);
+        footer.setSpacingBefore(20);
+        document.add(footer);
+
         document.close();
     }
 } 
