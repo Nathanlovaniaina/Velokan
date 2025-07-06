@@ -2,6 +2,8 @@ package org.example.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -20,6 +22,7 @@ public class Plat {
     private Integer prix;
 
     @Column(name = "date_creation")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateCreation;
 
     // Constructeurs

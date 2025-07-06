@@ -34,7 +34,7 @@ public class DetailsPlatController {
                                     @RequestParam Map<String, String> allParams,
                                     Model model) {
 
-        // Recherche ou création du plat
+
         List<Plat> plats = platService.findByIntitule(nomPlat);
         Plat plat;
 
@@ -43,7 +43,8 @@ public class DetailsPlatController {
             plat.setIntitule(nomPlat);
             platService.save(plat);
         } else {
-            plat = plats.get(0); // On suppose qu’un nom correspond à un seul plat
+
+            plat = plats.get(0);
         }
 
         // Traitement des composants sélectionnés

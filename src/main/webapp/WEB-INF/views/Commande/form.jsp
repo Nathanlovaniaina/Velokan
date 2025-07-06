@@ -7,66 +7,240 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Gestion des commandes de cantine">
-    <meta name="author" content="Votre Société">
-    <title>Nouvelle Commande | Cantine Entreprise</title>
+    <title>Nouvelle Commande | VELONKAN</title>
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <!-- CSS -->
-    <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #007e5d !important;
+            --secondary-color: #f8c828 !important;
+            --primary-light: #e6f2ef !important;
+            --secondary-light: #fef8e6 !important;
+            --dark-color: #2c3e50 !important;
+            --light-color: #f8f9fa !important;
+            --danger-color: #e74c3c !important;
+            --success-color: #2ecc71 !important;
+            --info-color: #3498db !important;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif !important;
+            color: var(--dark-color) !important;
+        }
+
+        .sidebar-nav{
+            flex-grow: 0;
+        }
+
+        .wrapper {
+            background: var(--primary-light) !important;
+        }
+        
+        /* Sidebar styling */
+        #sidebar,
+        .sidebar-content {
+            background-color: #fff !important;
+            color: #222e3c !important;
+        }
+        
+        .sidebar-brand {
+            color: #fff !important;
+            font-weight: 700 !important;
+            background-color: #fff  !important;
+            letter-spacing: 2px;
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 1rem 0.5rem;
+            border-radius: 8px;
+            margin: 1rem 0.5rem 1.5rem 0.5rem;
+            display: block;
+            font-style: normal;
+        }
+        
+        .sidebar-link.active {
+            color: var(--secondary-color) !important;
+        }
+        
+        .sidebar-link{
+            background-color: white !important;
+            color: #222e3c !important;
+        }
+        .sidebar-brand {
+            color: var(--secondary-color)  !important;
+            text-decoration: none;
+        }
+        
+        .sidebar-link:hover {
+            background-color: var(--secondary-light) !important;
+            color: var(--primary-color) !important;
+        }
+        
+        /* Navbar styling */
+        .navbar-bg {
+            background-color: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .sidebar-toggle {
+            color: var(--primary-color) !important;
+        }
+        
+        /* Card styling */
+        .card {
+            border: none !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
+            border-radius: 10px !important;
+            overflow: hidden !important;
+        }
+
+        .sidebar-header{
+            color: var(--primary-color);
+        }
+        
+        .card-header {
+            background-color: white !important;
+            border-bottom: none !important;
+            padding: 1rem 1.5rem !important;
+        }
+
+        .card-title {
+            color: #007e5d !important;
+            font-size: 20px;
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006a4d !important;
+            border-color: #006a4d !important;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color) !important;
+            border-color: var(--success-color) !important;
+        }
+        
+        /* Form styling */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+        }
+        
+        /* Modal styling */
+        .modal-header {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        /* Toast styling */
+        .toast-header {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        /* Custom styles */
         .modal-body {
             max-height: 60vh;
             overflow-y: auto;
         }
+        
         .plat-row {
             align-items: center;
             margin-bottom: 10px;
         }
+        
         .btn-select-plat {
             white-space: nowrap;
         }
+        
         /* Styles pour la modal des plats */
         .modal-plats .modal-content {
             height: 90vh;
             display: flex;
             flex-direction: column;
         }
+        
         .modal-plats .modal-body {
             overflow: hidden;
             padding: 0;
             flex: 1;
         }
+        
         .state-container {
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        /* Correction pour DataTables */
+        
+        /* DataTables styling */
         .dataTables_wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
             height: 100%;
         }
+        
         .dataTables_scroll {
             flex: 1;
         }
+        
         .dataTables_scrollHead {
             position: sticky;
             top: 0;
             z-index: 10;
+            background-color: white !important;
         }
+        
         .dataTables_scrollBody {
             overflow-y: auto !important;
+        }
+        
+        /* Select2 styling */
+        .select2-container--bootstrap-5 .select2-selection {
+            min-height: 38px;
+            border: 1px solid #ced4da !important;
+        }
+        
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+            padding-top: 4px;
+        }
+        
+        .select2-container--bootstrap-5 .select2-dropdown {
+            border-color: #ced4da !important;
+        }
+        
+        .select2-container--bootstrap-5.select2-container--focus .select2-selection {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
         }
     </style>
 </head>
@@ -74,21 +248,169 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">Cantine Entreprise</span>
+          <nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+            <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
+        </a>
+
+        <!-- Tableau de bord -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Tableau de bord
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                    <span class="align-middle">Suivi de recette</span>
                 </a>
-                <ul class="sidebar-nav">
-                    <!-- Votre menu existant -->
-                </ul>
-            </div>
-        </nav>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                    <span class="align-middle">Suivi de dépense</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                    <span class="align-middle">Suivi de bénéfice</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/commandes/count">
+                    <span class="align-middle">Évolution de Commandes</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Commandes -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Commandes
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/commande/form">
+                    <i class="align-middle" data-feather="shopping-cart"></i> 
+                    <span class="align-middle">Nouvelle Commande</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/plats/">
+                    <i class="align-middle" data-feather="coffee"></i>
+                    <span class="align-middle">Plats</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Gestion des ressources -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Ressources Humaines
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/">
+                    <i class="align-middle" data-feather="users"></i>
+                    <span class="align-middle">Employés</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/paiement_salaire">
+                    <i class="align-middle" data-feather="dollar-sign"></i>
+                    <span class="align-middle">Paiement salaire</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/poste/">
+                    <i class="align-middle" data-feather="briefcase"></i>
+                    <span class="align-middle">Postes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/mvtcontrat/create">
+                    <i class="align-middle" data-feather="file-text"></i>
+                    <span class="align-middle">Contrats</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/penalite/">
+                    <i class="align-middle" data-feather="alert-circle"></i>
+                    <span class="align-middle">Pénalités</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Gestion des stocks -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Gestion des stocks
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/listStock/">
+                    <i class="align-middle" data-feather="box"></i>
+                    <span class="align-middle">Stocks</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/composant/">
+                    <i class="align-middle" data-feather="cpu"></i>
+                    <span class="align-middle">Composants</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/type_composant/">
+                    <i class="align-middle" data-feather="layers"></i>
+                    <span class="align-middle">Types de composants</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/unite/">
+                    <i class="align-middle" data-feather="divide-square"></i>
+                    <span class="align-middle">Unités</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/categories/">
+                    <i class="align-middle" data-feather="grid"></i>
+                    <span class="align-middle">Catégories</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Administration -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Administration
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/entreprise/create">
+                    <i class="align-middle" data-feather="home"></i>
+                    <span class="align-middle">Créer entreprise</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/depense/">
+                    <i class="align-middle" data-feather="credit-card"></i>
+                    <span class="align-middle">Dépenses</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
         <div class="main">
             <!-- Navbar -->
             <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <!-- Votre navbar existante -->
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <span class="text-dark">Administrateur</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
 
             <main class="content">
@@ -96,7 +418,15 @@
                     <div class="mb-3">
                         <h1 class="h3 d-inline align-middle">Nouvelle Commande</h1>
                     </div>
-                    
+
+                    <!-- Affichage des erreurs -->
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            ${error}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                        </div>
+                    </c:if>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -172,6 +502,29 @@
                                             </button>
                                         </div>
                                     </form>
+                                    <hr class="my-4">
+
+                                    <h5 class="card-title mb-3">Importer une commande via CSV</h5>
+                                                                    
+                                    <form action="importCsvCommande" method="POST" enctype="multipart/form-data">
+                                        <div class="row align-items-end">
+                                            <div class="col-md-8">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Fichier CSV</label>
+                                                    <input type="file" class="form-control" name="file" accept=".csv" required>
+                                                    <div class="form-text">
+                                                        Format attendu : <code>NomPlat,Quantite,DateLivraison(yyyy-MM-dd'T'HH:mm),NomEntreprise</code>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="bi bi-upload me-1"></i> Importer la commande
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.entity.Employe;
-import org.example.entity.Poste;
 import org.example.service.EmployeService;
 import org.example.entity.PaiementSalaire;
 import org.example.service.PaiementSalaireService;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.List;
 import java.util.Date;
 import java.util.Calendar;
 

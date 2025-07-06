@@ -11,97 +11,163 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/suivirecette.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
-    
-    <style>
-        .card-table {
-            margin-bottom: 0;
-        }
-        .positive {
-            color: #2e7d32;
-        }
-        .negative {
-            color: #c62828;
-        }
-        .high-retard {
-            background-color: #ffebee;
-        }
-        .medium-retard {
-            background-color: #fff8e1;
-        }
-        .badge-retard {
-            background-color: #ff5722;
-            color: white;
-        }
-        .form-filter {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 0.25rem;
-            margin-bottom: 1rem;
-        }
-        .chart-container {
-            position: relative;
-            height: 300px;
-            margin-bottom: 2rem;
-        }
-        .dataTables_wrapper .dataTables_filter input {
-            margin-left: 0.5em;
-        }
-        .dt-buttons .btn {
-            margin-right: 5px;
-        }
-        /* Style pour les lignes qui dépassent le seuil */
-        .depasse-seuil {
-            background-color: #fff8e1 !important; /* Fond jaune clair */
-            font-weight: bold;
-            border-left: 4px solid #ff5722; /* Bordure orange à gauche */
-        }
-
-        /* Style pour le badge de retard */
-        .badge-retard {
-            background-color: #ff5722;
-            color: white;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 0.85em;
-        }
-    </style>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">Suivi Recettes</span>
-                </a>
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+            <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
+        </a>
 
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Tableaux de bord
-                    </li>
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="#">
-                            <i class="align-middle" data-feather="pie-chart"></i> 
-                            <span class="align-middle">Dashboard</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <!-- Tableau de bord -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Tableau de bord
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                    <span class="align-middle">Suivi de recette</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                    <span class="align-middle">Suivi de dépense</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                    <span class="align-middle">Suivi de bénéfice</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/commandes/count">
+                    <span class="align-middle">Évolution de Commandes</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Commandes -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Commandes
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/commande/form">
+                    <i class="align-middle" data-feather="shopping-cart"></i> 
+                    <span class="align-middle">Nouvelle Commande</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/plats/">
+                    <i class="align-middle" data-feather="coffee"></i>
+                    <span class="align-middle">Plats</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Gestion des ressources -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Ressources Humaines
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/">
+                    <i class="align-middle" data-feather="users"></i>
+                    <span class="align-middle">Employés</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/paiement_salaire">
+                    <i class="align-middle" data-feather="dollar-sign"></i>
+                    <span class="align-middle">Paiement salaire</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/poste/">
+                    <i class="align-middle" data-feather="briefcase"></i>
+                    <span class="align-middle">Postes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/mvtcontrat/create">
+                    <i class="align-middle" data-feather="file-text"></i>
+                    <span class="align-middle">Contrats</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/penalite/">
+                    <i class="align-middle" data-feather="alert-circle"></i>
+                    <span class="align-middle">Pénalités</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Gestion des stocks -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Gestion des stocks
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/listStock/">
+                    <i class="align-middle" data-feather="box"></i>
+                    <span class="align-middle">Stocks</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/composant/">
+                    <i class="align-middle" data-feather="cpu"></i>
+                    <span class="align-middle">Composants</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/type_composant/">
+                    <i class="align-middle" data-feather="layers"></i>
+                    <span class="align-middle">Types de composants</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/unite/">
+                    <i class="align-middle" data-feather="divide-square"></i>
+                    <span class="align-middle">Unités</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/categories/">
+                    <i class="align-middle" data-feather="grid"></i>
+                    <span class="align-middle">Catégories</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Administration -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Administration
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/entreprise/create">
+                    <i class="align-middle" data-feather="home"></i>
+                    <span class="align-middle">Créer entreprise</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/depense/">
+                    <i class="align-middle" data-feather="credit-card"></i>
+                    <span class="align-middle">Dépenses</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
         <div class="main">
             <nav class="navbar navbar-expand navbar-light navbar-bg">
@@ -146,8 +212,6 @@
                                                 <label class="form-label">Entreprise :</label>
                                                 <select class="form-select" id="entrepriseId" name="entrepriseId">
                                                     <option value="">Toutes les entreprises</option>
-                                                    <option value="1">Orange</option>
-                                                    <option value="2"> Canal+</option>
                                                     <c:forEach items="${entreprises}" var="entreprise">
                                                         <option value="${entreprise.id}">${entreprise.nom}</option>
                                                     </c:forEach>
@@ -157,15 +221,15 @@
                                                 <label class="form-label">Plat :</label>
                                                 <select class="form-select" id="platId" name="platId">
                                                     <option value="">Tous les plats</option>
-                                                    <option value="1">Riz Poulet</option>
-                                                    <option value="2">Soupe de légumes</option>
                                                     <c:forEach items="${plats}" var="plat">
                                                         <option value="${plat.id}">${plat.intitule}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-filter me-1"></i> Afficher
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -217,7 +281,9 @@
                                                 <input type="text" class="form-control" id="entrepriseFilter" name="entrepriseFilter" placeholder="Filtrer par entreprise">
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Filtrer</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-filter me-1"></i> Filtrer
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -274,7 +340,9 @@
                                                 <input type="date" class="form-control" id="endDateJournalier" name="endDate" value="2025-12-31" required>
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Afficher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-filter me-1"></i> Afficher
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -327,15 +395,12 @@
                                                 <input type="number" class="form-control" id="seuilRetard" name="seuilRetard" min="0" value="30">
                                             </div>
                                             <div class="col-md-2 align-self-end">
-                                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="bi bi-search me-1"></i> Rechercher
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
-                                    
-                                    <!-- Graphique Factures en Retard -->
-                                    <!-- <div class="chart-container">
-                                        <canvas id="facturesRetardChart"></canvas>
-                                    </div> -->
                                     
                                     <div class="table-responsive">
                                         <table class="table table-hover my-0" id="tableFacturesRetard">
@@ -376,6 +441,15 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
     <script>
     // Variables pour stocker les instances de graphiques et DataTables
     let revenuMensuelChart, revenuEntrepriseChart, revenuJournalierChart, facturesRetardChart;
@@ -493,26 +567,17 @@
             order: [[0, 'desc']]
         });
 
-        tableFacturesRetard = $('#tableFacturesRetard').DataTable({
-            dom: '<"top"Bf>rt<"bottom"lip><"clear">',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
-            },
-            responsive: true,
+        tableFacturesRetard = initDataTable('#tableFacturesRetard', {
             columns: [
                 { 
-                    data: 'facture', // Cette propriété doit correspondre à votre JSON
+                    data: 'facture',
                     render: function(data, type, row) {
-                        // Gestion des valeurs nulles ou undefined
                         return data !== undefined && data !== null ? 'FACT-' + data.toString().padStart(3, '0') : 'N/A';
                     }
                 },
                 { 
                     data: 'entreprise',
-                    defaultContent: 'Inconnu' // Valeur par défaut si la propriété est manquante
+                    defaultContent: 'Inconnu'
                 },
                 { 
                     data: 'montant_total',
@@ -531,12 +596,21 @@
                 { 
                     data: 'jours_retard',
                     className: 'text-end',
-                    render: function(data) {
-                        return data !== undefined ? data : '0';
+                    render: function(data, type, row) {
+                        const seuil = $('#seuilRetard').val() || 30;
+                        const retardClass = getRetardClass(data, seuil);
+                        const badge = data >= seuil ? ' <span class="badge-retard">Retard</span>' : '';
+                        return '<span class="' + retardClass + '">' + (data !== undefined ? data : '0') + badge + '</span>';
                     }
                 }
             ],
-            order: [[4, 'desc']] // Tri par jours de retard par défaut
+            order: [[4, 'desc']],
+            createdRow: function(row, data, dataIndex) {
+                const seuil = $('#seuilRetard').val() || 30;
+                if (data.jours_retard >= seuil) {
+                    $(row).addClass('depasse-seuil');
+                }
+            }
         });
 
         function updateRevenuMensuelChart(labels, data) {
@@ -553,8 +627,8 @@
                     datasets: [{
                         label: 'Revenu Mensuel (€)',
                         data: data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(0, 126, 93, 0.5)',
+                        borderColor: 'rgba(0, 126, 93, 1)',
                         borderWidth: 1
                     }]
                 },
@@ -604,25 +678,25 @@
                         label: 'Revenu par Entreprise (€)',
                         data: data,
                         backgroundColor: [
-                        'rgba(78, 115, 223, 0.6)',   // Bleu professionnel
-                        'rgba(54, 185, 204, 0.6)',    // Turquoise
-                        'rgba(255, 140, 0, 0.6)',     // Orange vif
-                        'rgba(155, 89, 182, 0.6)',    // Violet
-                        'rgba(46, 204, 113, 0.6)',    // Vert émeraude
-                        'rgba(231, 76, 60, 0.6)',     // Rouge
-                        'rgba(241, 196, 15, 0.6)',    // Jaune
-                        'rgba(52, 152, 219, 0.6)'     // Bleu ciel
-                    ],
-                    borderColor: [
-                        'rgba(78, 115, 223, 1)',
-                        'rgba(54, 185, 204, 1)',
-                        'rgba(255, 140, 0, 1)',
-                        'rgba(155, 89, 182, 1)',
-                        'rgba(46, 204, 113, 1)',
-                        'rgba(231, 76, 60, 1)',
-                        'rgba(241, 196, 15, 1)',
-                        'rgba(52, 152, 219, 1)'
-                    ],
+                            'rgba(0, 126, 93, 0.6)',
+                            'rgba(248, 200, 40, 0.6)',
+                            'rgba(46, 204, 113, 0.6)',
+                            'rgba(52, 152, 219, 0.6)',
+                            'rgba(155, 89, 182, 0.6)',
+                            'rgba(231, 76, 60, 0.6)',
+                            'rgba(241, 196, 15, 0.6)',
+                            'rgba(44, 62, 80, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(0, 126, 93, 1)',
+                            'rgba(248, 200, 40, 1)',
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(52, 152, 219, 1)',
+                            'rgba(155, 89, 182, 1)',
+                            'rgba(231, 76, 60, 1)',
+                            'rgba(241, 196, 15, 1)',
+                            'rgba(44, 62, 80, 1)'
+                        ],
                         borderWidth: 1
                     }]
                 },
@@ -663,16 +737,16 @@
                     datasets: [{
                         label: 'Revenu Journalier (€)',
                         data: data.map(item => item.revenu),
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(0, 126, 93, 1)',
+                        backgroundColor: 'rgba(0, 126, 93, 0.1)',
                         borderWidth: 2,
                         tension: 0.1,
                         fill: true
                     }, {
                         label: 'Revenu Veille (€)',
                         data: data.map(item => item.veille || null),
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(248, 200, 40, 1)',
+                        backgroundColor: 'rgba(248, 200, 40, 0.1)',
                         borderWidth: 2,
                         borderDash: [5, 5],
                         tension: 0.1
@@ -707,81 +781,6 @@
                     }
                 }
             });
-        }
-
-        function updateFacturesRetardChart(labels, data) {
-            const ctx = document.getElementById('facturesRetardChart');
-
-            // Détruire le graphique existant s'il existe
-            if (facturesRetardChart) {
-                facturesRetardChart.destroy();
-            }
-
-            // Vérifier que le contexte existe
-            if (!ctx) {
-                console.error("L'élément canvas pour le graphique des factures en retard n'existe pas");
-                return;
-            }
-
-            try {
-                facturesRetardChart = new Chart(ctx.getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Montant des factures (€)',
-                            data: data.map(item => item.montant),
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1,
-                            yAxisID: 'y'
-                        }, {
-                            label: 'Jours de retard',
-                            data: data.map(item => item.retard),
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1,
-                            type: 'line',
-                            yAxisID: 'y1'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                                title: {
-                                    display: true,
-                                    text: 'Montant (€)'
-                                }
-                            },
-                            y1: {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
-                                title: {
-                                    display: true,
-                                    text: 'Jours de retard'
-                                },
-                                grid: {
-                                    drawOnChartArea: false
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Entreprise'
-                                }
-                            }
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error("Erreur lors de la création du graphique:", error);
-            }
         }
 
         function loadData(startDate, endDate, entrepriseId, platId) {
@@ -883,73 +882,23 @@
         }
 
         function loadFacturesRetardData(startDate, endDate, seuilRetard) {
-            // Convertir le seuil en nombre
-            seuilRetard = Number(seuilRetard) || 0;
-
             $.ajax({
                 url: '${pageContext.request.contextPath}/api/suiviRecette/factures_retard',
                 method: 'GET',
                 data: { 
                     startDate: startDate, 
                     endDate: endDate,
-                    seuilRetard: seuilRetard
+                    seuilRetard: seuilRetard || 30
                 },
                 success: function(data) {
-                    console.log('Données reçues:', data);
-                
                     if (!data || !Array.isArray(data)) {
                         console.error('Données invalides reçues');
                         tableFacturesRetard.clear().draw();
                         return;
                     }
                 
-                    // Préparer les données avec un indicateur de dépassement de seuil
-                    const validatedData = data.map(item => {
-                        const retard = item.jours_retard || 0;
-                        return {
-                            facture: item.facture !== undefined ? item.facture : null,
-                            entreprise: item.entreprise || 'Inconnu',
-                            montant_total: item.montant_total || 0,
-                            date_emission: item.date_emission || null,
-                            jours_retard: retard,
-                            // Ajout d'un champ pour le tri et le style
-                            depasseSeuil: retard >= seuilRetard,
-                            // Valeur de tri (les dépassements en premier)
-                            triPriorite: retard >= seuilRetard ? 1 : 0
-                        };
-                    });
-                
-                    // Trier les données (dépassements en premier, puis par jours de retard décroissant)
-                    validatedData.sort((a, b) => {
-                        if (a.depasseSeuil !== b.depasseSeuil) {
-                            return b.triPriorite - a.triPriorite;
-                        }
-                        return b.jours_retard - a.jours_retard;
-                    });
-                
-                    // Effacer et recréer le DataTable avec les nouvelles données
-                    tableFacturesRetard.clear().rows.add(validatedData).draw();
-
-                    // Appliquer le style aux lignes qui dépassent le seuil
-                    tableFacturesRetard.rows().every(function() {
-                        const rowData = this.data();
-                        if (rowData.depasseSeuil) {
-                            $(this.node()).addClass('depasse-seuil');
-                        } else {
-                            $(this.node()).removeClass('depasse-seuil');
-                        }
-                    });
-                
-                    // Mise à jour du graphique (top 10 seulement)
-                    const topData = validatedData.slice(0, 10);
-                    if (topData.length > 0) {
-                        const labels = topData.map(item => item.entreprise);
-                        const chartData = topData.map(item => ({
-                            montant: item.montant_total,
-                            retard: item.jours_retard
-                        }));
-                        updateFacturesRetardChart(labels, chartData);
-                    }
+                    // Mettre à jour les données de la table
+                    tableFacturesRetard.clear().rows.add(data).draw();
                 },
                 error: function(xhr, status, error) {
                     console.error('Erreur AJAX:', error);

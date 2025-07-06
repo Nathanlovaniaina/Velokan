@@ -31,4 +31,8 @@ public class EntrepriseService {
     public void deleteById(Integer id) {
         entrepriseRepository.deleteById(id);
     }
+
+    public Optional<Entreprise> findByNom(String nom){
+        return entrepriseRepository.findByNom(nom);
+    }
 }
