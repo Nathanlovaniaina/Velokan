@@ -230,3 +230,6 @@ ADD CONSTRAINT details_plat_id_plat_fkey
 FOREIGN KEY (id_plat)
 REFERENCES plat(id)
 ON DELETE CASCADE;
+
+ALTER TABLE penalite
+ALTER COLUMN pourcentage SET DEFAULT 0;
