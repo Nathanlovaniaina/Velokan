@@ -23,28 +23,7 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="${pageContext.request.contextPath}">
-                    <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
-                </a>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Gestion
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="${pageContext.request.contextPath}/plats">
-                            <span class="align-middle">Plats</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="${pageContext.request.contextPath}/taches_plat">
-                            <span class="align-middle">Tâches Plat</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <jsp:include page="/WEB-INF/views/navbar.jsp" />
 
         <div class="main">
             <!-- Navbar -->
