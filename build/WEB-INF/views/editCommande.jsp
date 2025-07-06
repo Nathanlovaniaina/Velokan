@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -198,6 +197,7 @@
         <a href="${pageContext.request.contextPath}/commande/?dateDebut=${dateDebut}&dateFin=${dateFin}" 
            class="btn btn-secondary">Annuler</a>
       </div>
+      
     </form>
   </div>
   <script>

@@ -11,22 +11,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- <div class="header">
-      <h1 class="page-title">Listes des Commandes</h1>
-      <div class="date-info">${currentDate}</div>
-    </div> -->
-
-    <!-- <div class="stats-summary">
-      <div class="stat-card">
-        <span class="stat-number">${commandes.size()}</span>
-        <span class="stat-label">Total commandes</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number">${totalPortions}</span>
-        <span class="stat-label">Portions totales</span>
-      </div>
-    </div> -->
-
     <div class="filters-section">
       <form action="${pageContext.request.contextPath}/commande/" method="get" class="filters-grid">
         <div class="filter-group">
