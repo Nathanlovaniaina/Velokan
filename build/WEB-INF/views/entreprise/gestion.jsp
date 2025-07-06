@@ -5,192 +5,369 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Entreprises</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gestion des Entreprises | VELONKAN</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/gestion.css" rel="stylesheet">
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; padding: 20px; background: transparent; }
-        .container { max-width: 1200px; margin: 0 auto; background: transparent; border-radius: 20px; padding: 30px; box-shadow: 0 20px 40px #007e5d; backdrop-filter: blur(10px); }
-        .header { text-align: center; margin-bottom: 40px; color: #f8c828; }
-        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .header p { font-size: 1.1rem; color: #f8c828; }
-        .tabs { display: flex; margin-bottom: 30px; background: transparent; border-radius: 15px; padding: 5px; }
-        .tab-button { flex: 1; padding: 15px 20px; border: none; background: transparent; cursor: pointer; border-radius: 10px; font-size: 1rem; font-weight: 600; transition: all 0.3s ease; color: #f8c828; border: 1px solid #007e5d; }
-        .tab-button.active { background: transparent; color: #f8c828; transform: translateY(-2px); box-shadow: 0 5px 15px #007e5d; border: 1px solid #007e5d; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #f8c828; }
-        .form-control { width: 100%; padding: 15px; border: 2px solid #f8c828; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; background: transparent; color: #f8c828; }
-        .form-control:focus { outline: none; border-color: #007e5d; box-shadow: 0 0 0 3px #f8c828; transform: translateY(-2px); }
-        .form-control:invalid { border-color: #f8c828; }
-        .btn { padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid; }
-        .btn-primary { background: transparent; color: #007e5d; border-color: #f8c828; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px #007e5d; }
-        .btn-secondary { background: transparent; color: #f8c828; border-color: #f8c828; }
-        .btn-danger { background: transparent; color: #ff4d4f; border-color: #ff4d4f; }
-        .btn-sm { padding: 8px 16px; font-size: 0.9rem; }
-        .success-message, .error-message { padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; font-weight: 600; background: transparent; }
-        .success-message { color: #007e5d; border: 1px solid #007e5d; }
-        .error-message { color: #007e5d; border: 1px solid #f8c828; }
-        #map { width: 100%; height: 400px; border-radius: 15px; margin: 20px 0; box-shadow: 0 10px 30px #007e5d; }
-        .coordinates-display { background: transparent; padding: 15px; border-radius: 10px; margin-top: 10px; font-family: monospace; border: 1px solid #f8c828; }
-        .quartier-dropdown { position: relative; display: inline-block; margin-bottom: 15px; }
-        .quartier-list { display: none; position: absolute; background: rgba(0, 126, 93, 0.9); border: 1px solid #f8c828; border-radius: 10px; max-height: 200px; overflow-y: auto; width: 200px; z-index: 1000; backdrop-filter: blur(5px); }
-        .quartier-list.show { display: block; }
-        .quartier-list-item { padding: 10px; cursor: pointer; color: #f8c828; border-bottom: 1px solid #f8c828; }
-        .quartier-list-item:hover { background: rgba(248, 200, 40, 0.2); }
-        .quartier-list-item.selected { background: rgba(248, 200, 40, 0.3); color: #f8c828; }
-        .quartier-list-item:last-child { border-bottom: none; }
-        .entreprise-list { display: grid; gap: 20px; }
-        .entreprise-card { background: transparent; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px #007e5d; transition: all 0.3s ease; border: 1px solid #f8c828; }
-        .entreprise-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px #007e5d; }
-        .entreprise-name { font-size: 1.3rem; font-weight: bold; color: #f8c828; margin-bottom: 10px; }
-        .entreprise-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .info-item { display: flex; align-items: center; gap: 10px; color: #f8c828; }
-        .info-icon { width: 20px; height: 20px; fill: #007e5d; }
-        .entreprise-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-        @media (max-width: 768px) {
-            .container { padding: 20px; margin: 10px; }
-            .header h1 { font-size: 2rem; }
-            .tabs { flex-direction: column; }
-            .entreprise-info { grid-template-columns: 1fr; }
-            .entreprise-actions { justify-content: center; }
-            .quartier-dropdown { width: 100%; }
-            .quartier-list { width: 100%; }
-        }
-    </style>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Gestion des Entreprises</h1>
-            <p>Antananarivo - Madagascar</p>
-        </div>
-        <c:if test="${not empty message}">
-            <div class="${message.contains('Erreur') ? 'error-message' : 'success-message'}">${message}</div>
-        </c:if>
-        <div class="tabs">
-            <button class="tab-button <c:if test='${tab != \"list\"}'>active</c:if>" onclick="showTab('create')">Créer Entreprise</button>
-            <button class="tab-button <c:if test='${tab == \"list\"}'>active</c:if>" onclick="showTab('list')">Liste des Entreprises</button>
-        </div>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+            <span class="align-middle"><span style="color: #006a4d;">VELON</span><span style="color: #f8c828;">KAN</span></span>
+        </a>
 
-        <!-- Onglet Création -->
-        <div id="create-tab" class="tab-content <c:if test='${tab != \"list\"}'>active</c:if>">
-            <c:choose>
-                <c:when test="${entreprise.id != null}">
-                    <form id="entreprise-form" action="${pageContext.request.contextPath}/entreprise/update" method="post">
-                        <input type="hidden" name="id" value="${entreprise.id}"/>
-                </c:when>
-                <c:otherwise>
-                    <form id="entreprise-form" action="${pageContext.request.contextPath}/entreprise/save" method="post">
-                </c:otherwise>
-            </c:choose>
-                <input type="hidden" id="quartier" name="quartier" value="${entreprise.quartier}"/>
-                <div class="form-group">
-                    <label for="nom">Nom de l'entreprise *</label>
-                    <input type="text" id="nom" name="nom" class="form-control" required value="${entreprise.nom}" placeholder="Entrez le nom de l'entreprise"/>
-                </div>
-                <div class="form-group">
-                    <label>Sélectionnez un quartier d'Antananarivo</label>
-                    <div class="quartier-dropdown">
-                        <button type="button" class="btn btn-secondary" onclick="toggleQuartierList()">
-                            <span id="selected-quartier">${not empty entreprise.quartier ? entreprise.quartier : 'Choisir un quartier'}</span>
-                        </button>
-                        <div id="quartier-list" class="quartier-list"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="adresse">Adresse exacte *</label>
-                    <input type="text" id="adresse" name="adresse" class="form-control" required value="${entreprise.adresse}" placeholder="Entrez l'adresse exacte"/>
-                </div>
-                <div class="form-group">
-                    <label>Localisation sur la carte (Vue Satellite)</label>
-                    <div id="map"></div>
-                    <div class="coordinates-display">
-                        <strong>Coordonnées sélectionnées :</strong><br>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                            <div>
-                                <label for="latitude">Latitude:</label>
-                                <input type="number" step="0.000001" id="latitude" name="latitude" class="form-control" value="${entreprise.latitude != null ? entreprise.latitude : ''}" placeholder="Latitude"/>
+        <!-- Tableau de bord -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Tableau de bord
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/recette">
+                    <span class="align-middle">Suivi de recette</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/depense">
+                    <span class="align-middle">Suivi de dépense</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/suivi/benefice">
+                    <span class="align-middle">Suivi de bénéfice</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/commandes/count">
+                    <span class="align-middle">Évolution de Commandes</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Commandes -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Commandes
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/commande/form">
+                    <i class="align-middle" data-feather="shopping-cart"></i> 
+                    <span class="align-middle">Nouvelle Commande</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/plats/">
+                    <i class="align-middle" data-feather="coffee"></i>
+                    <span class="align-middle">Plats</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Gestion des ressources -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Ressources Humaines
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/">
+                    <i class="align-middle" data-feather="users"></i>
+                    <span class="align-middle">Employés</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/paiement_salaire">
+                    <i class="align-middle" data-feather="dollar-sign"></i>
+                    <span class="align-middle">Paiement salaire</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/poste/">
+                    <i class="align-middle" data-feather="briefcase"></i>
+                    <span class="align-middle">Postes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/mvtcontrat/create">
+                    <i class="align-middle" data-feather="file-text"></i>
+                    <span class="align-middle">Contrats</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/penalite/">
+                    <i class="align-middle" data-feather="alert-circle"></i>
+                    <span class="align-middle">Pénalités</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Gestion des stocks -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Gestion des stocks
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/listStock/">
+                    <i class="align-middle" data-feather="box"></i>
+                    <span class="align-middle">Stocks</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/composant/">
+                    <i class="align-middle" data-feather="cpu"></i>
+                    <span class="align-middle">Composants</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/type_composant/">
+                    <i class="align-middle" data-feather="layers"></i>
+                    <span class="align-middle">Types de composants</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/unite/">
+                    <i class="align-middle" data-feather="divide-square"></i>
+                    <span class="align-middle">Unités</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/categories/">
+                    <i class="align-middle" data-feather="grid"></i>
+                    <span class="align-middle">Catégories</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Administration -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Administration
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/entreprise/create">
+                    <i class="align-middle" data-feather="home"></i>
+                    <span class="align-middle">Créer entreprise</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/depense/">
+                    <i class="align-middle" data-feather="credit-card"></i>
+                    <span class="align-middle">Dépenses</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+        <div class="main">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <span class="text-dark">Administrateur</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Profil</a>
+                                <a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Paramètres</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i> Déconnexion</a>
                             </div>
-                            <div>
-                                <label for="longitude">Longitude:</label>
-                                <input type="number" step="0.000001" id="longitude" name="longitude" class="form-control" value="${entreprise.longitude != null ? entreprise.longitude : ''}" placeholder="Longitude"/>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="mb-3">
+                        <h1 class="h3 d-inline align-middle">Gestion des Entreprises</h1>
+                        <p class="text-muted mb-0">Antananarivo - Madagascar</p>
+                    </div>
+
+                    <c:if test="${not empty message}">
+                        <div class="alert ${message.contains('Erreur') ? 'alert-danger' : 'alert-success'} alert-dismissible fade show" role="alert">
+                            ${message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </c:if>
+
+                    <ul class="nav nav-tabs mb-4" id="entrepriseTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link ${tab != 'list' ? 'active' : ''}" id="create-tab" data-bs-toggle="tab" data-bs-target="#create" type="button" role="tab">Créer Entreprise</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link ${tab == 'list' ? 'active' : ''}" id="list-tab" data-bs-toggle="tab" data-bs-target="#list" type="button" role="tab">Liste des Entreprises</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="entrepriseTabsContent">
+                        <!-- Onglet Création -->
+                        <div class="tab-pane fade ${tab != 'list' ? 'show active' : ''}" id="create" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">${entreprise.id != null ? 'Modifier' : 'Créer'} une entreprise</h5>
+                                </div>
+                                <div class="card-body">
+                                    <c:choose>
+                                        <c:when test="${entreprise.id != null}">
+                                            <form id="entreprise-form" action="${pageContext.request.contextPath}/entreprise/update" method="post">
+                                                <input type="hidden" name="id" value="${entreprise.id}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form id="entreprise-form" action="${pageContext.request.contextPath}/entreprise/save" method="post">
+                                        </c:otherwise>
+                                    </c:choose>
+                                        <input type="hidden" id="quartier" name="quartier" value="${entreprise.quartier}"/>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="nom" class="form-label">Nom de l'entreprise *</label>
+                                                    <input type="text" id="nom" name="nom" class="form-control" required value="${entreprise.nom}" placeholder="Entrez le nom de l'entreprise"/>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Quartier d'Antananarivo</label>
+                                                    <div class="quartier-dropdown">
+                                                        <button type="button" class="btn btn-outline-primary w-100 text-start" onclick="toggleQuartierList()">
+                                                            <span id="selected-quartier">${not empty entreprise.quartier ? entreprise.quartier : 'Choisir un quartier'}</span>
+                                                            <i class="bi bi-chevron-down float-end"></i>
+                                                        </button>
+                                                        <div id="quartier-list" class="quartier-list"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="adresse" class="form-label">Adresse exacte *</label>
+                                            <input type="text" id="adresse" name="adresse" class="form-control" required value="${entreprise.adresse}" placeholder="Entrez l'adresse exacte"/>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Localisation sur la carte</label>
+                                            <div id="map"></div>
+                                            <div class="mt-3">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="latitude" class="form-label">Latitude</label>
+                                                        <input type="number" step="0.000001" id="latitude" name="latitude" class="form-control" value="${entreprise.latitude != null ? entreprise.latitude : ''}" placeholder="Latitude"/>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="longitude" class="form-label">Longitude</label>
+                                                        <input type="number" step="0.000001" id="longitude" name="longitude" class="form-control" value="${entreprise.longitude != null ? entreprise.longitude : ''}" placeholder="Longitude"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="debutDateContrat" class="form-label">Date de début du contrat</label>
+                                            <input type="date" id="debutDateContrat" name="debutDateContrat" class="form-control" value="<fmt:formatDate value='${entreprise.debutDateContrat}' pattern='yyyy-MM-dd'/>"/>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-end">
+                                            <a href="${pageContext.request.contextPath}/entreprise/list" class="btn btn-outline-secondary me-2">
+                                                <i class="bi bi-arrow-left me-1"></i> Annuler
+                                            </a>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-save me-1"></i> ${entreprise.id != null ? 'Mettre à jour' : 'Enregistrer'}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Onglet Liste -->
+                        <div class="tab-pane fade ${tab == 'list' ? 'show active' : ''}" id="list" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Liste des entreprises</h5>
+                                </div>
+                                <div class="card-body">
+                                    <c:choose>
+                                        <c:when test="${empty entreprises}">
+                                            <div class="text-center py-5">
+                                                <i class="bi bi-building text-muted" style="font-size: 3rem;"></i>
+                                                <h5 class="mt-3">Aucune entreprise enregistrée</h5>
+                                                <a href="${pageContext.request.contextPath}/entreprise/create" class="btn btn-primary mt-3">
+                                                    <i class="bi bi-plus-circle me-1"></i> Ajouter une entreprise
+                                                </a>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="row">
+                                                <c:forEach var="entreprise" items="${entreprises}">
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="entreprise-card">
+                                                            <div class="entreprise-name">${entreprise.nom}</div>
+                                                            <div class="info-item">
+                                                                <strong>Adresse:</strong> <c:out value="${entreprise.adresse != null ? entreprise.adresse : 'Non défini'}"/>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <strong>Quartier:</strong> <c:out value="${entreprise.quartier != null ? entreprise.quartier : 'Non défini'}"/>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <strong>Coordonnées:</strong> 
+                                                                <c:out value="${entreprise.latitude != null ? entreprise.latitude : 'Non défini'}, ${entreprise.longitude != null ? entreprise.longitude : 'Non défini'}"/>
+                                                            </div>
+                                                            <div class="info-item">
+                                                                <strong>Date de début:</strong> 
+                                                                <c:out value="${entreprise.debutDateContrat != null ? '' : 'Non défini'}"/>
+                                                                <fmt:formatDate value="${entreprise.debutDateContrat}" pattern="dd/MM/yyyy"/>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end mt-3">
+                                                                <button class="btn btn-sm btn-outline-primary me-2" 
+                                                                        onclick="viewOnMap(${entreprise.latitude != null ? entreprise.latitude : -18.8792}, ${entreprise.longitude != null ? entreprise.longitude : 47.5079}, '${entreprise.nom}')">
+                                                                    <i class="bi bi-map me-1"></i> Carte
+                                                                </button>
+                                                                <a href="${pageContext.request.contextPath}/entreprise/edit/${entreprise.id}" class="btn btn-sm btn-secondary me-2">
+                                                                    <i class="bi bi-pencil me-1"></i> Modifier
+                                                                </a>
+                                                                <a href="${pageContext.request.contextPath}/entreprise/delete/${entreprise.id}" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise ?')">
+                                                                    <i class="bi bi-trash me-1"></i> Supprimer
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="debutDateContrat">Date de début du contrat</label>
-                    <input type="date" id="debutDateContrat" name="debutDateContrat" class="form-control" value="<fmt:formatDate value='${entreprise.debutDateContrat}' pattern='yyyy-MM-dd'/>"/>
-                </div>
-                <button type="submit" class="btn btn-primary">${entreprise.id != null ? 'Mettre à jour' : 'Enregistrer'} l'entreprise</button>
-            </form>
-        </div>
-
-        <div id="list-tab" class="tab-content <c:if test='${tab == \"list\"}'>active</c:if>">
-            <div class="entreprise-list">
-                <c:choose>
-                    <c:when test="${empty entreprises}">
-                        <div style="text-align: center; padding: 50px; color: #f8c828;">
-                            <h3>Aucune entreprise enregistrée</h3>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach var="entreprise" items="${entreprises}">
-                            <div class="entreprise-card">
-                                <div class="entreprise-name">${entreprise.nom}</div>
-                                <div class="entreprise-info">
-                                    <div class="info-item">
-                                        <svg class="info-icon" viewBox="0 0 24 24">
-                                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                                        </svg>
-                                        <span><strong>Adresse:</strong> <c:out value="${entreprise.adresse != null ? entreprise.adresse : 'Non défini'}"/></span>
-                                    </div>
-                                    <div class="info-item">
-                                        <svg class="info-icon" viewBox="0 0 24 24">
-                                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                                        </svg>
-                                        <span><strong>Coordonnées:</strong> <c:out value="${entreprise.latitude != null ? entreprise.latitude : 'Non défini'}, ${entreprise.longitude != null ? entreprise.longitude : 'Non défini'}"/></span>
-                                    </div>
-                                    <div class="info-item">
-                                        <svg class="info-icon" viewBox="0 0 24 24">
-                                            <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-2V2h-2v2H9V2H7v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zM19 21H5V10h14v11z"/>
-                                        </svg>
-                                        <span><strong>Date de début:</strong> <c:out value="${entreprise.debutDateContrat != null ? '' : 'Non défini'}"/><fmt:formatDate value="${entreprise.debutDateContrat}" pattern="dd/MM/yyyy"/></span>
-                                    </div>
-                                    <div class="info-item">
-                                        <svg class="info-icon" viewBox="0 0 24 24">
-                                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                                        </svg>
-                                        <span><strong>Quartier:</strong> <c:out value="${entreprise.quartier != null ? entreprise.quartier : 'Non défini'}"/></span>
-                                    </div>
-                                    <div class="info-item">
-                                        <svg class="info-icon" viewBox="0 0 24 24">
-                                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                                        </svg>
-                                        <span><strong>Geom:</strong> <c:out value="${entreprise.geom != null ? entreprise.geom : 'NULL'}"/></span>
-                                    </div>
-                                </div>
-                                <div class="entreprise-actions">
-                                    <button class="btn btn-secondary btn-sm" onclick="viewOnMap(${entreprise.latitude != null ? entreprise.latitude : -18.8792}, ${entreprise.longitude != null ? entreprise.longitude : 47.5079}, '${entreprise.nom}')">🛰️ Voir sur la carte</button>
-                                    <a href="${pageContext.request.contextPath}/entreprise/edit/${entreprise.id}" class="btn btn-primary btn-sm">✏️ Modifier</a>
-                                    <a href="${pageContext.request.contextPath}/entreprise/delete/${entreprise.id}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise ?')">🗑️ Supprimer</a>
-                                    <a href="${pageContext.request.contextPath}/mvtcontrat/list?entrepriseId=${entreprise.id}" class="btn btn-primary btn-sm">📋 Voir les Mouvements</a>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+            </main>
         </div>
     </div>
 
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
     <script>
         const quartiers = [
             { nom: "Analakely", lat: -18.9087, lng: 47.5204 },
@@ -333,13 +510,21 @@
         }
 
         function viewOnMap(lat, lng, nom) {
-            console.log(`viewOnMap called with lat=${lat}, lng=${lng}, nom=${nom}`);
-            showTab('create');
+            // Activer l'onglet création
+            const tab = new bootstrap.Tab(document.getElementById('create-tab'));
+            tab.show();
+            
+            // Initialiser la carte après un petit délai pour permettre le changement d'onglet
             setTimeout(() => {
                 initMap(lat, lng, 16);
                 placeMarker({ lat, lng });
                 highlightQuartier(lat, lng);
-            }, 500);
+                
+                // Afficher un popup avec le nom de l'entreprise
+                if (marker) {
+                    marker.bindPopup(`<b>${nom}</b><br>Coordonnées: (${lat.toFixed(6)}, ${lng.toFixed(6)})`).openPopup();
+                }
+            }, 300);
         }
 
         function selectQuartier(quartier, element) {
@@ -352,24 +537,6 @@
             if (map) {
                 map.setView([quartier.lat, quartier.lng], 16);
                 placeMarker({ lat: quartier.lat, lng: quartier.lng });
-            }
-        }
-
-        function showTab(tabName) {
-            console.log(`Showing tab: ${tabName}`);
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(tabName + '-tab').classList.add('active');
-            document.querySelector(`.tab-button[onclick="showTab('${tabName}')"]`).classList.add('active');
-            if (tabName === 'create') {
-                setTimeout(() => {
-                    const lat = parseFloat(document.getElementById('latitude').value) || -18.8792;
-                    const lng = parseFloat(document.getElementById('longitude').value) || 47.5079;
-                    initMap(lat, lng, 16);
-                    if (document.getElementById('latitude').value && document.getElementById('longitude').value) {
-                        placeMarker({ lat, lng });
-                    }
-                }, 100);
             }
         }
 
@@ -401,7 +568,6 @@
             }
 
             if (errorMessage) {
-                console.error('Validation errors:', errorMessage);
                 alert(errorMessage);
                 return false;
             }
@@ -411,11 +577,30 @@
         document.addEventListener('DOMContentLoaded', () => {
             generateQuartierList();
             initMap();
+            
+            // Initialiser les tabs Bootstrap
+            const tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]');
+            tabEls.forEach(tabEl => {
+                tabEl.addEventListener('shown.bs.tab', function (event) {
+                    if (event.target.id === 'create-tab') {
+                        setTimeout(() => {
+                            const lat = parseFloat(document.getElementById('latitude').value) || -18.8792;
+                            const lng = parseFloat(document.getElementById('longitude').value) || 47.5079;
+                            initMap(lat, lng, 16);
+                            if (document.getElementById('latitude').value && document.getElementById('longitude').value) {
+                                placeMarker({ lat, lng });
+                            }
+                        }, 100);
+                    }
+                });
+            });
+            
             document.getElementById('entreprise-form').addEventListener('submit', (e) => {
                 if (!validateForm()) {
                     e.preventDefault();
                 }
             });
+            
             document.addEventListener('click', (e) => {
                 const dropdown = document.querySelector('.quartier-dropdown');
                 const list = document.getElementById('quartier-list');
@@ -423,6 +608,16 @@
                     list.classList.remove('show');
                 }
             });
+            
+            // Initialiser le toggle de la sidebar
+            const sidebarToggle = document.querySelector('.js-sidebar-toggle');
+            const sidebar = document.querySelector('.js-sidebar');
+            
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('collapsed');
+                });
+            }
         });
     </script>
 </body>

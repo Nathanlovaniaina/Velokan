@@ -1,4 +1,4 @@
-:root {
+        :root {
             --primary-color: #007e5d !important;
             --secondary-color: #f8c828 !important;
             --primary-light: #e6f2ef !important;
@@ -116,106 +116,17 @@
             color: white !important;
         }
         
-        .btn-success {
-            background-color: var(--success-color) !important;
-            border-color: var(--success-color) !important;
+        .home-card {
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        /* Form styling */
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+        .home-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
         }
         
-        /* Modal styling */
-        .modal-header {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        .btn-close-white {
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
-        
-        /* Toast styling */
-        .toast-header {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-        
-        /* Custom styles */
-        .modal-body {
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-        
-        .plat-row {
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .btn-select-plat {
-            white-space: nowrap;
-        }
-        
-        /* Styles pour la modal des plats */
-        .modal-plats .modal-content {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .modal-plats .modal-body {
-            overflow: hidden;
-            padding: 0;
-            flex: 1;
-        }
-        
-        .state-container {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* DataTables styling */
-        .dataTables_wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .dataTables_scroll {
-            flex: 1;
-        }
-        
-        .dataTables_scrollHead {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background-color: white !important;
-        }
-        
-        .dataTables_scrollBody {
-            overflow-y: auto !important;
-        }
-        
-        /* Select2 styling */
-        .select2-container--bootstrap-5 .select2-selection {
-            min-height: 38px;
-            border: 1px solid #ced4da !important;
-        }
-        
-        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
-            padding-top: 4px;
-        }
-        
-        .select2-container--bootstrap-5 .select2-dropdown {
-            border-color: #ced4da !important;
-        }
-        
-        .select2-container--bootstrap-5.select2-container--focus .select2-selection {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+        .home-card-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
         }
