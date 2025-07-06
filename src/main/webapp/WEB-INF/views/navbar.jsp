@@ -79,6 +79,11 @@
                     <span class="align-middle">Pénalités</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/taches_plat/">
+                    <span class="align-middle">Taches</span>
+                </a>
+            </li>
         </ul>
 
         <!-- Gestion des stocks -->

@@ -2,182 +2,339 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Ajout de Tâches</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- Polices -->
+    <title>Ajout de Tâches | VELONKAN</title>
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/ajout_taches.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/poste.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <!-- Font Awesome pour les icônes -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007e5d !important;
+            --secondary-color: #f8c828 !important;
+            --primary-light: #e6f2ef !important;
+            --secondary-light: #fef8e6 !important;
+            --dark-color: #2c3e50 !important;
+            --light-color: #f8f9fa !important;
+            --danger-color: #e74c3c !important;
+            --success-color: #2ecc71 !important;
+            --info-color: #3498db !important;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif !important;
+            color: var(--dark-color) !important;
+            background-color: var(--primary-light) !important;
+        }
+        
+        .card {
+            border: none !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
+            border-radius: 10px !important;
+            overflow: hidden !important;
+        }
+        
+        .card-header {
+            background-color: white !important;
+            border-bottom: none !important;
+            padding: 1rem 1.5rem !important;
+        }
+
+        .card-title {
+            color: var(--primary-color) !important;
+            font-size: 20px;
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006a4d !important;
+            border-color: #006a4d !important;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        /* Form styling */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25) !important;
+        }
+        
+        /* Table styling */
+        .table {
+            --bs-table-bg: transparent;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: var(--primary-light) !important;
+        }
+        
+        /* Content editable styling */
+        [contenteditable="true"] {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid transparent;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+        
+        [contenteditable="true"]:hover {
+            border-color: #dee2e6;
+            background-color: var(--secondary-light);
+        }
+        
+        [contenteditable="true"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+            box-shadow: 0 0 0 0.25rem rgba(0, 126, 93, 0.25);
+        }
+        
+        /* Custom styles for the page */
+        .plat-selector {
+            margin-bottom: 1.5rem;
+        }
+        
+        .selected-plat-display {
+            background-color: var(--primary-light);
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .task-form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        
+        .task-form .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .task-form .form-group-order {
+            min-width: 100px;
+        }
+    </style>
 </head>
 <body>
-    <div style="font-family: Arial, sans-serif; margin: 20px; max-width: 1200px; margin: 0 auto; padding: 20px;">
-        <h1 style="text-align: center; color: #333;">
-            <i class="fas fa-plus-circle"></i> Velonkan - Ajout de Tâches
-        </h1>
-        
-        <!-- Messages -->
-        <c:if test="${not empty message}">
-            <div style="padding: 10px; margin: 10px 0; border-radius: 4px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
-                ${message}
-            </div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div style="padding: 10px; margin: 10px 0; border-radius: 4px; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">
-                ${error}
-            </div>
-        </c:if>
-        
-        <!-- Formulaire d'ajout -->
-        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px;">
-            <h2 style="margin-top: 0; color: #333;">
-                <i class="fas fa-utensils"></i> Ajouter des tâches à un plat
-            </h2>
-            
-            <!-- Sélection du plat -->
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Sélectionner un plat :</label>
-                <select id="platSelector" onchange="selectPlat(this.value)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; background: white;">
-                    <option value="">Choisir un plat...</option>
-                    <c:forEach var="plat" items="${plats}">
-                        <option value="${plat.id}" ${selectedPlatId == plat.id ? 'selected' : ''}>${plat.intitule}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            
-            <!-- Plat sélectionné (affiché en permanence) -->
-            <div id="selectedPlatDisplay" style="display: ${not empty selectedPlatId ? 'block' : 'none'}; background: #e3f2fd; padding: 15px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #2196f3;">
-                <strong style="color: #1976d2;">
-                    <i class="fas fa-utensils"></i> Plat sélectionné : 
-                    <span id="selectedPlatName">
-                        <c:forEach var="plat" items="${plats}">
-                            <c:if test="${plat.id == selectedPlatId}">${plat.intitule}</c:if>
-                        </c:forEach>
-                    </span>
-                </strong>
-            </div>
-            
-            <!-- Formulaire d'ajout de tâche -->
-            <form id="tacheForm" action="ajout/save" method="POST" style="display: ${not empty selectedPlatId ? 'flex' : 'none'}; gap: 15px; align-items: end; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 200px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Nom de la tâche :</label>
-                    <input type="text" name="nom" required 
-                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;"
-                           placeholder="Ex: Laver les légumes...">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <jsp:include page="/WEB-INF/views/navbar.jsp" />
+
+        <div class="main">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <span class="text-dark">Administrateur</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                
-                <div style="min-width: 100px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Ordre :</label>
-                    <input type="number" name="order" required min="1" value="1"
-                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;"
-                           placeholder="1">
-                </div>
-                
-                <input type="hidden" name="platId" id="hiddenPlatId" value="${selectedPlatId}">
-                
-                <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-                    <i class="fas fa-plus"></i> Ajouter Tâche
-                </button>
-            </form>
-        </div>
-        
-        <!-- Zone de message de succès -->
-        <div id="successMessage" style="display: none; padding: 15px; margin: 10px 0; border-radius: 4px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; text-align: center; font-weight: bold;">
-            <i class="fas fa-check-circle"></i> Les tâches sont enregistrées avec succès !
-        </div>
-        
-        <!-- Boutons d'actions -->
-        <div style="margin-bottom: 20px; text-align: center;">
-            <button onclick="showSuccessMessage()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
-                <i class="fas fa-check"></i> Enregistrer
-            </button>
-            <a href="${pageContext.request.contextPath}/taches_plat/" style="padding: 10px 20px; background: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block;">
-                <i class="fas fa-list"></i> Voir liste des tâches
-            </a>
-        </div>
-        
-        <!-- Liste des tâches du plat sélectionné -->
-        <div id="tachesSection" style="display: ${not empty selectedPlatId ? 'block' : 'none'};">
-            <div style="background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                <div style="padding: 20px; border-bottom: 1px solid #eee;">
-                    <h3 style="margin: 0; color: #333;">
-                        <i class="fas fa-tasks"></i> Tâches du plat sélectionné
-                    </h3>
-                </div>
-                
-                <c:choose>
-                    <c:when test="${empty tachesPlat}">
-                        <div style="text-align: center; padding: 40px; color: #666;">
-                            <i class="fas fa-clipboard-list" style="font-size: 48px; color: #ccc; margin-bottom: 10px;"></i>
-                            <h4>Aucune tâche pour ce plat</h4>
-                            <p>Commencez par ajouter des tâches pour les voir apparaître ici.</p>
+            </nav>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="mb-3">
+                        <h1 class="h3 d-inline align-middle">Ajout de Tâches</h1>
+                    </div>
+
+                    <!-- Messages -->
+                    <c:if test="${not empty message}">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            ${message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                         </div>
-                    </c:when>
-                    <c:otherwise>
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="background: #f8f9fa;">
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-weight: 600; color: #555;">Nom de la tâche</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-weight: 600; color: #555;">Ordre</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-weight: 600; color: #555;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="tache" items="${tachesPlat}" varStatus="status">
-                                    <tr data-task-id="${tache.id}" style="border-bottom: 1px solid #eee;">
-                                        <td style="padding: 12px;">
-                                            <div contenteditable="true" 
-                                                 data-field="nom" 
-                                                 data-id="${tache.id}"
-                                                 data-plat-id="${tache.plat.id}"
-                                                 onblur="saveField(this)" 
-                                                 onkeypress="handleKeyPress(event, this)"
-                                                 style="cursor: text; padding: 8px; border: 1px solid transparent; border-radius: 3px; min-height: 20px;"
-                                                 onmouseover="this.style.borderColor='#ddd'; this.style.background='#f9f9f9';"
-                                                 onmouseout="this.style.borderColor='transparent'; this.style.background='transparent';"
-                                                 onfocus="this.style.borderColor='#007bff'; this.style.background='white';">${tache.nom}</div>
-                                        </td>
-                                        <td style="padding: 12px;">
-                                            <input type="number" 
-                                                   value="${tache.ordre}" 
-                                                   data-field="order"
-                                                   data-id="${tache.id}"
-                                                   data-plat-id="${tache.plat.id}"
-                                                   onblur="saveField(this)" 
-                                                   onkeypress="handleKeyPress(event, this)" 
-                                                   min="1"
-                                                   style="width: 80px; border: 1px solid #ddd; padding: 4px; font-size: 14px; border-radius: 3px;">
-                                        </td>
-                                        <td style="padding: 12px;">
-                                            <a href="ajout/delete/${tache.id}" 
-                                               onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer la tâche \"${tache.nom}\" ?\\n\\nCette action est définitive et ne peut pas être annulée.')"
-                                               style="color: #dc3545; text-decoration: none; padding: 6px 8px; border-radius: 3px; display: inline-flex; align-items: center; font-size: 14px;"
-                                               onmouseover="this.style.background='#f8d7da'; this.style.color='#721c24';"
-                                               onmouseout="this.style.background='transparent'; this.style.color='#dc3545';">
-                                                <i class="fas fa-times"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </c:otherwise>
-                </c:choose>
+                    </c:if>
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            ${error}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                        </div>
+                    </c:if>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0"><i class="fas fa-utensils me-2"></i>Ajouter des tâches à un plat</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Sélection du plat -->
+                                    <div class="mb-4">
+                                        <label class="form-label">Sélectionner un plat :</label>
+                                        <select id="platSelector" onchange="selectPlat(this.value)" class="form-select">
+                                            <option value="">Choisir un plat...</option>
+                                            <c:forEach var="plat" items="${plats}">
+                                                <option value="${plat.id}" ${selectedPlatId == plat.id ? 'selected' : ''}>${plat.intitule}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Plat sélectionné -->
+                                    <div id="selectedPlatDisplay" class="selected-plat-display" style="display: ${not empty selectedPlatId ? 'block' : 'none'}">
+                                        <strong class="text-primary">
+                                            <i class="fas fa-utensils me-2"></i> Plat sélectionné : 
+                                            <span id="selectedPlatName">
+                                                <c:forEach var="plat" items="${plats}">
+                                                    <c:if test="${plat.id == selectedPlatId}">${plat.intitule}</c:if>
+                                                </c:forEach>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    
+                                    <!-- Formulaire d'ajout de tâche -->
+                                    <form id="tacheForm" action="ajout/save" method="POST" class="task-form" style="display: ${not empty selectedPlatId ? 'flex' : 'none'}">
+                                        <div class="form-group">
+                                            <label class="form-label">Nom de la tâche :</label>
+                                            <input type="text" name="nom" class="form-control" required placeholder="Ex: Laver les légumes...">
+                                        </div>
+                                        
+                                        <div class="form-group form-group-order">
+                                            <label class="form-label">Ordre :</label>
+                                            <input type="number" name="order" class="form-control" required min="1" value="1">
+                                        </div>
+                                        
+                                        <input type="hidden" name="platId" id="hiddenPlatId" value="${selectedPlatId}">
+                                        
+                                        <button type="submit" class="btn btn-primary mb-3">
+                                            <i class="fas fa-plus me-2"></i> Ajouter Tâche
+                                        </button>
+                                    </form>
+                                    
+                                    <!-- Boutons d'actions -->
+                                    <div class="d-flex justify-content-between mt-4">
+                                        <a href="${pageContext.request.contextPath}/taches_plat/" class="btn btn-outline-primary">
+                                            <i class="fas fa-list me-2"></i> Voir liste des tâches
+                                        </a>
+                                        <button onclick="showSuccessMessage()" class="btn btn-success">
+                                            <i class="fas fa-check me-2"></i> Enregistrer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Liste des tâches du plat sélectionné -->
+                            <div id="tachesSection" style="display: ${not empty selectedPlatId ? 'block' : 'none'}; margin-top: 2rem;">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0"><i class="fas fa-tasks me-2"></i>Tâches du plat sélectionné</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <c:choose>
+                                            <c:when test="${empty tachesPlat}">
+                                                <div class="text-center py-4 text-muted">
+                                                    <i class="fas fa-clipboard-list fa-3x mb-3" style="color: #dee2e6;"></i>
+                                                    <h4>Aucune tâche pour ce plat</h4>
+                                                    <p>Commencez par ajouter des tâches pour les voir apparaître ici.</p>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nom de la tâche</th>
+                                                                <th>Ordre</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach var="tache" items="${tachesPlat}" varStatus="status">
+                                                                <tr data-task-id="${tache.id}">
+                                                                    <td>
+                                                                        <div contenteditable="true" 
+                                                                             data-field="nom" 
+                                                                             data-id="${tache.id}"
+                                                                             data-plat-id="${tache.plat.id}"
+                                                                             onblur="saveField(this)" 
+                                                                             onkeypress="handleKeyPress(event, this)"
+                                                                             class="editable-field">${tache.nom}</div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" 
+                                                                               value="${tache.ordre}" 
+                                                                               data-field="order"
+                                                                               data-id="${tache.id}"
+                                                                               data-plat-id="${tache.plat.id}"
+                                                                               onblur="saveField(this)" 
+                                                                               onkeypress="handleKeyPress(event, this)" 
+                                                                               min="1"
+                                                                               class="form-control form-control-sm d-inline-block" style="width: 80px;">
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="ajout/delete/${tache.id}" 
+                                                                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer la tâche \"${tache.nom}\" ?')"
+                                                                           class="btn btn-sm btn-outline-danger">
+                                                                            <i class="fas fa-trash-alt"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast de succès -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Succès</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Fermer"></button>
+            </div>
+            <div class="toast-body">
+                <i class="fas fa-check-circle me-2"></i> Les tâches sont enregistrées avec succès !
             </div>
         </div>
     </div>
 
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
+    
     <script>
         // Fonction pour sélectionner un plat
         function selectPlat(platId) {
@@ -228,9 +385,9 @@
             document.body.appendChild(form);
             
             // Effet visuel de sauvegarde
-            element.style.background = '#d4edda';
+            element.classList.add('bg-success', 'bg-opacity-10');
             setTimeout(() => {
-                element.style.background = '';
+                element.classList.remove('bg-success', 'bg-opacity-10');
                 form.submit();
             }, 200);
         }
@@ -245,17 +402,8 @@
         
         // Fonction pour afficher le message de succès
         function showSuccessMessage() {
-            const successMessage = document.getElementById('successMessage');
-            const tachesSection = document.getElementById('tachesSection');
-            
-            successMessage.style.display = 'block';
-            tachesSection.style.display = 'none';
-            
-            // Faire disparaître le message après 3 secondes et réafficher la liste
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-                tachesSection.style.display = 'block';
-            }, 3000);
+            const toast = new bootstrap.Toast(document.getElementById('successToast'));
+            toast.show();
         }
         
         // Initialisation
@@ -270,8 +418,5 @@
             }
         });
     </script>
-    <script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
