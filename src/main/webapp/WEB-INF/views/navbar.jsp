@@ -139,11 +139,6 @@
                     <span class="align-middle">Entreprises</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/depense/">
-                    <span class="align-middle">Dépenses générales</span>
-                </a>
-            </li>
         </ul>
     </div>
 </nav>
