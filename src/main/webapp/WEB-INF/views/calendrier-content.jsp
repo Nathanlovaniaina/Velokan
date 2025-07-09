@@ -213,11 +213,17 @@ function openRecoModal(dateStr) {
                     
                     if (data && data.plats && data.plats.length > 0) {
                         console.log('Affichage de', data.plats.length, 'plats recommandés');
-                        
                         // Ajouter un titre pour les recommandations
                         html += '<h4>Recommandations</h4>';
-                        
-                        data.plats.forEach(function(plat, idx) {
+
+                        // Trier les plats : d'abord ceux déjà publiés, puis les autres, chacun trié par score décroissant
+                        var platsPublies = data.plats.filter(function(plat) { return dejaPubliesIds.includes(plat.id); });
+                        var platsNonPublies = data.plats.filter(function(plat) { return !dejaPubliesIds.includes(plat.id); });
+                        platsPublies.sort(function(a, b) { return b.score - a.score; });
+                        platsNonPublies.sort(function(a, b) { return b.score - a.score; });
+                        var platsTries = platsPublies.concat(platsNonPublies);
+
+                        platsTries.forEach(function(plat, idx) {
                             console.log('Traitement du plat:', plat);
                             console.log('plat.intitule:', plat.intitule);
                             console.log('plat.id:', plat.id);
@@ -230,11 +236,6 @@ function openRecoModal(dateStr) {
                             var platIntitule = plat.intitule || 'Sans nom';
                             var platScore = plat.score ? plat.score.toFixed(2) : '-';
                             
-                            console.log('Variables extraites:');
-                            console.log('platId:', platId);
-                            console.log('platIntitule:', platIntitule);
-                            console.log('platScore:', platScore);
-                            
                             var checkedAttr = dejaPublie ? ' checked' : '';
                             // Les plats déjà publiés sont cochés mais non désactivés (modifiable)
                             var platHtml = '<div class="reco-plat" style="border: 1px solid #ccc; padding: 10px; margin: 5px 0;">' +
@@ -246,7 +247,6 @@ function openRecoModal(dateStr) {
                                     '</div>' +
                                 '</div>' +
                             '</div>';
-                            console.log('HTML pour ce plat:', platHtml);
                             html += platHtml;
                         });
                         console.log('HTML généré complet:', html);
