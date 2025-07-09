@@ -77,13 +77,13 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-4">
-                                            <div class="alert alert-success" id="revenuTotal">Revenu total : -- €</div>
+                                            <div class="alert alert-success" id="revenuTotal">Revenu total : -- Ar</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="alert alert-danger" id="coutTotal">Coût total : -- €</div>
+                                            <div class="alert alert-danger" id="coutTotal">Coût total : -- Ar</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="alert alert-info" id="beneficeNet">Bénéfice net : -- €</div>
+                                            <div class="alert alert-info" id="beneficeNet">Bénéfice net : -- Ar</div>
                                         </div>
                                     </div>
                                     <div class="chart-container">
@@ -107,7 +107,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Entreprise</th>
-                                                    <th class="text-end">Revenu (€)</th>
+                                                    <th class="text-end">Revenu (Ar)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -134,9 +134,9 @@
                                                 <tr>
                                                     <th>Plat</th>
                                                     <th class="text-end">Total vendus</th>
-                                                    <th class="text-end">Revenu total (€)</th>
-                                                    <th class="text-end">Coût total (€)</th>
-                                                    <th class="text-end">Bénéfice (€)</th>
+                                                    <th class="text-end">Revenu total (Ar)</th>
+                                                    <th class="text-end">Coût total (Ar)</th>
+                                                    <th class="text-end">Bénéfice (Ar)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -161,7 +161,7 @@
                                         <table class="table table-hover my-0" id="tableSalairesVerses">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-end">Total Salaires Versés (€)</th>
+                                                    <th class="text-end">Total Salaires Versés (Ar)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -187,9 +187,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>Jour</th>
-                                                    <th class="text-end">Revenu (€)</th>
-                                                    <th class="text-end">Coût (€)</th>
-                                                    <th class="text-end">Bénéfice (€)</th>
+                                                    <th class="text-end">Revenu (Ar)</th>
+                                                    <th class="text-end">Coût (Ar)</th>
+                                                    <th class="text-end">Bénéfice (Ar)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -279,7 +279,7 @@
             data: {
                 labels: ['Revenu', 'Coût', 'Bénéfice Net'],
                 datasets: [{
-                    label: 'Montant (€)',
+                    label: 'Montant (Ar)',
                     data: [revenu, cout, benefice],
                     backgroundColor: [
                         'rgba(0, 126, 93, 0.5)',
@@ -302,7 +302,7 @@
                         beginAtZero: true, 
                         title: { 
                             display: true, 
-                            text: 'Montant (€)' 
+                            text: 'Montant (Ar)' 
                         } 
                     }
                 },
@@ -310,7 +310,7 @@
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                return context.dataset.label + ': ' + context.raw.toFixed(2) + ' €';
+                                return context.dataset.label + ': ' + context.raw.toFixed(2) + ' Ar';
                             }
                         }
                     }
@@ -323,14 +323,14 @@
         $.get('${pageContext.request.contextPath}/api/suiviBenefices/benefice-net', { startDate, endDate }, function(data) {
             if (data && data.length > 0) {
                 const d = data[0];
-                $('#revenuTotal').text('Revenu total : ' + d.total_revenu.toFixed(2) + ' €');
-                $('#coutTotal').text('Coût total : ' + d.total_cout.toFixed(2) + ' €');
-                $('#beneficeNet').text('Bénéfice net : ' + d.benefice_net.toFixed(2) + ' €');
+                $('#revenuTotal').text('Revenu total : ' + d.total_revenu.toFixed(2) + ' Ar');
+                $('#coutTotal').text('Coût total : ' + d.total_cout.toFixed(2) + ' Ar');
+                $('#beneficeNet').text('Bénéfice net : ' + d.benefice_net.toFixed(2) + ' Ar');
                 updateBeneficeNetChart(d.total_revenu, d.total_cout, d.benefice_net);
             } else {
-                $('#revenuTotal').text('Revenu total : -- €');
-                $('#coutTotal').text('Coût total : -- €');
-                $('#beneficeNet').text('Bénéfice net : -- €');
+                $('#revenuTotal').text('Revenu total : -- Ar');
+                $('#coutTotal').text('Coût total : -- Ar');
+                $('#beneficeNet').text('Bénéfice net : -- Ar');
                 updateBeneficeNetChart(0, 0, 0);
             }
         }).fail(function() {
@@ -378,7 +378,7 @@
                 { 
                     data: 'revenu', 
                     className: 'text-end', 
-                    render: data => data != null ? data.toFixed(2) + ' €' : '0.00 €' 
+                    render: data => data != null ? data.toFixed(2) + ' Ar' : '0.00 Ar' 
                 }
             ]
         });
@@ -394,12 +394,12 @@
                 { 
                     data: 'revenu_total', 
                     className: 'text-end', 
-                    render: data => data != null ? data.toFixed(2) + ' €' : '0.00 €' 
+                    render: data => data != null ? data.toFixed(2) + ' Ar' : '0.00 Ar' 
                 },
                 { 
                     data: 'cout_total', 
                     className: 'text-end', 
-                    render: data => data != null ? data.toFixed(2) + ' €' : '0.00 €' 
+                    render: data => data != null ? data.toFixed(2) + ' Ar' : '0.00 Ar' 
                 },
                 { 
                     data: 'benefice', 
@@ -407,7 +407,7 @@
                     render: (data, type, row) => {
                         const benefice = data != null ? parseFloat(data) : 0;
                         const classe = benefice >= 0 ? 'positive' : 'negative';
-                        return '<span class="' + classe + '">' + benefice.toFixed(2) + ' €</span>';
+                        return '<span class="' + classe + '">' + benefice.toFixed(2) + ' Ar</span>';
                     }
                 }
             ]
@@ -418,7 +418,7 @@
                 { 
                     data: 'total_salaire', 
                     className: 'text-end', 
-                    render: data => data != null ? data.toFixed(2) + ' €' : '0.00 €' 
+                    render: data => data != null ? data.toFixed(2) + ' Ar' : '0.00 Ar' 
                 }
             ]
         });
@@ -435,12 +435,12 @@
                 { 
                     data: 'revenu_journalier', 
                     className: 'text-end', 
-                    render: data => data != null ? data.toFixed(2) + ' €' : '0.00 €' 
+                    render: data => data != null ? data.toFixed(2) + ' Ar' : '0.00 Ar' 
                 },
                 { 
                     data: 'cout_journalier', 
                     className: 'text-end', 
-                    render: data => data != null ? data.toFixed(2) + ' €' : '0.00 €' 
+                    render: data => data != null ? data.toFixed(2) + ' Ar' : '0.00 Ar' 
                 },
                 { 
                     data: 'benefice_journalier', 
@@ -448,7 +448,7 @@
                     render: (data, type, row) => {
                         const benefice = data != null ? parseFloat(data) : 0;
                         const classe = benefice >= 0 ? 'positive' : 'negative';
-                        return '<span class="' + classe + '">' + benefice.toFixed(2) + ' €</span>';
+                        return '<span class="' + classe + '">' + benefice.toFixed(2) + ' Ar</span>';
                     }
                 }
             ],

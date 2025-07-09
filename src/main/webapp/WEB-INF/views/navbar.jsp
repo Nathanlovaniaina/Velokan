@@ -26,11 +26,6 @@
                     <span class="align-middle">Suivi de bénéfice</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/commandes/count">
-                    <span class="align-middle">Évolution des commandes</span>
-                </a>
-            </li>
         </ul>
 
         <!-- Commandes -->
@@ -83,11 +78,6 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/unite/">
                     <span class="align-middle">Unités de mesure</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/categories/">
-                    <span class="align-middle">Catégories</span>
                 </a>
             </li>
         </ul>

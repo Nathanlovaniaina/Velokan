@@ -354,7 +354,7 @@
                     data: 'revenuMensuel',
                     className: 'text-end',
                     render: function(data) {
-                        return data != null ? parseFloat(data).toFixed(2) + ' €' : '0.00 €';
+                        return data != null ? parseFloat(data).toFixed(2) + ' Ar' : '0.00 Ar';
                     }
                 }
             ]
@@ -367,7 +367,7 @@
                     data: 'revenuEntreprise',
                     className: 'text-end',
                     render: function(data) {
-                        return parseFloat(data || 0).toFixed(2) + ' €';
+                        return parseFloat(data || 0).toFixed(2) + ' Ar';
                     }
                 },
                 { 
@@ -399,14 +399,14 @@
                     data: 'revenu_journalier',
                     className: 'text-end',
                     render: function(data) {
-                        return parseFloat(data || 0).toFixed(2) + ' €';
+                        return parseFloat(data || 0).toFixed(2) + ' Ar';
                     }
                 },
                 { 
                     data: 'revenu_veille',
                     className: 'text-end',
                     render: function(data) {
-                        return data != null ? parseFloat(data).toFixed(2) + ' €' : 'N/A';
+                        return data != null ? parseFloat(data).toFixed(2) + ' Ar' : 'N/A';
                     }
                 },
                 { 
@@ -415,7 +415,7 @@
                     render: function(data, type, row) {
                         const evolutionClass = getEvolutionClass(data);
                         const evolutionText = data !== null ? 
-                            (data > 0 ? '+' : '') + parseFloat(data).toFixed(2) + '%' : 'N/A';
+                            (data > 0 ? '+' : '') + parseFloat(data).toFixed(2) + 'Ar' : 'N/A';
                         return '<span class="' + evolutionClass + '">' + evolutionText + '</span>';
                     }
                 }
@@ -439,7 +439,7 @@
                     data: 'montant_total',
                     className: 'text-end',
                     render: function(data) {
-                        return data !== undefined ? parseFloat(data).toFixed(2) + ' €' : '0.00 €';
+                        return data !== undefined ? parseFloat(data).toFixed(2) + ' Ar' : '0.00 Ar';
                     }
                 },
                 { 
@@ -481,7 +481,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Revenu Mensuel (€)',
+                        label: 'Revenu Mensuel (Ar)',
                         data: data,
                         backgroundColor: 'rgba(0, 126, 93, 0.5)',
                         borderColor: 'rgba(0, 126, 93, 1)',
@@ -496,7 +496,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Montant (€)'
+                                text: 'Montant (Ar)'
                             }
                         },
                         x: {
@@ -510,7 +510,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': ' + context.raw.toFixed(2) + ' €';
+                                    return context.dataset.label + ': ' + context.raw.toFixed(2) + ' Ar';
                                 }
                             }
                         }
@@ -531,7 +531,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Revenu par Entreprise (€)',
+                        label: 'Revenu par Entreprise (Ar)',
                         data: data,
                         backgroundColor: [
                             'rgba(0, 126, 93, 0.6)',
@@ -570,7 +570,7 @@
                                     const value = context.raw || 0;
                                     const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                     const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ${value.toFixed(2)} € (${percentage}%)`;
+                                    return `${label}: ${value.toFixed(2)} Ar (${percentage}%)`;
                                 }
                             }
                         }
@@ -591,7 +591,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Revenu Journalier (€)',
+                        label: 'Revenu Journalier (Ar)',
                         data: data.map(item => item.revenu),
                         borderColor: 'rgba(0, 126, 93, 1)',
                         backgroundColor: 'rgba(0, 126, 93, 0.1)',
@@ -599,7 +599,7 @@
                         tension: 0.1,
                         fill: true
                     }, {
-                        label: 'Revenu Veille (€)',
+                        label: 'Revenu Veille (Ar)',
                         data: data.map(item => item.veille || null),
                         borderColor: 'rgba(248, 200, 40, 1)',
                         backgroundColor: 'rgba(248, 200, 40, 0.1)',
@@ -616,7 +616,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Montant (€)'
+                                text: 'Montant (Ar)'
                             }
                         },
                         x: {
@@ -630,7 +630,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': ' + (context.raw ? context.raw.toFixed(2) + ' €' : 'N/A');
+                                    return context.dataset.label + ': ' + (context.raw ? context.raw.toFixed(2) + ' Ar' : 'N/A');
                                 }
                             }
                         }

@@ -322,14 +322,14 @@
                     data: 'montant_total',
                     className: 'text-end',
                     render: function(data) {
-                        return data != null ? parseFloat(data).toFixed(2) + ' €' : '0.00 €';
+                        return data != null ? parseFloat(data).toFixed(2) + ' Ar' : '0.00 Ar';
                     }
                 },
                 { 
                     data: 'prix_moyen_unitaire',
                     className: 'text-end',
                     render: function(data) {
-                        return data != null ? parseFloat(data).toFixed(2) + ' €' : '0.00 €';
+                        return data != null ? parseFloat(data).toFixed(2) + ' Ar' : '0.00 Ar';
                     }
                 }
             ]
@@ -343,14 +343,14 @@
                     data: 'depenses_mensuelles',
                     className: 'text-end',
                     render: function(data) {
-                        return data != null ? parseFloat(data).toFixed(2) + ' €' : '0.00 €';
+                        return data != null ? parseFloat(data).toFixed(2) + ' Ar' : '0.00 Ar';
                     }
                 },
                 { 
                     data: 'depenses_mois_precedent',
                     className: 'text-end',
                     render: function(data) {
-                        return data != null ? parseFloat(data).toFixed(2) + ' €' : 'N/A';
+                        return data != null ? parseFloat(data).toFixed(2) + ' Ar' : 'N/A';
                     }
                 },
                 { 
@@ -445,7 +445,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Dépenses par Composant (€)',
+                        label: 'Dépenses par Composant (Ar)',
                         data: data,
                         backgroundColor: '#f8c828',
                         borderColor: '#f8c829',
@@ -460,7 +460,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Montant (€)'
+                                text: 'Montant (Ar)'
                             }
                         },
                         x: {
@@ -474,7 +474,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': ' + context.raw.toFixed(2) + ' €';
+                                    return context.dataset.label + ': ' + context.raw.toFixed(2) + ' Ar';
                                 }
                             }
                         }
@@ -495,7 +495,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Dépenses Mensuelles (€)',
+                        label: 'Dépenses Mensuelles (Ar)',
                         data: data.map(item => item.depenses),
                         borderColor: '#f8c828',
                         backgroundColor: '#f8c828',
@@ -503,7 +503,7 @@
                         tension: 0.1,
                         fill: true
                     }, {
-                        label: 'Mois Précédent (€)',
+                        label: 'Mois Précédent (Ar)',
                         data: data.map(item => item.precedent || null),
                         borderColor: '#007e5d',
                         backgroundColor: '#007e5d',
@@ -520,7 +520,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Montant (€)'
+                                text: 'Montant (Ar)'
                             }
                         },
                         x: {
@@ -534,7 +534,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': ' + (context.raw ? context.raw.toFixed(2) + ' €' : 'N/A');
+                                    return context.dataset.label + ': ' + (context.raw ? context.raw.toFixed(2) + ' Ar' : 'N/A');
                                 }
                             }
                         }
