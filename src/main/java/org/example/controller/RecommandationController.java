@@ -56,7 +56,23 @@ public class RecommandationController {
         String dateStr = (String) payload.get("date");
         java.util.List<Integer> platIds = (java.util.List<Integer>) payload.get("plats");
         LocalDate date = LocalDate.parse(dateStr);
+        Map<String, Object> result = new HashMap<>();
         boolean ok = true;
+
+        // Vérifier le nombre de publications existantes pour la date
+        java.util.List<PublicationPlat> existantes = publicationPlatService.findByDatePublication(date);
+        if (existantes.size() == 2 && platIds.size() > 2) {
+            result.put("success", false);
+            result.put("message", "Il y a déjà 2 plats publiés pour cette date.");
+            return result;
+        }
+        // Si on modifie (update), supprimer les anciennes publications pour la date
+        if (!existantes.isEmpty()) {
+            for (PublicationPlat pub : existantes) {
+                publicationPlatService.delete(pub);
+            }
+        }
+        // Insérer les nouvelles publications
         for (Integer platId : platIds) {
             Plat plat = platService.findById(platId).orElse(null);
             if (plat != null) {
@@ -68,7 +84,6 @@ public class RecommandationController {
                 ok = false;
             }
         }
-        Map<String, Object> result = new HashMap<>();
         result.put("success", ok);
         return result;
     }
@@ -163,11 +178,7 @@ public class RecommandationController {
             cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell1.setPadding(8);
             table.addCell(cell1);
-            PdfPCell cell2 = new PdfPCell(new Phrase("Image (URL)", headerFont));
-            cell2.setBackgroundColor(new Color(232, 245, 233));
-            cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-            cell2.setPadding(8);
-            table.addCell(cell2);
+
             // Lignes
             for (org.example.entity.PublicationPlat pub : entry.getValue()) {
                 PdfPCell platCell = new PdfPCell(new Phrase(pub.getPlat().getIntitule(), cellFont));

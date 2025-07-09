@@ -90,12 +90,6 @@
         </div>
         
         <div class="modal-actions">
-            <button class="btn btn-outline" id="btnAutre">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                </svg>
-                Autres suggestions
-            </button>
             <button class="btn btn-primary" id="btnValider">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M5 13l4 4L19 7"/>
@@ -135,17 +129,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     calendar.render();
+
+    // Initialiser la limitation de sélection pour la modale
+    limiterSelectionRecommandations();
 });
 
 // Modal logic
 var modal = document.getElementById('recoModal');
 var closeModalBtn = document.getElementById('closeModal');
 var btnValider = document.getElementById('btnValider');
-var btnAutre = document.getElementById('btnAutre');
 var recoContent = document.getElementById('recoContent');
 var selectedDate = null;
 var platsRecommandes = [];
 var platsRecommandesIds = [];
+
+// Fonction pour limiter la sélection à 2 plats recommandés
+function limiterSelectionRecommandations() {
+    const checkboxes = document.querySelectorAll('.reco-checkbox');
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', function() {
+            const checked = document.querySelectorAll('.reco-checkbox:checked');
+            if (checked.length > 2) {
+                this.checked = false;
+                alert('Vous ne pouvez sélectionner que 2 recommandations maximum.');
+            }
+        });
+    });
+}
 
 function openRecoModal(dateStr) {
     selectedDate = dateStr;
@@ -225,8 +235,10 @@ function openRecoModal(dateStr) {
                             console.log('platIntitule:', platIntitule);
                             console.log('platScore:', platScore);
                             
-                            var platHtml = '<div class="reco-plat' + (dejaPublie ? ' disabled' : '') + '" style="border: 1px solid #ccc; padding: 10px; margin: 5px 0;">' +
-                                '<input type="checkbox" class="reco-checkbox" id="reco-plat-' + idx + '" data-plat-id="' + platId + '"' + (dejaPublie ? ' disabled' : ' checked') + '>' +
+                            var checkedAttr = dejaPublie ? ' checked' : '';
+                            // Les plats déjà publiés sont cochés mais non désactivés (modifiable)
+                            var platHtml = '<div class="reco-plat" style="border: 1px solid #ccc; padding: 10px; margin: 5px 0;">' +
+                                '<input type="checkbox" class="reco-checkbox" id="reco-plat-' + idx + '" data-plat-id="' + platId + '"' + checkedAttr + '>' +
                                 '<div class="reco-plat-info">' +
                                     '<div class="reco-plat-title" style="font-weight: bold;">' + platIntitule + '</div>' +
                                     '<div class="reco-plat-score">' +
@@ -252,6 +264,8 @@ function openRecoModal(dateStr) {
                     console.log('Assignation du HTML au contenu');
                     recoContent.innerHTML = html;
                     console.log('Contenu final:', recoContent.innerHTML);
+                    // Ajout de la limitation après le rendu du HTML
+                    limiterSelectionRecommandations();
                 })
                 .catch(() => {
                     recoContent.innerHTML = pubsHtml + `
@@ -315,11 +329,6 @@ btnValider.onclick = function() {
         showNotification('Erreur lors de la validation.', 'error');
         modal.style.display = 'none';
     });
-};
-
-btnAutre.onclick = function() {
-    // Relancer la recherche de suggestions
-    openRecoModal(selectedDate);
 };
 
 function chargerPublications(start, end) {

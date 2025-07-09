@@ -90,6 +90,7 @@ public class RecommandationService {
         System.out.println("DEBUG: Nombre de résultats après tri: " + result.size());
         System.out.println("DEBUG: Résultats finaux: " + result);
         
-        return result.subList(0, Math.min(2, result.size()));
+        return result.subList(0, result.size());
+        // return result.subList(0, Math.min(4, result.size()));
     }
 } 

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PublicationPlatRepository extends JpaRepository<PublicationPlat, Integer> {
     List<PublicationPlat> findByDatePublicationBetween(LocalDate start, LocalDate end);
+    List<PublicationPlat> findByDatePublication(LocalDate date);
 } 

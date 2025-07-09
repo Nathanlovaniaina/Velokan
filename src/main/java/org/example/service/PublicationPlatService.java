@@ -19,4 +19,12 @@ public class PublicationPlatService {
     public java.util.List<PublicationPlat> findByDatePublicationBetween(java.time.LocalDate start, java.time.LocalDate end) {
         return publicationPlatRepository.findByDatePublicationBetween(start, end);
     }
+
+    public java.util.List<PublicationPlat> findByDatePublication(java.time.LocalDate date) {
+        return publicationPlatRepository.findByDatePublication(date);
+    }
+
+    public void delete(PublicationPlat publicationPlat) {
+        publicationPlatRepository.delete(publicationPlat);
+    }
 } 
