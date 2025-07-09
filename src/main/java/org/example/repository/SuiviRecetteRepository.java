@@ -1,4 +1,5 @@
 package org.example.repository;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,23 +26,25 @@ public class SuiviRecetteRepository {
             FROM 
                 facture f
             JOIN 
-                commandes c ON f.id_commandes = c.id
-            WHERE 1=1
+                commandes c ON c.id = f.id_commandes
+            WHERE 
+                f.date_emission BETWEEN :startDate AND :endDate
+                AND f.statut = 'Paye'
         """);
 
-        // Ajout des filtres de base
-        sql.append(" AND f.date_emission BETWEEN :startDate AND :endDate");
-        sql.append(" AND f.statut = 'Paye'");
-
-        // Filtres optionnels
         if (entrepriseId != null) {
             sql.append(" AND f.id_entreprise = :entrepriseId");
         }
         if (platId != null) {
-            sql.append(" AND c.id_plat = :platId");
+            sql.append("""
+                AND EXISTS (
+                    SELECT 1 FROM detail_commande dc 
+                    WHERE dc.id_commande = c.id 
+                    AND dc.id_plat = :platId
+                )
+            """);
         }
 
-        // Group by et order by
         sql.append("""
             GROUP BY 
                 mois, annee
@@ -70,20 +73,26 @@ public class SuiviRecetteRepository {
                 e.nom AS entreprise,
                 SUM(f.montant_total) AS revenu_entreprise,
                 COUNT(DISTINCT f.id_commandes) AS nombre_total_commandes,
-                SUM(c.quantite) AS nombre_total_plats
+                (
+                    SELECT SUM(dc.quantite) 
+                    FROM detail_commande dc 
+                    JOIN commandes cmd ON dc.id_commande = cmd.id
+                    JOIN facture fact ON cmd.id = fact.id_commandes
+                    WHERE fact.id_entreprise = e.id
+                    AND fact.date_emission BETWEEN :startDate AND :endDate
+                    AND fact.statut = 'Paye'
+                ) AS nombre_total_plats
             FROM 
                 facture f
             JOIN 
                 entreprise e ON f.id_entreprise = e.id
-            JOIN 
-                commandes c ON f.id_commandes = c.id
             WHERE 
                 f.date_emission BETWEEN :startDate AND :endDate
                 AND f.statut = 'Paye'
             GROUP BY 
-                e.nom
+                e.id, e.nom
             ORDER BY 
-                revenu_entreprise DESC;
+                revenu_entreprise DESC
         """;
 
         javax.persistence.Query query = entityManager.createNativeQuery(sql);
@@ -103,15 +112,15 @@ public class SuiviRecetteRepository {
                 (revenu_journalier - LAG(revenu_journalier) OVER (ORDER BY date_emission)) AS evolution
             FROM (
                 SELECT 
-                    date_emission,
-                    SUM(montant_total) AS revenu_journalier
+                    f.date_emission,
+                    SUM(f.montant_total) AS revenu_journalier
                 FROM 
-                    facture
+                    facture f
                 WHERE 
-                    date_emission BETWEEN :startDate AND :endDate
-                    AND statut = 'Paye'
+                    f.date_emission BETWEEN :startDate AND :endDate
+                    AND f.statut = 'Paye'
                 GROUP BY 
-                    date_emission
+                    f.date_emission
             ) AS journalier
             ORDER BY 
                 date_emission
@@ -128,11 +137,14 @@ public class SuiviRecetteRepository {
     public List<Object[]> getFacturesEnRetard(LocalDate startDate, LocalDate endDate) {
         String sql = """
             SELECT 
-                f.id AS facture,
+                f.id AS id_facture,
                 e.nom AS entreprise,
                 f.montant_total,
                 f.date_emission,
-                CURRENT_DATE - f.date_emission AS jours_retard
+                CASE
+                    WHEN f.date_paiement IS NULL THEN CURRENT_DATE - f.date_emission
+                    ELSE f.date_paiement - f.date_emission
+                END AS jours_retard
             FROM 
                 facture f
             JOIN 
@@ -150,7 +162,4 @@ public class SuiviRecetteRepository {
     
         return query.getResultList();
     }
-
-
 }
-

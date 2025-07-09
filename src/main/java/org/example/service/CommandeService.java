@@ -11,17 +11,17 @@ import java.util.Map;
 @Service
 public class CommandeService {
 
-    private final CommandeRepositoryScript commandeRepository;
+    private final CommandeRepositoryScript commandeRepositoryscr;
 
-    public CommandeService(CommandeRepositoryScript commandeRepository) {
-        this.commandeRepository = commandeRepository;
+    public CommandeService(CommandeRepositoryScript commandeRepositoryscr) {
+        this.commandeRepositoryscr = commandeRepositoryscr;
     }
 
     @Transactional
     public Long creerCommande(Long idEntreprise, LocalDateTime dateLivraison, 
                             List<Map<String, String>> platsCommandes, 
                             String commentaires, int prixTotal) {
-        return commandeRepository.creerCommandeComplete(
+        return commandeRepositoryscr.creerCommandeComplete(
             idEntreprise, 
             dateLivraison, 
             platsCommandes, 

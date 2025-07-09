@@ -1,167 +1,147 @@
 package org.example.controller;
 
-import org.example.repository.CommandeRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.example.entity.Commandes;
+import org.example.entity.DetailCommande;
+import org.example.entity.Entreprise;
+import org.example.entity.Plat;
+import org.example.service.CommandesService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.Locale;
 
 @Controller
-@RequestMapping("/commandes")
+@RequestMapping("/commande")
 public class CommandeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CommandeController.class);
-    private final CommandeRepository commandeRepository;
+    private final CommandesService commandeService;
 
-    public CommandeController(CommandeRepository commandeRepository) {
-        this.commandeRepository = commandeRepository;
+    public CommandeController(CommandesService commandeService) {
+        this.commandeService = commandeService;
+        
     }
 
-    @GetMapping("/count")
-    public String countOrdersByDate(
-            @RequestParam(value = "date", required = false) String dateStr,
-            @RequestParam(value = "endDate", required = false) String endDateStr,
-            Model model) {
-        logger.info("countOrdersByDate called with date={} endDate={}", dateStr, endDateStr);
-
-        if (dateStr == null || dateStr.trim().isEmpty()) {
-            model.addAttribute("error", "Erreur : veuillez fournir une date de début au format AAAA‑MM‑JJ.");
-            return "commandes/count";
-        }
-
-        try {
-            LocalDate startDate = LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
-            LocalDate endDate = (endDateStr == null || endDateStr.trim().isEmpty())
-                                  ? startDate
-                                  : LocalDate.parse(endDateStr, DateTimeFormatter.ISO_LOCAL_DATE);
-
-            if (startDate.isAfter(endDate)) {
-                model.addAttribute("error", "La date de début doit être antérieure ou égale à la date de fin.");
-                return "commandes/count";
-            }
-
-            // Récupération des données
-            List<Object[]> results = commandeRepository.countByDateRange(startDate, endDate);
-
-            if (results.isEmpty()) {
-                // Aucun résultat dans la plage → on fait un seul jour
-                long count = commandeRepository.countByDate(startDate);
-                model.addAttribute("date", dateStr);
-                model.addAttribute("nombreCommandes", count);
-                model.addAttribute("isSingleDay", true);
-                return "commandes/count";
-            }
-
-            // Comptage de la veille réelle
-            long previousCount = commandeRepository.countByDate(startDate.minusDays(1));
-
-            List<Map<String, Object>> orderDataList = new ArrayList<>();
-            for (Object[] row : results) {
-                LocalDate d = ((java.sql.Date) row[0]).toLocalDate();
-                long count = ((Number) row[1]).longValue();
-
-                long diff = count - previousCount;
-                String evolution = diff > 0 ? "A évolué" : diff < 0 ? "A diminué" : "Pas d'évolution";
-
-                Map<String, Object> od = new LinkedHashMap<>();
-                od.put("date", d.toString());
-                od.put("count", count);
-                od.put("evolution", evolution);
-                orderDataList.add(od);
-
-                previousCount = count;
-                logger.debug("Date={}, count={}, évolution={}", d, count, evolution);
-            }
-
-            model.addAttribute("orderDataList", orderDataList);
-            model.addAttribute("startDate", dateStr);
-            model.addAttribute("endDate", endDateStr);
-            model.addAttribute("isSingleDay", false);
-
-        } catch (DateTimeParseException e) {
-            logger.error("Format de date invalide", e);
-            model.addAttribute("error", "Erreur : format de date invalide. Utilisez AAAA‑MM‑JJ.");
-        } catch (Exception e) {
-            logger.error("Erreur base données", e);
-            model.addAttribute("error", "Erreur serveur. Veuillez réessayer.");
-        }
-
-        return "commandes/count";
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @GetMapping("/chart")
-    public String showOrdersChart(
-            @RequestParam(value = "startDate", required = false) String startDateStr,
-            @RequestParam(value = "endDate", required = false) String endDateStr,
-            Model model) {
-        logger.info("showOrdersChart called with startDate={} endDate={}", startDateStr, endDateStr);
-
-        if (startDateStr == null || startDateStr.trim().isEmpty()) {
-            model.addAttribute("error", "Erreur : veuillez fournir une date de début au format AAAA‑MM‑JJ.");
-            return "commandes/count";
-        }
-
+    @GetMapping("/")
+    public String toPayement(Model model,
+                             @RequestParam(value = "dateDebut", required = false) String dateDebut,
+                             @RequestParam(value = "dateFin", required = false) String dateFin,
+                             @RequestParam(value = "succes", required = false) String succes) {
         try {
-            LocalDate start = LocalDate.parse(startDateStr, DateTimeFormatter.ISO_LOCAL_DATE);
-            LocalDate end = (endDateStr == null || endDateStr.trim().isEmpty())
-                              ? start
-                              : LocalDate.parse(endDateStr, DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", new Locale("fr", "FR"));
+            model.addAttribute("currentDate", today.format(formatter));
 
-            if (start.isAfter(end)) {
-                model.addAttribute("error", "La date de début doit être antérieure ou égale à la date de fin.");
-                return "commandes/count";
+            if (succes != null) {
+                model.addAttribute("succes", succes);
             }
 
-            List<Object[]> results = commandeRepository.countByDateRange(start, end);
-
-            if (results.isEmpty()) {
-                long count = commandeRepository.countByDate(start);
-                model.addAttribute("date", startDateStr);
-                model.addAttribute("nombreCommandes", count);
-                model.addAttribute("isSingleDay", true);
-                return "commandes/count";
+            if (dateDebut != null && dateFin != null && !dateDebut.isEmpty() && !dateFin.isEmpty()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date startDate = sdf.parse(dateDebut);
+                Date endDate = sdf.parse(dateFin);
+                model.addAttribute("commandes", commandeService.findByDateRange(startDate, endDate));
+                model.addAttribute("totalPortions", commandeService.getTotalPortions(startDate, endDate));
+                model.addAttribute("dateDebut", dateDebut);
+                model.addAttribute("dateFin", dateFin);
+            } else {
+                model.addAttribute("commandes", commandeService.findAll());
+                model.addAttribute("totalPortions", commandeService.getTotalPortions(null, null));
             }
-
-            long previousCount = commandeRepository.countByDate(start.minusDays(1));
-            List<Map<String, Object>> orderDataList = new ArrayList<>();
-            for (Object[] row : results) {
-                LocalDate d = ((java.sql.Date) row[0]).toLocalDate();
-                long count = ((Number) row[1]).longValue();
-
-                long diff = count - previousCount;
-                String evolution = diff > 0 ? "A évolué" : diff < 0 ? "A diminué" : "Pas d'évolution";
-
-                Map<String, Object> od = new LinkedHashMap<>();
-                od.put("date", d.toString());
-                od.put("count", count);
-                od.put("evolution", evolution);
-                orderDataList.add(od);
-
-                previousCount = count;
-                logger.debug("Date={}, count={}, évolution={}", d, count, evolution);
-            }
-
-            model.addAttribute("orderDataList", orderDataList);
-            model.addAttribute("startDate", startDateStr);
-            model.addAttribute("endDate", endDateStr);
-            model.addAttribute("isSingleDay", false);
-
-        } catch (DateTimeParseException e) {
-            logger.error("Format de date invalide", e);
-            model.addAttribute("error", "Erreur : format de date invalide. Utilisez AAAA‑MM‑JJ.");
         } catch (Exception e) {
-            logger.error("Erreur base données", e);
-            model.addAttribute("error", "Erreur serveur. Veuillez réessayer.");
+            model.addAttribute("commandes", commandeService.findAll());
+            model.addAttribute("totalPortions", commandeService.getTotalPortions(null, null));
         }
+        return "listeCommande";
+    }
 
-        return "commandes/count";
+    @GetMapping("/delete")
+    public String supprimerCommande(@RequestParam("id") Integer id,
+                                   @RequestParam(value = "dateDebut", required = false) String dateDebut,
+                                   @RequestParam(value = "dateFin", required = false) String dateFin) {
+        commandeService.deleteById(id);
+        if (dateDebut != null && dateFin != null && !dateDebut.isEmpty() && !dateFin.isEmpty()) {
+            return "redirect:/commande/?dateDebut=" + dateDebut + "&dateFin=" + dateFin + "&succes=Commande supprimée";
+        }
+        return "redirect:/commande/?succes=Commande supprimée";
+    }
+
+    @GetMapping("/edit")
+    public String editCommande(@RequestParam("id") Integer id,
+                              @RequestParam(value = "dateDebut", required = false) String dateDebut,
+                              @RequestParam(value = "dateFin", required = false) String dateFin,
+                              Model model) {
+        Commandes commande = commandeService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commande introuvable"));
+        model.addAttribute("commande", commande);
+        model.addAttribute("entreprises", commandeService.findAllEntreprises());
+        model.addAttribute("plats", commandeService.findAllPlats());
+        model.addAttribute("dateDebut", dateDebut);
+        model.addAttribute("dateFin", dateFin);
+        return "editCommande";
+    }
+
+    @PostMapping("/update")
+    public String updateCommande(@ModelAttribute("commande") Commandes commande,
+                                @RequestParam("idEntreprise") Integer idEntreprise,
+                                @RequestParam(value = "details[0].idPlat", required = false) Integer[] idPlats,
+                                @RequestParam(value = "dateDebut", required = false) String dateDebut,
+                                @RequestParam(value = "dateFin", required = false) String dateFin,
+                                Model model) {
+        try {
+           
+            commande.setEntreprise(new Entreprise());
+            commande.getEntreprise().setId(idEntreprise);
+
+            
+            if (commande.getDetails() != null && idPlats != null) {
+                for (int i = 0; i < commande.getDetails().size() && i < idPlats.length; i++) {
+                    DetailCommande detail = commande.getDetails().get(i);
+                    if (detail != null) {
+                        if (idPlats[i] == null) {
+                            throw new IllegalArgumentException("Plat non spécifié pour un détail");
+                        }
+                        detail.setPlat(new Plat());
+                        detail.getPlat().setId(idPlats[i]);
+                        if (detail.getQuantite() == null || detail.getQuantite() <= 0) {
+                            throw new IllegalArgumentException("Quantité invalide");
+                        }
+                        if (detail.getPrixUnitaire() == null || detail.getPrixUnitaire() < 0) {
+                            throw new IllegalArgumentException("Prix unitaire invalide");
+                        }
+                    }
+                }
+            } else {
+                throw new IllegalArgumentException("Aucun détail de commande fourni");
+            }
+
+            commandeService.updateCommande(commande);
+            String redirectUrl = "/commande/?succes=Commande mise à jour";
+            if (dateDebut != null && dateFin != null && !dateDebut.isEmpty() && !dateFin.isEmpty()) {
+                redirectUrl += "&dateDebut=" + dateDebut + "&dateFin=" + dateFin;
+            }
+            return "redirect:" + redirectUrl;
+        } catch (Exception e) {
+            model.addAttribute("error", "Erreur lors de la mise à jour : " + e.getMessage());
+            model.addAttribute("commande", commande);
+            model.addAttribute("entreprises", commandeService.findAllEntreprises());
+            model.addAttribute("plats", commandeService.findAllPlats());
+            model.addAttribute("dateDebut", dateDebut);
+            model.addAttribute("dateFin", dateFin);
+            return "editCommande";
+        }
     }
 }

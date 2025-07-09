@@ -30,7 +30,9 @@ public class SuiviDepensesRepository {
             FROM 
                 mvt_stock ms
             JOIN 
-                composant c ON ms.id_composant = c.id
+                stock s ON ms.id_stock = s.id
+            JOIN 
+                composant c ON s.id_composant = c.id
             JOIN 
                 type_composant tc ON c.id_type = tc.id
             JOIN 
@@ -83,6 +85,8 @@ public class SuiviDepensesRepository {
                       NULLIF(LAG(SUM(ms.quantite * ms.prix_unitaire)) OVER (ORDER BY EXTRACT(YEAR FROM ms.date_mvt), EXTRACT(MONTH FROM ms.date_mvt)), 0) * 100, 2) AS evolution_pct
             FROM 
                 mvt_stock ms
+            JOIN
+                stock s ON ms.id_stock = s.id
             WHERE 
                 ms.type_mvt = 0
                 AND ms.date_mvt BETWEEN :startDate AND :endDate
@@ -110,7 +114,9 @@ public class SuiviDepensesRepository {
             FROM 
                 mvt_stock ms
             JOIN 
-                composant c ON ms.id_composant = c.id
+                stock s ON ms.id_stock = s.id
+            JOIN 
+                composant c ON s.id_composant = c.id
             WHERE 
                 ms.type_mvt = 0
                 AND ms.date_mvt BETWEEN :startDate AND :endDate
@@ -139,7 +145,9 @@ public class SuiviDepensesRepository {
             FROM 
                 mvt_stock ms
             JOIN 
-                composant c ON ms.id_composant = c.id
+                stock s ON ms.id_stock = s.id
+            JOIN 
+                composant c ON s.id_composant = c.id
             JOIN 
                 type_composant tc ON c.id_type = tc.id
             WHERE 
@@ -176,15 +184,17 @@ public class SuiviDepensesRepository {
             ),
             consommation_reelle AS (
                 SELECT 
-                    id_composant,
-                    SUM(quantite) AS quantite_reelle
+                    s.id_composant,
+                    SUM(ms.quantite) AS quantite_reelle
                 FROM 
-                    mvt_stock
+                    mvt_stock ms
+                JOIN
+                    stock s ON ms.id_stock = s.id
                 WHERE 
-                    type_mvt = 1
-                    AND date_mvt BETWEEN :dateDebut AND :dateFin
+                    ms.type_mvt = 1
+                    AND ms.date_mvt BETWEEN :dateDebut AND :dateFin
                 GROUP BY 
-                    id_composant
+                    s.id_composant
             )
             SELECT 
                 c.id,

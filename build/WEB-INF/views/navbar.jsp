@@ -28,7 +28,7 @@
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/commandes/count">
-                    <span class="align-middle">Évolution de Commandes</span>
+                    <span class="align-middle">Évolution des commandes</span>
                 </a>
             </li>
         </ul>
@@ -40,49 +40,17 @@
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/commande/form">
-                    <span class="align-middle">Nouvelle Commande</span>
+                    <span class="align-middle">Nouvelle commande</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/commande/">
+                    <span class="align-middle">Liste des commandes</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/plats/">
-                    <span class="align-middle">Plats</span>
-                </a>
-            </li>
-        </ul>
-
-        <!-- Gestion des ressources -->
-        <ul class="sidebar-nav">
-            <li class="sidebar-header">
-                Ressources Humaines
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/">
-                    <span class="align-middle">Employés</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/paiement_salaire">
-                    <span class="align-middle">Paiement salaire</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/poste/">
-                    <span class="align-middle">Postes</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/mvtcontrat/create">
-                    <span class="align-middle">Contrats</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/penalite/">
-                    <span class="align-middle">Pénalités</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/taches_plat/">
-                    <span class="align-middle">Taches</span>
+                    <span class="align-middle">Gestion des plats</span>
                 </a>
             </li>
         </ul>
@@ -93,8 +61,13 @@
                 Gestion des stocks
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="${pageContext.request.contextPath}/listStock/">
-                    <span class="align-middle">Stocks</span>
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/stock/Stock/listeStoc">
+                    <span class="align-middle">État des stocks</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/stock/Stock/form">
+                    <span class="align-middle">Mouvements de stocks</span>
                 </a>
             </li>
             <li class="sidebar-item">
@@ -109,12 +82,49 @@
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/unite/">
-                    <span class="align-middle">Unités</span>
+                    <span class="align-middle">Unités de mesure</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/categories/">
                     <span class="align-middle">Catégories</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Ressources Humaines -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Ressources Humaines
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/">
+                    <span class="align-middle">Employés</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/poste/">
+                    <span class="align-middle">Postes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/mvtcontrat/create">
+                    <span class="align-middle">Contrats</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/employe/paiement_salaire">
+                    <span class="align-middle">Paiements salaires</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/penalite/">
+                    <span class="align-middle">Pénalités</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="${pageContext.request.contextPath}/taches_plat/">
+                    <span class="align-middle">Tâches</span>
                 </a>
             </li>
         </ul>
@@ -126,12 +136,12 @@
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/entreprise/create">
-                    <span class="align-middle">Créer entreprise</span>
+                    <span class="align-middle">Entreprises</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="${pageContext.request.contextPath}/depense/">
-                    <span class="align-middle">Dépenses</span>
+                    <span class="align-middle">Dépenses générales</span>
                 </a>
             </li>
         </ul>

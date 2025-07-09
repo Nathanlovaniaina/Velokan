@@ -40,14 +40,16 @@ public class SuiviBeneficesRepository {
             FROM 
                 detail_commande dc
             JOIN details_plat dp ON dc.id_plat = dp.id_plat
-            JOIN mvt_stock ms ON dp.id_composant = ms.id_composant
+            JOIN stock s ON s.id_composant = dp.id_composant
+            JOIN mvt_stock ms ON ms.id_stock = s.id
             JOIN commandes c ON dc.id_commande = c.id
             WHERE 
                 c.date_heure_prevue BETWEEN :startDate AND :endDate
                 AND ms.date_mvt = (
                     SELECT MAX(ms2.date_mvt)
                     FROM mvt_stock ms2
-                    WHERE ms2.id_composant = ms.id_composant
+                    JOIN stock s2 ON ms2.id_stock = s2.id
+                    WHERE s2.id_composant = s.id_composant
                       AND ms2.date_mvt <= c.date_heure_prevue
                 )
         """;
@@ -71,13 +73,15 @@ public class SuiviBeneficesRepository {
                 SELECT SUM(dc.quantite * dp.quantite * ms.prix_unitaire) AS total_cout
                 FROM detail_commande dc
                 JOIN details_plat dp ON dc.id_plat = dp.id_plat
-                JOIN mvt_stock ms ON dp.id_composant = ms.id_composant
+                JOIN stock s ON s.id_composant = dp.id_composant
+                JOIN mvt_stock ms ON ms.id_stock = s.id
                 JOIN commandes c ON dc.id_commande = c.id
                 WHERE c.date_heure_prevue BETWEEN :startDate AND :endDate
                 AND ms.date_mvt = (
                     SELECT MAX(ms2.date_mvt)
                     FROM mvt_stock ms2
-                    WHERE ms2.id_composant = ms.id_composant
+                    JOIN stock s2 ON ms2.id_stock = s2.id
+                    WHERE s2.id_composant = s.id_composant
                       AND ms2.date_mvt <= c.date_heure_prevue
                 )
             )
@@ -129,14 +133,16 @@ public class SuiviBeneficesRepository {
                 detail_commande dc
             JOIN plat p ON p.id = dc.id_plat
             JOIN details_plat dp ON dp.id_plat = p.id
-            JOIN mvt_stock ms ON ms.id_composant = dp.id_composant
+            JOIN stock s ON s.id_composant = dp.id_composant
+            JOIN mvt_stock ms ON ms.id_stock = s.id
             JOIN commandes c ON dc.id_commande = c.id
             WHERE 
                 c.date_heure_prevue BETWEEN :startDate AND :endDate
                 AND ms.date_mvt = (
                     SELECT MAX(ms2.date_mvt)
                     FROM mvt_stock ms2
-                    WHERE ms2.id_composant = ms.id_composant
+                    JOIN stock s2 ON ms2.id_stock = s2.id
+                    WHERE s2.id_composant = s.id_composant
                       AND ms2.date_mvt <= c.date_heure_prevue
                 )
             GROUP BY p.intitule
@@ -178,13 +184,15 @@ public class SuiviBeneficesRepository {
                 detail_commande dc
             JOIN commandes c ON dc.id_commande = c.id
             JOIN details_plat dp ON dc.id_plat = dp.id_plat
-            JOIN mvt_stock ms ON ms.id_composant = dp.id_composant
+            JOIN stock s ON s.id_composant = dp.id_composant
+            JOIN mvt_stock ms ON ms.id_stock = s.id
             WHERE 
                 c.date_heure_prevue BETWEEN :startDate AND :endDate
                 AND ms.date_mvt = (
                     SELECT MAX(ms2.date_mvt)
                     FROM mvt_stock ms2
-                    WHERE ms2.id_composant = ms.id_composant
+                    JOIN stock s2 ON ms2.id_stock = s2.id
+                    WHERE s2.id_composant = s.id_composant
                       AND ms2.date_mvt <= c.date_heure_prevue
                 )
             GROUP BY jour

@@ -18,6 +18,6 @@ public interface CommandeRepository extends JpaRepository<Commande, Integer> {
       AND DATE(date_heure_prevue) BETWEEN :startDate AND :endDate
     GROUP BY DATE(date_heure_prevue)
     ORDER BY order_date
-""", nativeQuery = true)
-List<Object[]> countByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    """, nativeQuery = true)
+    List<Object[]> countByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

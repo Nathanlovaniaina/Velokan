@@ -1,5 +1,14 @@
+-- Supprimer la base si elle existe
 DROP DATABASE IF EXISTS velonkan;
-CREATE DATABASE velonkan;
+
+-- Créer la base avec encodage UTF-8 et collation francophone (modifiable si besoin)
+CREATE DATABASE velonkan
+  WITH 
+  ENCODING = 'UTF8'
+  LC_COLLATE = 'fr_FR.UTF-8'
+  LC_CTYPE = 'fr_FR.UTF-8'
+  TEMPLATE = template0;
+
 \c velonkan;
 
 CREATE TABLE plat (
@@ -50,18 +59,17 @@ CREATE TABLE publication_plat(
 CREATE TABLE stock (
     id SERIAL PRIMARY KEY,
     id_composant INTEGER REFERENCES composant(id) NOT NULL,
-    date_creation DATE,
-    qtte_stock NUMERIC(10,2),
-    nombre_jour_conservation INTEGER
+    qtte_stock NUMERIC(10,2)
 );
 
 CREATE TABLE mvt_stock(
     id SERIAL PRIMARY KEY,
-    id_composant INTEGER REFERENCES composant(id) NOT NULL,
+    id_stock INTEGER REFERENCES stock(id) NOT NULL,
     type_mvt INTEGER CHECK (type_mvt IN (0, 1)),
     quantite NUMERIC(10,2),
     date_mvt DATE NOT NULL,
     prix_unitaire NUMERIC(10,2),
+    nombre_jour_conservation INTEGER,
     date_peremption DATE
 );
 
@@ -188,7 +196,8 @@ CREATE TABLE mvt_employe(
 
 CREATE TABLE penalite(
     id SERIAL PRIMARY KEY,
-    nb_jour INTEGER
+    nb_jour INTEGER,
+    pourcentage INTEGER
 );
 
 CREATE TABLE paiement_salaire (

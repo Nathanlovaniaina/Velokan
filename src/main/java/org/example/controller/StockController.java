@@ -1,109 +1,173 @@
 package org.example.controller;
 
+import org.example.controller.StockController.MouvementsWrapper;
 import org.example.entity.Composant;
-import org.example.entity.Employe;
+import org.example.entity.MvtStock;
 import org.example.entity.Stock;
+import org.example.repository.MvtStockRepository;
+import org.example.repository.StockRepository;
 import org.example.service.ComposantService;
+import org.example.service.MvtStockService;
 import org.example.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
-@RestController
+@Controller
 @RequestMapping("/stock")
 public class StockController {
 
     @Autowired
     private StockService stockService;
+
+    @Autowired
+    private MvtStockService mvtStockService;
+
+    @Autowired 
     private ComposantService composantService;
 
-    public StockController(StockService stockService, ComposantService composantService) {
-        this.stockService = stockService;
-        this.composantService = composantService;
-    }
-
-    @GetMapping("/list")
-    public String listFilms(Model model) {
+    @GetMapping("/Stock/listeStoc")
+    public String listStock(Model model) {
         List<Stock> stocks = stockService.findAll();
+        List<Composant> composants = composantService.findAll();
+        model.addAttribute("composants", composants);
         model.addAttribute("stock", stocks);
-        return "listStock";
+        return "/Stock/listStock";
     }
-
-    @GetMapping("/create")
+//
+    @GetMapping("/Stock/create")
     public String showCreateForm(Model model, HttpSession session) {
         List<Composant> composants = composantService.findAll();
-        model.addAttribute("composant", composants);
-        return "createStock";
+        model.addAttribute("stocks", stockService.findAll());
+        model.addAttribute("composants", composants);
+        return "/Stock/createVraiStock";
     }
+//
+    @PostMapping("/Stock/save")
+    public String saveMultipleStocks(
+        @RequestParam("id_composant") List<Integer> idComposants,
+        @RequestParam("qtte_stock") List<BigDecimal> quantites,
+        Model model
+        ) {
+    int nbStocks = idComposants.size();
+    for (int i = 0; i < nbStocks; i++) {
+        Optional<Composant> composantOpt = composantService.findById(idComposants.get(i));
+        if (composantOpt.isPresent()) {
+            Stock stock = new Stock();
+            stock.setComposant(composantOpt.get());
+            stock.setQtteStock(quantites.get(i));
+            stockService.saveStock(stock);
+        }
+     }
 
+    return "redirect:/stock/Stock/listStock";
+}
 
-    @PostMapping("/save")
-    public String saveStock(
-            @RequestParam(value = "id", required = false) Long id,
-            @RequestParam("id_composant") Integer idComposant,
-            @RequestParam("date_creation") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateCreation,
-            @RequestParam("qtte_stock") BigDecimal qtte,
-            @RequestParam("nombre_jour_conservation") Integer nbJourConserv,
-            Model model){
-                var composantOpt = composantService.findById(idComposant);
-                Stock stock = (id != null) ? stockService.findById(id).orElse(new Stock()) : new Stock();
-                stock.setComposant(composantOpt.get());
-                stock.setdateCreation(dateCreation);
-                stock.setQtteStock(qtte);
-                stock.setNombre_jour_conservation(nbJourConserv);
-
-                stockService.saveStock(stock);
-
-                //model.addAttribute("succes", "Stock enregistré!");
-                //model.addAttribute("stocks", stockService.findAll());
-                //model.addAttribute("stock", new Stock());
-                //model.addAttribute("composants", stockService.getAllComposant());
-                return "redirect:/stock/list";
-            }
-
-    @GetMapping("/delete")
+    @GetMapping("/Stock/delete")
     public String deleteStock(@RequestParam("id") Long id) {
         stockService.deleteById(id);
-        return "redirect:/stock/list";
+        return "redirect:/stock/Stock/listStock";
     }
 
-    @GetMapping("/update")
+    @GetMapping("/Stock/update")
     public String showUpdateForm(@RequestParam("id") Long id, Model model) {
         Optional<Stock> stockOpt = stockService.findById(id);
         if (stockOpt.isPresent()) {
             model.addAttribute("stock", stockOpt.get());
             model.addAttribute("composants", composantService.findAll());
-            return "createStock";
-        }
-        return "redirect:/stock/list";
+            return "/Stock/createVraiStock";
+      }
+        return "redirect:/stock/Stock/listStock";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/Stock/update")
     public String updateStock(
-            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam("id") Long id,
             @RequestParam("id_composant") Integer idComposant,
-            @RequestParam("date_creation") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateCreation,
-            @RequestParam("qtte_stock") BigDecimal qtte,
-            @RequestParam("nombre_jour_conservation") Integer nbJourConserv) {
+            @RequestParam("qtte_stock") BigDecimal qtte) {
         Optional<Stock> stockOpt = stockService.findById(id);
         if (stockOpt.isPresent()) {
             var composantOpt = composantService.findById(idComposant);
             Stock stock = stockOpt.get();
             stock.setComposant(composantOpt.get());
-            stock.setdateCreation(dateCreation);
             stock.setQtteStock(qtte);
-            stock.setNombre_jour_conservation(nbJourConserv);
             stockService.saveStock(stock);
         }
-        return "redirect:/stock/list";
+        return "redirect:/stock/Stock/listStock";
     }
+    @GetMapping("/Stock/form")
+    public String formulaire(Model model) {
+        model.addAttribute("mvt", new MvtStock());
+        model.addAttribute("stocks", stockService.findAll());
+        return "/Stock/createStock";
+    }
+
+    @PostMapping("/Stock/ajouter")
+public String enregistrer(@ModelAttribute("mouvements") MouvementsWrapper wrapper) {
+    stockService.enregistrerMouvements(wrapper.getListeMvt());
+    return "redirect:/stock/Stock/list";
+}
+
+
+    @GetMapping("/Stock/list")
+    public String historique(@RequestParam(value = "type", required = false) Integer typeMvt,
+                            @RequestParam(value="debut",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debut,
+                            @RequestParam(value="fin",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin,
+                            Model model) {
+        if (typeMvt != null && debut == null && fin == null) {
+            List<MvtStock> mouvements = mvtStockService.findByType(typeMvt);
+            model.addAttribute("mouvements", mouvements);
+            return "/Stock/historique";
+        }
+        if (debut != null && fin != null && typeMvt == null) {
+            List<MvtStock> mouvements = mvtStockService.findByDates(debut, fin);
+            model.addAttribute("mouvements", mouvements);
+            model.addAttribute("selectedType", typeMvt);
+            return "/Stock/historique";
+        }
+        if (debut != null && fin != null && typeMvt != null) {
+            List<MvtStock> mouvements = mvtStockService.findByTypeAndDates(typeMvt, debut, fin);
+            model.addAttribute("mouvements", mouvements);
+            model.addAttribute("selectedType", typeMvt);
+            return "/Stock/historique";
+        }
+        
+        else { 
+            List<MvtStock> mouvements = mvtStockService.findAll();
+            model.addAttribute("mouvements", mouvements);
+            return "/Stock/historique";
+        } 
+        
+    }
+
+ 
+    public static class MouvementsWrapper {
+    private List<MvtStock> listeMvt;
+
+    public MouvementsWrapper() {
+    }
+
+    public MouvementsWrapper(List<MvtStock> listeMvt) {
+        this.listeMvt = listeMvt;
+    }
+
+    public List<MvtStock> getListeMvt() {
+        return listeMvt;
+    }
+
+    public void setListeMvt(List<MvtStock> listeMvt) {
+        this.listeMvt = listeMvt;
+    }
+}
+
+    
 }
