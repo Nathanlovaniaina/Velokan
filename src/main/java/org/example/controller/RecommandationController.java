@@ -115,7 +115,7 @@ public class RecommandationController {
                                       HttpServletResponse response) throws Exception {
         java.time.LocalDate startDate = java.time.LocalDate.parse(start);
         java.time.LocalDate endDate = java.time.LocalDate.parse(end);
-        java.util.List<org.example.entity.PublicationPlat> pubs = publicationPlatService.findByDatePublicationBetween(startDate, endDate);
+        java.util.List<org.example.entity.PublicationPlat> pubs = publicationPlatService.findWithCompositionsByDatePublicationBetween(startDate, endDate);
         // Préparer les données groupées par date
         Map<java.time.LocalDate, java.util.List<org.example.entity.PublicationPlat>> pubsByDate = new TreeMap<>();
         for (org.example.entity.PublicationPlat pub : pubs) {
@@ -178,16 +178,41 @@ public class RecommandationController {
             cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell1.setPadding(8);
             table.addCell(cell1);
+            PdfPCell cell2 = new PdfPCell(new Phrase("Composition", headerFont));
+            cell2.setBackgroundColor(new Color(232, 245, 233));
+            cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell2.setPadding(8);
+            table.addCell(cell2);
 
-            // Lignes
+            // Grouper les publications par plat (pour éviter les doublons)
+            java.util.Map<Integer, org.example.entity.Plat> platsMap = new java.util.LinkedHashMap<>();
             for (org.example.entity.PublicationPlat pub : entry.getValue()) {
-                PdfPCell platCell = new PdfPCell(new Phrase(pub.getPlat().getIntitule(), cellFont));
+                org.example.entity.Plat plat = pub.getPlat();
+                platsMap.put(plat.getId(), plat); // Unicité par id
+            }
+            for (org.example.entity.Plat plat : platsMap.values()) {
+                PdfPCell platCell = new PdfPCell(new Phrase(plat.getIntitule(), cellFont));
                 platCell.setPadding(6);
                 table.addCell(platCell);
-                String img = pub.getPlat().getImage() != null ? pub.getPlat().getImage() : "";
-                PdfPCell imgCell = new PdfPCell(new Phrase(img, cellFont));
-                imgCell.setPadding(6);
-                table.addCell(imgCell);
+                // Récupérer la composition du plat (liste des ingrédients)
+                String composition = "";
+                try {
+                    java.util.List<org.example.entity.DetailsPlat> details = plat.getCompositions();
+                    if (details != null && !details.isEmpty()) {
+                        java.util.List<String> compoList = new java.util.ArrayList<>();
+                        for (org.example.entity.DetailsPlat dp : details) {
+                            if (dp.getComposant() != null) {
+                                compoList.add(dp.getComposant().getNom());
+                            }
+                        }
+                        composition = String.join(", ", compoList);
+                    }
+                } catch (Exception e) {
+                    composition = "-";
+                }
+                PdfPCell compoCell = new PdfPCell(new Phrase(composition, cellFont));
+                compoCell.setPadding(6);
+                table.addCell(compoCell);
             }
             document.add(table);
         }

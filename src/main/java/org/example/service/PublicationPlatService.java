@@ -24,6 +24,10 @@ public class PublicationPlatService {
         return publicationPlatRepository.findByDatePublication(date);
     }
 
+    public java.util.List<PublicationPlat> findWithCompositionsByDatePublicationBetween(java.time.LocalDate start, java.time.LocalDate end) {
+        return publicationPlatRepository.findWithCompositionsByDatePublicationBetween(start, end);
+    }
+
     public void delete(PublicationPlat publicationPlat) {
         publicationPlatRepository.delete(publicationPlat);
     }
