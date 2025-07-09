@@ -76,7 +76,6 @@ public class RecommandationService {
             
             Map<String, Object> map = new HashMap<>();
             map.put("intitule", plat.getIntitule());
-            map.put("image", plat.getImage());
             map.put("score", score);
             map.put("id", plat.getId());
             result.add(map);

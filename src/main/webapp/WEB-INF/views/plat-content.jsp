@@ -103,11 +103,7 @@
                         <td>
                             <div class="plat-info">
                                 <div class="plat-name">${plat.intitule}</div>
-                                <c:if test="${not empty plat.image}">
-                                    <div class="plat-image">
-                                        <img src="${plat.image}" alt="${plat.intitule}" class="plat-thumbnail">
-                                    </div>
-                                </c:if>
+                                <!-- Suppression de l'affichage de l'image du plat -->
                             </div>
                         </td>
                         <td>

@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.Image;
 import com.lowagie.text.Font;
 import java.awt.Color;
 import com.lowagie.text.Element;
@@ -102,7 +101,6 @@ public class RecommandationController {
             Map<String, Object> map = new HashMap<>();
             map.put("date", pub.getDatePublication().toString());
             map.put("plat", pub.getPlat().getIntitule());
-            map.put("image", pub.getPlat().getImage());
             map.put("id", pub.getPlat().getId());
             result.add(map);
         }
